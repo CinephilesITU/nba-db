@@ -101,3 +101,146 @@ CREATE TABLE OpponentStats (
     FOREIGN KEY (TeamID) REFERENCES Team(TeamID),
     UNIQUE(TeamID)
 );
+
+CREATE TABLE Staging_Data (
+    PLAYER_NAME TEXT,
+    PLAYER_ID INT,
+    TEAM_NAME_x TEXT,
+    LOCATION TEXT,
+    MIN_x DECIMAL(10, 2),
+    FGM DECIMAL(10, 2),
+    FGA DECIMAL(10, 2),
+    FG_PCT DECIMAL(5, 3),
+    FG3M DECIMAL(10, 2),
+    FG3A DECIMAL(10, 2),
+    FG3_PCT DECIMAL(5, 3),
+    FTM DECIMAL(10, 2),
+    FTA DECIMAL(10, 2),
+    FT_PCT DECIMAL(5, 3),
+    OREB DECIMAL(10, 2),
+    DREB_x DECIMAL(10, 2),
+    REB DECIMAL(10, 2),
+    AST DECIMAL(10, 2),
+    TOV DECIMAL(10, 2),
+    STL_x DECIMAL(10, 2),
+    BLK_x DECIMAL(10, 2),
+    BLKA DECIMAL(10, 2),
+    PF DECIMAL(10, 2),
+    PFD DECIMAL(10, 2),
+    PTS DECIMAL(10, 2),
+    PLUS_MINUS DECIMAL(10, 2),
+    Efficiency DECIMAL(10, 2),
+    `Season Type` TEXT,
+    GP_x INT,
+    W_x INT,
+    L_x INT,
+    Logo_URL TEXT,
+    DISPLAY_FIRST_LAST_x TEXT,
+    TEAM_ID INT,
+    TEAM_ABBREVIATION TEXT,
+    HEADSHOT_URL TEXT,
+    DISPLAY_FIRST_LAST_y TEXT,
+    POSITION TEXT,
+    TEAM_NAME_y TEXT,
+    GP_y INT,
+    W_y INT,
+    L_y INT,
+    W_PCT DECIMAL(5, 3),
+    MIN_y DECIMAL(10, 2),
+    DEF_RATING DECIMAL(10, 2),
+    DREB_y DECIMAL(10, 2),
+    DREB_PCT DECIMAL(5, 3),
+    STL_y DECIMAL(10, 2),
+    BLK_y DECIMAL(10, 2),
+    OPP_PTS_OFF_TOV DECIMAL(10, 2),
+    OPP_PTS_2ND_CHANCE DECIMAL(10, 2),
+    OPP_PTS_FB DECIMAL(10, 2),
+    OPP_PTS_PAINT DECIMAL(10, 2),
+    GP_RANK INT,
+    W_RANK INT,
+    L_RANK INT,
+    W_PCT_RANK INT,
+    MIN_RANK INT,
+    DEF_RATING_RANK INT,
+    DREB_RANK INT,
+    DREB_PCT_RANK INT,
+    STL_RANK INT,
+    BLK_RANK INT,
+    OPP_PTS_OFF_TOV_RANK INT,
+    OPP_PTS_2ND_CHANCE_RANK INT,
+    OPP_PTS_FB_RANK INT,
+    OPP_PTS_PAINT_RANK INT,
+    Conference TEXT
+);
+
+
+INSERT INTO Conference (ConferenceName)
+SELECT DISTINCT Conference
+FROM Staging_Data
+WHERE Conference IS NOT NULL AND Conference != '';
+
+
+INSERT INTO Team (TeamID, TeamName, TeamAbbreviation, LogoURL, ConferenceID)
+SELECT DISTINCT
+    s.TEAM_ID,
+    s.TEAM_NAME_x,
+    s.TEAM_ABBREVIATION,
+    s.Logo_URL,
+    c.ConferenceID
+FROM Staging_Data s
+JOIN Conference c ON s.Conference = c.ConferenceName
+WHERE s.TEAM_ID IS NOT NULL;
+
+
+INSERT INTO Player (PlayerID, PlayerName, Position, HeadshotURL, TeamID)
+SELECT DISTINCT
+    s.PLAYER_ID,
+    s.PLAYER_NAME,
+    s.POSITION,
+    s.HEADSHOT_URL,
+    s.TEAM_ID
+FROM Staging_Data s
+
+WHERE s.TEAM_ID IN (SELECT TeamID FROM Team)
+  AND s.PLAYER_ID IS NOT NULL;
+  
+INSERT INTO TeamStats (
+    TeamID, GP, W, L, W_PCT, MIN, DEF_RATING, DREB, DREB_PCT, STL, BLK,
+    GP_RANK, W_RANK, L_RANK, W_PCT_RANK, MIN_RANK, DEF_RATING_RANK,
+    DREB_RANK, DREB_PCT_RANK, STL_RANK, BLK_RANK
+)
+SELECT DISTINCT
+    s.TEAM_ID, s.GP_y, s.W_y, s.L_y, s.W_PCT, s.MIN_y, s.DEF_RATING, s.DREB_y,
+    s.DREB_PCT, s.STL_y, s.BLK_y, s.GP_RANK, s.W_RANK, s.L_RANK, s.W_PCT_RANK,
+    s.MIN_RANK, s.DEF_RATING_RANK, s.DREB_RANK, s.DREB_PCT_RANK, s.STL_RANK, s.BLK_RANK
+FROM Staging_Data s
+
+WHERE s.TEAM_ID IN (SELECT TeamID FROM Team);
+
+
+INSERT INTO OpponentStats (
+    TeamID, OPP_PTS_OFF_TOV, OPP_PTS_2ND_CHANCE, OPP_PTS_FB, OPP_PTS_PAINT,
+    OPP_PTS_OFF_TOV_RANK, OPP_PTS_2ND_CHANCE_RANK, OPP_PTS_FB_RANK, OPP_PTS_PAINT_RANK
+)
+SELECT DISTINCT
+    s.TEAM_ID, s.OPP_PTS_OFF_TOV, s.OPP_PTS_2ND_CHANCE, s.OPP_PTS_FB, s.OPP_PTS_PAINT,
+    s.OPP_PTS_OFF_TOV_RANK, s.OPP_PTS_2ND_CHANCE_RANK, s.OPP_PTS_FB_RANK, s.OPP_PTS_PAINT_RANK
+FROM Staging_Data s
+WHERE s.TEAM_ID IN (SELECT TeamID FROM Team);
+
+
+INSERT INTO PlayerStats (
+    PlayerID, SeasonType, GP, W, L, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT,
+    FTM, FTA, FT_PCT, OREB, DREB, REB, AST, TOV, STL, BLK, BLKA, PF, PFD,
+    PTS, PLUS_MINUS, Efficiency
+)
+SELECT
+    s.PLAYER_ID,
+    s.`Season Type`,
+    s.GP_x, s.W_x, s.L_x, s.MIN_x, s.FGM, s.FGA, s.FG_PCT, s.FG3M, s.FG3A, s.FG3_PCT,
+    s.FTM, s.FTA, s.FT_PCT, s.OREB, s.DREB_x, s.REB, s.AST, s.TOV, s.STL_x, s.BLK_x,
+    s.BLKA, s.PF, s.PFD, s.PTS, s.PLUS_MINUS, s.Efficiency
+FROM Staging_Data s
+WHERE s.PLAYER_ID IN (SELECT PlayerID FROM Player);
+
+DROP TABLE Staging_Data;
