@@ -1,0 +1,103 @@
+CREATE DATABASE IF NOT EXISTS nba_veritabani
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE nba_veritabani;
+
+CREATE TABLE Conference (
+    ConferenceID INT AUTO_INCREMENT PRIMARY KEY,
+    ConferenceName VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE Team (
+    TeamID INT PRIMARY KEY, 
+    TeamName VARCHAR(255),
+    TeamAbbreviation VARCHAR(10),
+    LogoURL TEXT,
+    ConferenceID INT,
+    FOREIGN KEY (ConferenceID) REFERENCES Conference(ConferenceID)
+);
+
+CREATE TABLE Player (
+    PlayerID INT PRIMARY KEY, 
+    PlayerName VARCHAR(255),
+    Position VARCHAR(50),
+    HeadshotURL TEXT,
+    TeamID INT,
+    FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+);
+
+CREATE TABLE PlayerStats (
+    PlayerStatsID INT AUTO_INCREMENT PRIMARY KEY,
+    PlayerID INT,
+    SeasonType VARCHAR(100),
+    GP INT,
+    W INT,
+    L INT,
+    MIN DECIMAL(10, 2),
+    FGM DECIMAL(10, 2),
+    FGA DECIMAL(10, 2),
+    FG_PCT DECIMAL(5, 3),
+    FG3M DECIMAL(10, 2),
+    FG3A DECIMAL(10, 2),
+    FG3_PCT DECIMAL(5, 3),
+    FTM DECIMAL(10, 2),
+    FTA DECIMAL(10, 2),
+    FT_PCT DECIMAL(5, 3),
+    OREB DECIMAL(10, 2),
+    DREB DECIMAL(10, 2),
+    REB DECIMAL(10, 2),
+    AST DECIMAL(10, 2),
+    TOV DECIMAL(10, 2),
+    STL DECIMAL(10, 2),
+    BLK DECIMAL(10, 2),
+    BLKA DECIMAL(10, 2),
+    PF DECIMAL(10, 2),
+    PFD DECIMAL(10, 2),
+    PTS DECIMAL(10, 2),
+    PLUS_MINUS DECIMAL(10, 2),
+    Efficiency DECIMAL(10, 2),
+    FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID)
+);
+
+CREATE TABLE TeamStats (
+    TeamStatsID INT AUTO_INCREMENT PRIMARY KEY,
+    TeamID INT,
+    GP INT,
+    W INT,
+    L INT,
+    W_PCT DECIMAL(5, 3),
+    MIN DECIMAL(10, 2),
+    DEF_RATING DECIMAL(10, 2),
+    DREB DECIMAL(10, 2),
+    DREB_PCT DECIMAL(5, 3),
+    STL DECIMAL(10, 2),
+    BLK DECIMAL(10, 2),
+    GP_RANK INT,
+    W_RANK INT,
+    L_RANK INT,
+    W_PCT_RANK INT,
+    MIN_RANK INT,
+    DEF_RATING_RANK INT,
+    DREB_RANK INT,
+    DREB_PCT_RANK INT,
+    STL_RANK INT,
+    BLK_RANK INT,
+    FOREIGN KEY (TeamID) REFERENCES Team(TeamID),
+    UNIQUE(TeamID)
+);
+
+CREATE TABLE OpponentStats (
+    OpponentStatsID INT AUTO_INCREMENT PRIMARY KEY,
+    TeamID INT,
+    OPP_PTS_OFF_TOV DECIMAL(10, 2),
+    OPP_PTS_2ND_CHANCE DECIMAL(10, 2),
+    OPP_PTS_FB DECIMAL(10, 2),
+    OPP_PTS_PAINT DECIMAL(10, 2),
+    OPP_PTS_OFF_TOV_RANK INT,
+    OPP_PTS_2ND_CHANCE_RANK INT,
+    OPP_PTS_FB_RANK INT,
+    OPP_PTS_PAINT_RANK INT,
+    FOREIGN KEY (TeamID) REFERENCES Team(TeamID),
+    UNIQUE(TeamID)
+);
