@@ -186,7 +186,6 @@ SELECT DISTINCT Conference
 FROM Staging_Data
 WHERE Conference IS NOT NULL AND Conference != '';
 
-
 INSERT INTO Team (TeamID, TeamName, TeamAbbreviation, LogoURL, ConferenceID)
 SELECT
     s.TEAM_ID,
@@ -207,7 +206,6 @@ SELECT DISTINCT
     s.HEADSHOT_URL,
     s.TEAM_ID
 FROM Staging_Data s
-
 WHERE s.TEAM_ID IN (SELECT TeamID FROM Team)
   AND s.PLAYER_ID IS NOT NULL;
   
@@ -224,7 +222,6 @@ FROM Staging_Data s
 WHERE s.TEAM_ID IN (SELECT TeamID FROM Team)
 GROUP BY s.TEAM_ID;
 
-
 INSERT INTO OpponentStats (
     TeamID, OPP_PTS_OFF_TOV, OPP_PTS_2ND_CHANCE, OPP_PTS_FB, OPP_PTS_PAINT,
     OPP_PTS_OFF_TOV_RANK, OPP_PTS_2ND_CHANCE_RANK, OPP_PTS_FB_RANK, OPP_PTS_PAINT_RANK
@@ -235,7 +232,6 @@ SELECT
 FROM Staging_Data s
 WHERE s.TEAM_ID IN (SELECT TeamID FROM Team)
 GROUP BY s.TEAM_ID;
-
 
 INSERT INTO PlayerStats (
     PlayerID, SeasonType, GP, W, L, MIN, FGM, FGA, FG_PCT, FG3M, FG3A, FG3_PCT,
