@@ -4,6 +4,7 @@ COLLATE utf8mb4_unicode_ci;
 
 USE nba_veritabani;
 
+-- TEMEL TABLOLAR
 CREATE TABLE Conference (
     ConferenceID INT AUTO_INCREMENT PRIMARY KEY,
     ConferenceName VARCHAR(100) UNIQUE NOT NULL
@@ -25,6 +26,40 @@ CREATE TABLE Player (
     HeadshotURL TEXT,
     TeamID INT,
     FOREIGN KEY (TeamID) REFERENCES Team(TeamID)
+);
+
+-- İSTATİSTİK TABLOLARI (BİRLEŞTİRİLMİŞ VE DÜZELTİLMİŞ)
+CREATE TABLE PlayerStats (
+    PlayerStatsID INT AUTO_INCREMENT PRIMARY KEY,
+    PlayerID INT,
+    SeasonType VARCHAR(100),
+    GP INT,
+    W INT,
+    L INT,
+    MIN DECIMAL(10, 2),
+    FGM DECIMAL(10, 2),
+    FGA DECIMAL(10, 2),
+    FG_PCT DECIMAL(5, 3),
+    FG3M DECIMAL(10, 2),
+    FG3A DECIMAL(10, 2),
+    FG3_PCT DECIMAL(5, 3),
+    FTM DECIMAL(10, 2),
+    FTA DECIMAL(10, 2),
+    FT_PCT DECIMAL(5, 3),
+    OREB DECIMAL(10, 2),
+    DREB DECIMAL(10, 2),
+    REB DECIMAL(10, 2),
+    AST DECIMAL(10, 2),
+    TOV DECIMAL(10, 2),
+    STL DECIMAL(10, 2),
+    BLK DECIMAL(10, 2),
+    BLKA DECIMAL(10, 2),
+    PF DECIMAL(10, 2),
+    PFD DECIMAL(10, 2),
+    PTS DECIMAL(10, 2),
+    PLUS_MINUS DECIMAL(10, 2),
+    Efficiency DECIMAL(10, 2),
+    FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID)
 );
 
 CREATE TABLE TeamStats (
@@ -69,70 +104,7 @@ CREATE TABLE OpponentStats (
     UNIQUE(TeamID)
 );
 
-CREATE TABLE `Player Regular Season Performance` (
-    PlayerStatsID INT AUTO_INCREMENT PRIMARY KEY,
-    PlayerID INT,
-    GP INT,
-    W INT,
-    L INT,
-    MIN DECIMAL(10, 2),
-    FGM DECIMAL(10, 2),
-    FGA DECIMAL(10, 2),
-    FG_PCT DECIMAL(5, 3),
-    FG3M DECIMAL(10, 2),
-    FG3A DECIMAL(10, 2),
-    FG3_PCT DECIMAL(5, 3),
-    FTM DECIMAL(10, 2),
-    FTA DECIMAL(10, 2),
-    FT_PCT DECIMAL(5, 3),
-    OREB DECIMAL(10, 2),
-    DREB DECIMAL(10, 2),
-    REB DECIMAL(10, 2),
-    AST DECIMAL(10, 2),
-    TOV DECIMAL(10, 2),
-    STL DECIMAL(10, 2),
-    BLK DECIMAL(10, 2),
-    BLKA DECIMAL(10, 2),
-    PF DECIMAL(10, 2),
-    PFD DECIMAL(10, 2),
-    PTS DECIMAL(10, 2),
-    PLUS_MINUS DECIMAL(10, 2),
-    Efficiency DECIMAL(10, 2),
-    FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID)
-);
-
-CREATE TABLE `Player Playoff Performance` (
-    PlayerStatsID INT AUTO_INCREMENT PRIMARY KEY,
-    PlayerID INT,
-    GP INT,
-    W INT,
-    L INT,
-    MIN DECIMAL(10, 2),
-    FGM DECIMAL(10, 2),
-    FGA DECIMAL(10, 2),
-    FG_PCT DECIMAL(5, 3),
-    FG3M DECIMAL(10, 2),
-    FG3A DECIMAL(10, 2),
-    FG3_PCT DECIMAL(5, 3),
-    FTM DECIMAL(10, 2),
-    FTA DECIMAL(10, 2),
-    FT_PCT DECIMAL(5, 3),
-    OREB DECIMAL(10, 2),
-    DREB DECIMAL(10, 2),
-    REB DECIMAL(10, 2),
-    AST DECIMAL(10, 2),
-    TOV DECIMAL(10, 2),
-    STL DECIMAL(10, 2),
-    BLK DECIMAL(10, 2),
-    BLKA DECIMAL(10, 2),
-    PF DECIMAL(10, 2),
-    PFD DECIMAL(10, 2),
-    PTS DECIMAL(10, 2),
-    PLUS_MINUS DECIMAL(10, 2),
-    Efficiency DECIMAL(10, 2),
-    FOREIGN KEY (PlayerID) REFERENCES Player(PlayerID)
-);
-
+-- VERİ YÜKLEME İÇİN GEÇİCİ TABLO
 CREATE TABLE Staging_Data (
     PLAYER_NAME TEXT, PLAYER_ID INT, TEAM_NAME_x TEXT, LOCATION TEXT,
     MIN_x DECIMAL(10, 2), FGM DECIMAL(10, 2), FGA DECIMAL(10, 2), FG_PCT DECIMAL(5, 3),
