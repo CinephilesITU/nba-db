@@ -125,6 +125,42 @@ CREATE TABLE TeamPlayoffsPerformance (
     FOREIGN KEY (teamID) REFERENCES TEAMS(teamID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Team Arena Details (child of TEAMS)
+CREATE TABLE TeamArenaDetails (
+    arenaDetailID INT PRIMARY KEY AUTO_INCREMENT, 
+
+    teamID INT NOT NULL,                         
+
+    city VARCHAR(100),
+    state VARCHAR(10),
+    arena VARCHAR(100),
+    capacity INT,
+    latitude DECIMAL(9,6),
+    longitude DECIMAL(9,6),
+    us_time_zone VARCHAR(50),
+    division VARCHAR(50),
+    elevation_m INT,
+
+    FOREIGN KEY (teamID) REFERENCES TEAMS(teamID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Team Fixtures (child of TeamArenaDetails)
+CREATE TABLE TeamFixtures (
+    matchID INT PRIMARY KEY AUTO_INCREMENT,  
+
+    arenaDetailID INT NOT NULL,           
+    
+    matchNumber INT,
+    roundNumber INT,
+    matchDate DATETIME,
+    homeTeam VARCHAR(100),
+    awayTeam VARCHAR(100),
+    result VARCHAR(20),
+
+    FOREIGN KEY (arenaDetailID) REFERENCES TeamArenaDetails(arenaDetailID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 
 -- ----------------------------------------------------------
 -- ----------------------------------------------------------
@@ -177,6 +213,8 @@ INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALU
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612761, 'Toronto Raptors', 'TOR', 'https://loodibee.com/wp-content/uploads/nba-toronto-raptors-logo-2020.png', 'East');
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612755, 'Philadelphia 76ers', 'PHI', 'https://loodibee.com/wp-content/uploads/nba-philadelphia-76ers-logo.png', 'East');
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612739, 'Cleveland Cavaliers', 'CLE', 'https://loodibee.com/wp-content/uploads/cleveland-cavaliers-2010-2017.png', 'East');
+-- dummy team for international games
+INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (999, 'Neutral Venue', 'NEU', NULL, 'Special');
 
 -- ----------------------------------------------------------
 -- ----------------------------------------------------------
@@ -2952,5 +2990,15027 @@ INSERT INTO PlayerPlayoffsPerformance (playerID, teamID, teamName, location, GP_
 
 -- ----------------------------------------------------------
 -- ----------------------------------------------------------
+
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Atlanta Hawks'),
+    'Atlanta', 'GA', 'State Farm Arena', 16600, 33.7573, -84.3963, 'Eastern', 'Southeast', 320
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Boston Celtics'),
+    'Boston', 'MA', 'TD Garden', 19580, 42.3662, -71.0621, 'Eastern', 'Atlantic', 5
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Brooklyn Nets'),
+    'Brooklyn', 'NY', 'Barclays Center', 17732, 40.6826, -73.9754, 'Eastern', 'Atlantic', 10
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Charlotte Hornets'),
+    'Charlotte', 'NC', 'Spectrum Center', 19077, 35.2251, -80.8392, 'Eastern', 'Southeast', 230
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Chicago Bulls'),
+    'Chicago', 'IL', 'United Center', 20917, 41.8807, -87.6742, 'Central', 'Central', 181
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Cleveland Cavaliers'),
+    'Cleveland', 'OH', 'Rocket Mortgage FieldHouse', 19432, 41.4965, -81.6882, 'Eastern', 'Central', 199
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Dallas Mavericks'),
+    'Dallas', 'TX', 'American Airlines Center', 19200, 32.7905, -96.8104, 'Central', 'Southwest', 131
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Denver Nuggets'),
+    'Denver', 'CO', 'Ball Arena', 19520, 39.7487, -105.0077, 'Mountain', 'Northwest', 1609
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Detroit Pistons'),
+    'Detroit', 'MI', 'Little Caesars Arena', 20491, 42.341, -83.055, 'Eastern', 'Central', 183
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Golden State Warriors'),
+    'San Francisco', 'CA', 'Chase Center', 18064, 37.768, -122.3877, 'Pacific', 'Pacific', 5
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Houston Rockets'),
+    'Houston', 'TX', 'Toyota Center', 18055, 29.7508, -95.3621, 'Central', 'Southwest', 12
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Indiana Pacers'),
+    'Indianapolis', 'IN', 'Gainbridge Fieldhouse', 17923, 39.764, -86.1555, 'Eastern', 'Central', 218
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'LA Clippers'),
+    'Los Angeles', 'CA', 'Crypto.com Arena ', 19060, 34.043, -118.2673, 'Pacific', 'Pacific', 89
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Los Angeles Lakers'),
+    'Los Angeles', 'CA', 'Crypto.com Arena', 18997, 34.0431, -118.2673, 'Pacific', 'Pacific', 89
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Memphis Grizzlies'),
+    'Memphis', 'TN', 'FedExForum', 18119, 35.1382, -90.0506, 'Central', 'Southwest', 103
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Miami Heat'),
+    'Miami', 'FL', 'Kaseya Center', 19600, 25.7814, -80.187, 'Eastern', 'Southeast', 2
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Milwaukee Bucks'),
+    'Milwaukee', 'WI', 'Fiserv Forum', 17341, 43.0451, -87.9172, 'Central', 'Central', 188
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Minnesota Timberwolves'),
+    'Minneapolis', 'MN', 'Target Center', 19356, 44.9795, -93.276, 'Central', 'Northwest', 265
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'New Orleans Pelicans'),
+    'New Orleans', 'LA', 'Smoothie King Center', 16867, 29.949, -90.0815, 'Central', 'Southwest', 1
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'New York Knicks'),
+    'New York', 'NY', 'Madison Square Garden', 19812, 40.7505, -73.9934, 'Eastern', 'Atlantic', 10
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Oklahoma City Thunder'),
+    'Oklahoma City', 'OK', 'Paycom Center', 18203, 35.4634, -97.5151, 'Central', 'Northwest', 366
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Orlando Magic'),
+    'Orlando', 'FL', 'Amway Center', 18846, 28.5392, -81.3839, 'Eastern', 'Southeast', 25
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Philadelphia 76ers'),
+    'Philadelphia', 'PA', 'Wells Fargo Center', 20478, 39.9012, -75.171, 'Eastern', 'Atlantic', 12
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Phoenix Suns'),
+    'Phoenix', 'AZ', 'Footprint Center', 17071, 33.4457, -112.0712, 'Mountain', 'Pacific', 331
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Portland Trail Blazers'),
+    'Portland', 'OR', 'Moda Center', 19441, 45.5316, -122.6668, 'Pacific', 'Northwest', 15
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Sacramento Kings'),
+    'Sacramento', 'CA', 'Golden 1 Center', 17583, 38.58, -121.4997, 'Pacific', 'Pacific', 9
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'San Antonio Spurs'),
+    'San Antonio', 'TX', 'AT&T Center', 18418, 29.427, -98.4375, 'Central', 'Southwest', 198
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Toronto Raptors'),
+    'Toronto', 'ON', 'Scotiabank Arena', 19800, 43.6435, -79.3791, 'Eastern', 'Atlantic', 76
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Utah Jazz'),
+    'Salt Lake City', 'UT', 'Delta Center', 18206, 40.7683, -111.9011, 'Mountain', 'Northwest', 1288
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES (
+    (SELECT teamID FROM TEAMS WHERE teamName = 'Washington Wizards'),
+    'Washington', 'DC', 'Capital One Arena', 20356, 38.8981, -77.0209, 'Eastern', 'Southeast', 7
+);
+
+
+-- ----------------------------------------------------------
+-- ----------------------------------------------------------
+
+-- Additional Arenas for international and special games
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Mexico City', 'MX', 'Arena CDMX', 22000, 19.3647, -99.2752, 'Central', 'None', 2240
+);
+
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Las Vegas', 'NV', 'T-Mobile Arena', 20000, 36.1025, -115.1780, 'Pacific', 'Southwest', 620
+);
+
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Paris', 'FR', 'Accor Arena', 20000, 48.8380, 2.3788, 'UTC+1', 'Southwest', 35
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES
+(999, 'Austin', 'TX', 'Moody Center', 15000, 30.2819, -97.7313, 'Central', 'Southwest', 149);
+
+
+
+-- ----------------------------------------------------------
+-- ----------------------------------------------------------
+
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1,
+    1,
+    '2023-10-24 23:30',
+    'Denver Nuggets',
+    'Los Angeles Lakers',
+    '119 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    2,
+    1,
+    '2023-10-25 02:00',
+    'Golden State Warriors',
+    'Phoenix Suns',
+    '104 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    3,
+    1,
+    '2023-10-25 23:00',
+    'Charlotte Hornets',
+    'Atlanta Hawks',
+    '116 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    4,
+    1,
+    '2023-10-25 23:00',
+    'Indiana Pacers',
+    'Washington Wizards',
+    '143 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    5,
+    1,
+    '2023-10-25 23:00',
+    'New York Knicks',
+    'Boston Celtics',
+    '104 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    6,
+    1,
+    '2023-10-25 23:00',
+    'Orlando Magic',
+    'Houston Rockets',
+    '116 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    7,
+    1,
+    '2023-10-25 23:30',
+    'Brooklyn Nets',
+    'Cleveland Cavaliers',
+    '113 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    8,
+    1,
+    '2023-10-25 23:30',
+    'Miami Heat',
+    'Detroit Pistons',
+    '103 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    9,
+    1,
+    '2023-10-25 23:30',
+    'Toronto Raptors',
+    'Minnesota Timberwolves',
+    '97 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    10,
+    1,
+    '2023-10-26 00:00',
+    'Chicago Bulls',
+    'Oklahoma City Thunder',
+    '104 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    11,
+    1,
+    '2023-10-26 00:00',
+    'Memphis Grizzlies',
+    'New Orleans Pelicans',
+    '104 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    12,
+    1,
+    '2023-10-26 01:00',
+    'Utah Jazz',
+    'Sacramento Kings',
+    '114 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    13,
+    1,
+    '2023-10-26 01:30',
+    'San Antonio Spurs',
+    'Dallas Mavericks',
+    '119 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    14,
+    1,
+    '2023-10-26 02:30',
+    'LA Clippers',
+    'Portland Trail Blazers',
+    '126 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    15,
+    1,
+    '2023-10-26 23:30',
+    'Milwaukee Bucks',
+    'Philadelphia 76ers',
+    '118 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    16,
+    1,
+    '2023-10-27 02:00',
+    'Los Angeles Lakers',
+    'Phoenix Suns',
+    '100 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    17,
+    1,
+    '2023-10-27 23:00',
+    'Charlotte Hornets',
+    'Detroit Pistons',
+    '99 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    18,
+    1,
+    '2023-10-27 23:00',
+    'Memphis Grizzlies',
+    'Denver Nuggets',
+    '104 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    19,
+    1,
+    '2023-10-27 23:30',
+    'Atlanta Hawks',
+    'New York Knicks',
+    '120 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    20,
+    1,
+    '2023-10-27 23:30',
+    'Boston Celtics',
+    'Miami Heat',
+    '119 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    21,
+    1,
+    '2023-10-27 23:30',
+    'Cleveland Cavaliers',
+    'Oklahoma City Thunder',
+    '105 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    22,
+    1,
+    '2023-10-28 00:00',
+    'Chicago Bulls',
+    'Toronto Raptors',
+    '104 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    23,
+    1,
+    '2023-10-28 00:00',
+    'San Antonio Spurs',
+    'Houston Rockets',
+    '126 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    24,
+    1,
+    '2023-10-28 00:30',
+    'Dallas Mavericks',
+    'Brooklyn Nets',
+    '125 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    25,
+    1,
+    '2023-10-28 01:30',
+    'Utah Jazz',
+    'LA Clippers',
+    '120 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    26,
+    1,
+    '2023-10-28 02:00',
+    'Portland Trail Blazers',
+    'Orlando Magic',
+    '97 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    27,
+    1,
+    '2023-10-28 02:00',
+    'Sacramento Kings',
+    'Golden State Warriors',
+    '114 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    28,
+    1,
+    '2023-10-28 23:00',
+    'Detroit Pistons',
+    'Chicago Bulls',
+    '118 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    29,
+    1,
+    '2023-10-28 23:00',
+    'Washington Wizards',
+    'Memphis Grizzlies',
+    '113 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    30,
+    1,
+    '2023-10-28 23:00',
+    'New Orleans Pelicans',
+    'New York Knicks',
+    '96 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    31,
+    1,
+    '2023-10-28 23:30',
+    'Cleveland Cavaliers',
+    'Indiana Pacers',
+    '113 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    32,
+    1,
+    '2023-10-28 23:30',
+    'Toronto Raptors',
+    'Philadelphia 76ers',
+    '107 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    33,
+    1,
+    '2023-10-29 00:00',
+    'Minnesota Timberwolves',
+    'Miami Heat',
+    '106 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    34,
+    1,
+    '2023-10-29 02:00',
+    'Phoenix Suns',
+    'Utah Jazz',
+    '126 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    35,
+    1,
+    '2023-10-29 19:30',
+    'Oklahoma City Thunder',
+    'Denver Nuggets',
+    '95 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    36,
+    1,
+    '2023-10-29 23:00',
+    'Houston Rockets',
+    'Golden State Warriors',
+    '95 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    37,
+    1,
+    '2023-10-29 23:00',
+    'Milwaukee Bucks',
+    'Atlanta Hawks',
+    '110 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    38,
+    1,
+    '2023-10-29 23:30',
+    'Philadelphia 76ers',
+    'Portland Trail Blazers',
+    '126 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    39,
+    1,
+    '2023-10-30 01:00',
+    'LA Clippers',
+    'San Antonio Spurs',
+    '123 - 83'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    40,
+    1,
+    '2023-10-30 01:00',
+    'Sacramento Kings',
+    'Los Angeles Lakers',
+    '132 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    41,
+    2,
+    '2023-10-30 23:00',
+    'Charlotte Hornets',
+    'Brooklyn Nets',
+    '121 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    42,
+    2,
+    '2023-10-30 23:00',
+    'Indiana Pacers',
+    'Chicago Bulls',
+    '105 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    43,
+    2,
+    '2023-10-30 23:00',
+    'Washington Wizards',
+    'Boston Celtics',
+    '107 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    44,
+    2,
+    '2023-10-30 23:30',
+    'Atlanta Hawks',
+    'Minnesota Timberwolves',
+    '127 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    45,
+    2,
+    '2023-10-30 23:30',
+    'Toronto Raptors',
+    'Portland Trail Blazers',
+    '91 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    46,
+    2,
+    '2023-10-31 00:00',
+    'Memphis Grizzlies',
+    'Dallas Mavericks',
+    '110 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    47,
+    2,
+    '2023-10-31 00:00',
+    'Milwaukee Bucks',
+    'Miami Heat',
+    '122 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    48,
+    2,
+    '2023-10-31 00:00',
+    'New Orleans Pelicans',
+    'Golden State Warriors',
+    '102 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    49,
+    2,
+    '2023-10-31 00:00',
+    'Oklahoma City Thunder',
+    'Detroit Pistons',
+    '124 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    50,
+    2,
+    '2023-10-31 01:00',
+    'Denver Nuggets',
+    'Utah Jazz',
+    '110 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    51,
+    2,
+    '2023-10-31 02:30',
+    'Los Angeles Lakers',
+    'Orlando Magic',
+    '106 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    52,
+    2,
+    '2023-10-31 23:30',
+    'Cleveland Cavaliers',
+    'New York Knicks',
+    '91 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    53,
+    2,
+    '2023-11-01 02:00',
+    'Phoenix Suns',
+    'San Antonio Spurs',
+    '114 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    54,
+    2,
+    '2023-11-01 02:30',
+    'LA Clippers',
+    'Orlando Magic',
+    '118 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    55,
+    2,
+    '2023-11-01 23:00',
+    'Detroit Pistons',
+    'Portland Trail Blazers',
+    '101 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    56,
+    2,
+    '2023-11-01 23:00',
+    'Toronto Raptors',
+    'Milwaukee Bucks',
+    '130 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    57,
+    2,
+    '2023-11-01 23:30',
+    'Atlanta Hawks',
+    'Washington Wizards',
+    '130 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    58,
+    2,
+    '2023-11-01 23:30',
+    'Boston Celtics',
+    'Indiana Pacers',
+    '155 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    59,
+    2,
+    '2023-11-01 23:30',
+    'Miami Heat',
+    'Brooklyn Nets',
+    '105 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    60,
+    2,
+    '2023-11-01 23:30',
+    'New York Knicks',
+    'Cleveland Cavaliers',
+    '89 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    61,
+    2,
+    '2023-11-01 23:30',
+    'Oklahoma City Thunder',
+    'New Orleans Pelicans',
+    '106 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    62,
+    2,
+    '2023-11-02 00:00',
+    'Houston Rockets',
+    'Charlotte Hornets',
+    '128 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    63,
+    2,
+    '2023-11-02 00:00',
+    'Minnesota Timberwolves',
+    'Denver Nuggets',
+    '110 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    64,
+    2,
+    '2023-11-02 00:30',
+    'Dallas Mavericks',
+    'Chicago Bulls',
+    '114 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    65,
+    2,
+    '2023-11-02 01:00',
+    'Utah Jazz',
+    'Memphis Grizzlies',
+    '133 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    66,
+    2,
+    '2023-11-02 02:00',
+    'Golden State Warriors',
+    'Sacramento Kings',
+    '102 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    67,
+    2,
+    '2023-11-02 02:00',
+    'Los Angeles Lakers',
+    'LA Clippers',
+    '130 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    68,
+    2,
+    '2023-11-02 23:00',
+    'Philadelphia 76ers',
+    'Toronto Raptors',
+    '114 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    69,
+    2,
+    '2023-11-03 00:00',
+    'New Orleans Pelicans',
+    'Detroit Pistons',
+    '125 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    70,
+    2,
+    '2023-11-03 01:00',
+    'Utah Jazz',
+    'Orlando Magic',
+    '113 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    71,
+    2,
+    '2023-11-03 02:00',
+    'Phoenix Suns',
+    'San Antonio Spurs',
+    '121 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    72,
+    2,
+    '2023-11-03 23:00',
+    'Indiana Pacers',
+    'Cleveland Cavaliers',
+    '121 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    73,
+    2,
+    '2023-11-03 23:30',
+    'Milwaukee Bucks',
+    'New York Knicks',
+    '110 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    74,
+    2,
+    '2023-11-04 00:00',
+    'Miami Heat',
+    'Washington Wizards',
+    '121 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    75,
+    2,
+    '2023-11-04 00:00',
+    'Chicago Bulls',
+    'Brooklyn Nets',
+    '107 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    76,
+    2,
+    '2023-11-04 00:00',
+    'Oklahoma City Thunder',
+    'Golden State Warriors',
+    '139 - 141'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    77,
+    2,
+    '2023-11-04 02:00',
+    'Denver Nuggets',
+    'Dallas Mavericks',
+    '125 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    78,
+    2,
+    '2023-11-04 02:00',
+    'Portland Trail Blazers',
+    'Memphis Grizzlies',
+    '115 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    79,
+    2,
+    '2023-11-04 17:00',
+    'Philadelphia 76ers',
+    'Phoenix Suns',
+    '112 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    80,
+    2,
+    '2023-11-04 23:00',
+    'Indiana Pacers',
+    'Charlotte Hornets',
+    '124 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    81,
+    2,
+    '2023-11-04 23:00',
+    'Orlando Magic',
+    'Los Angeles Lakers',
+    '120 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    82,
+    2,
+    '2023-11-04 23:00',
+    'New Orleans Pelicans',
+    'Atlanta Hawks',
+    '105 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    83,
+    2,
+    '2023-11-05 00:00',
+    'Brooklyn Nets',
+    'Boston Celtics',
+    '114 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    84,
+    2,
+    '2023-11-05 00:00',
+    'Houston Rockets',
+    'Sacramento Kings',
+    '107 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    85,
+    2,
+    '2023-11-05 00:00',
+    'Minnesota Timberwolves',
+    'Utah Jazz',
+    '123 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    86,
+    2,
+    '2023-11-05 01:00',
+    'Denver Nuggets',
+    'Chicago Bulls',
+    '123 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    87,
+    2,
+    '2023-11-05 20:00',
+    'Detroit Pistons',
+    'Phoenix Suns',
+    '106 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    88,
+    2,
+    '2023-11-05 20:30',
+    'San Antonio Spurs',
+    'Toronto Raptors',
+    '116 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    89,
+    2,
+    '2023-11-05 23:00',
+    'Cleveland Cavaliers',
+    'Golden State Warriors',
+    '115 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    90,
+    2,
+    '2023-11-06 00:30',
+    'Dallas Mavericks',
+    'Charlotte Hornets',
+    '124 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    91,
+    2,
+    '2023-11-06 02:00',
+    'Portland Trail Blazers',
+    'Memphis Grizzlies',
+    '100 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    92,
+    3,
+    '2023-11-07 00:00',
+    'Detroit Pistons',
+    'Golden State Warriors',
+    '109 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    93,
+    3,
+    '2023-11-07 00:00',
+    'Indiana Pacers',
+    'San Antonio Spurs',
+    '152 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    94,
+    3,
+    '2023-11-07 00:00',
+    'Orlando Magic',
+    'Dallas Mavericks',
+    '102 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    95,
+    3,
+    '2023-11-07 00:00',
+    'Philadelphia 76ers',
+    'Washington Wizards',
+    '146 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    96,
+    3,
+    '2023-11-07 00:30',
+    'Brooklyn Nets',
+    'Milwaukee Bucks',
+    '125 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    97,
+    3,
+    '2023-11-07 00:30',
+    'Miami Heat',
+    'Los Angeles Lakers',
+    '108 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    98,
+    3,
+    '2023-11-07 00:30',
+    'New York Knicks',
+    'LA Clippers',
+    '111 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    99,
+    3,
+    '2023-11-07 01:00',
+    'Chicago Bulls',
+    'Utah Jazz',
+    '130 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    100,
+    3,
+    '2023-11-07 01:00',
+    'Houston Rockets',
+    'Sacramento Kings',
+    '122 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    101,
+    3,
+    '2023-11-07 01:00',
+    'Minnesota Timberwolves',
+    'Boston Celtics',
+    '114 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    102,
+    3,
+    '2023-11-07 01:00',
+    'Oklahoma City Thunder',
+    'Atlanta Hawks',
+    '126 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    103,
+    3,
+    '2023-11-07 02:00',
+    'Denver Nuggets',
+    'New Orleans Pelicans',
+    '134 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    104,
+    3,
+    '2023-11-09 00:00',
+    'Charlotte Hornets',
+    'Washington Wizards',
+    '116 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    105,
+    3,
+    '2023-11-09 00:00',
+    'Indiana Pacers',
+    'Utah Jazz',
+    '134 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    106,
+    3,
+    '2023-11-09 00:00',
+    'Philadelphia 76ers',
+    'Boston Celtics',
+    '106 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    107,
+    3,
+    '2023-11-09 00:30',
+    'Brooklyn Nets',
+    'LA Clippers',
+    '100 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    108,
+    3,
+    '2023-11-09 00:30',
+    'New York Knicks',
+    'San Antonio Spurs',
+    '126 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    109,
+    3,
+    '2023-11-09 01:00',
+    'Chicago Bulls',
+    'Phoenix Suns',
+    '115 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    110,
+    3,
+    '2023-11-09 01:00',
+    'Houston Rockets',
+    'Los Angeles Lakers',
+    '128 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    111,
+    3,
+    '2023-11-09 01:00',
+    'Memphis Grizzlies',
+    'Miami Heat',
+    '102 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    112,
+    3,
+    '2023-11-09 01:00',
+    'Milwaukee Bucks',
+    'Detroit Pistons',
+    '120 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    113,
+    3,
+    '2023-11-09 01:00',
+    'Minnesota Timberwolves',
+    'New Orleans Pelicans',
+    '122 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    114,
+    3,
+    '2023-11-09 01:00',
+    'Oklahoma City Thunder',
+    'Cleveland Cavaliers',
+    '128 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    115,
+    3,
+    '2023-11-09 01:30',
+    'Dallas Mavericks',
+    'Toronto Raptors',
+    '116 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    116,
+    3,
+    '2023-11-09 03:00',
+    'Denver Nuggets',
+    'Golden State Warriors',
+    '108 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    117,
+    3,
+    '2023-11-09 03:00',
+    'Sacramento Kings',
+    'Portland Trail Blazers',
+    '121 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    118,
+    3,
+    '2023-11-10 00:00',
+    'Indiana Pacers',
+    'Milwaukee Bucks',
+    '126 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Arena CDMX'),
+    119,
+    3,
+    '2023-11-10 02:30',
+    'Orlando Magic',
+    'Atlanta Hawks',
+    '119 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    120,
+    3,
+    '2023-11-11 00:00',
+    'Detroit Pistons',
+    'Philadelphia 76ers',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    121,
+    3,
+    '2023-11-11 00:00',
+    'Washington Wizards',
+    'Charlotte Hornets',
+    '117 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    122,
+    3,
+    '2023-11-11 00:30',
+    'Boston Celtics',
+    'Brooklyn Nets',
+    '121 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    123,
+    3,
+    '2023-11-11 01:00',
+    'Houston Rockets',
+    'New Orleans Pelicans',
+    '104 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    124,
+    3,
+    '2023-11-11 01:00',
+    'Memphis Grizzlies',
+    'Utah Jazz',
+    '121 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    125,
+    3,
+    '2023-11-11 01:00',
+    'San Antonio Spurs',
+    'Minnesota Timberwolves',
+    '110 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    126,
+    3,
+    '2023-11-11 01:30',
+    'Dallas Mavericks',
+    'LA Clippers',
+    '144 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    127,
+    3,
+    '2023-11-11 03:00',
+    'Phoenix Suns',
+    'Los Angeles Lakers',
+    '119 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    128,
+    3,
+    '2023-11-11 03:00',
+    'Sacramento Kings',
+    'Oklahoma City Thunder',
+    '105 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    129,
+    3,
+    '2023-11-11 23:00',
+    'Orlando Magic',
+    'Milwaukee Bucks',
+    '112 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    130,
+    3,
+    '2023-11-12 00:00',
+    'Boston Celtics',
+    'Toronto Raptors',
+    '117 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    131,
+    3,
+    '2023-11-12 00:30',
+    'Atlanta Hawks',
+    'Miami Heat',
+    '109 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    132,
+    3,
+    '2023-11-12 01:30',
+    'Golden State Warriors',
+    'Cleveland Cavaliers',
+    '110 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    133,
+    3,
+    '2023-11-12 17:00',
+    'New York Knicks',
+    'Charlotte Hornets',
+    '129 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    134,
+    3,
+    '2023-11-12 20:00',
+    'Brooklyn Nets',
+    'Washington Wizards',
+    '102 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    135,
+    3,
+    '2023-11-12 20:30',
+    'LA Clippers',
+    'Memphis Grizzlies',
+    '101 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    136,
+    3,
+    '2023-11-12 23:00',
+    'Philadelphia 76ers',
+    'Indiana Pacers',
+    '137 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    137,
+    3,
+    '2023-11-13 00:00',
+    'Chicago Bulls',
+    'Detroit Pistons',
+    '119 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    138,
+    3,
+    '2023-11-13 00:00',
+    'Houston Rockets',
+    'Denver Nuggets',
+    '107 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    139,
+    3,
+    '2023-11-13 00:00',
+    'New Orleans Pelicans',
+    'Dallas Mavericks',
+    '124 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    140,
+    3,
+    '2023-11-13 00:00',
+    'San Antonio Spurs',
+    'Miami Heat',
+    '113 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    141,
+    3,
+    '2023-11-13 01:00',
+    'Phoenix Suns',
+    'Oklahoma City Thunder',
+    '99 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    142,
+    3,
+    '2023-11-13 01:30',
+    'Golden State Warriors',
+    'Minnesota Timberwolves',
+    '110 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    143,
+    3,
+    '2023-11-13 03:00',
+    'Los Angeles Lakers',
+    'Portland Trail Blazers',
+    '116 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    144,
+    4,
+    '2023-11-14 00:30',
+    'Boston Celtics',
+    'New York Knicks',
+    '114 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    145,
+    4,
+    '2023-11-14 00:30',
+    'Toronto Raptors',
+    'Washington Wizards',
+    '111 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    146,
+    4,
+    '2023-11-14 01:00',
+    'Milwaukee Bucks',
+    'Chicago Bulls',
+    '118 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    147,
+    4,
+    '2023-11-14 03:00',
+    'Sacramento Kings',
+    'Cleveland Cavaliers',
+    '132 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    148,
+    4,
+    '2023-11-15 00:00',
+    'Charlotte Hornets',
+    'Miami Heat',
+    '105 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    149,
+    4,
+    '2023-11-15 00:00',
+    'Detroit Pistons',
+    'Atlanta Hawks',
+    '120 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    150,
+    4,
+    '2023-11-15 00:00',
+    'Philadelphia 76ers',
+    'Indiana Pacers',
+    '126 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    151,
+    4,
+    '2023-11-15 00:30',
+    'Brooklyn Nets',
+    'Orlando Magic',
+    '124 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    152,
+    4,
+    '2023-11-15 00:30',
+    'Oklahoma City Thunder',
+    'San Antonio Spurs',
+    '123 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    153,
+    4,
+    '2023-11-15 01:00',
+    'New Orleans Pelicans',
+    'Dallas Mavericks',
+    '131 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    154,
+    4,
+    '2023-11-15 02:00',
+    'Utah Jazz',
+    'Portland Trail Blazers',
+    '115 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    155,
+    4,
+    '2023-11-15 03:00',
+    'Denver Nuggets',
+    'LA Clippers',
+    '111 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    156,
+    4,
+    '2023-11-15 03:00',
+    'Golden State Warriors',
+    'Minnesota Timberwolves',
+    '101 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    157,
+    4,
+    '2023-11-15 03:30',
+    'Los Angeles Lakers',
+    'Memphis Grizzlies',
+    '134 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    158,
+    4,
+    '2023-11-16 00:00',
+    'Washington Wizards',
+    'Dallas Mavericks',
+    '117 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    159,
+    4,
+    '2023-11-16 00:30',
+    'Atlanta Hawks',
+    'New York Knicks',
+    '114 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    160,
+    4,
+    '2023-11-16 00:30',
+    'Philadelphia 76ers',
+    'Boston Celtics',
+    '107 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    161,
+    4,
+    '2023-11-16 00:30',
+    'Toronto Raptors',
+    'Milwaukee Bucks',
+    '112 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    162,
+    4,
+    '2023-11-16 01:00',
+    'Chicago Bulls',
+    'Orlando Magic',
+    '94 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    163,
+    4,
+    '2023-11-16 02:00',
+    'Phoenix Suns',
+    'Minnesota Timberwolves',
+    '133 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    164,
+    4,
+    '2023-11-16 03:00',
+    'Los Angeles Lakers',
+    'Sacramento Kings',
+    '110 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    165,
+    4,
+    '2023-11-16 03:00',
+    'Portland Trail Blazers',
+    'Cleveland Cavaliers',
+    '95 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    166,
+    4,
+    '2023-11-17 00:30',
+    'Miami Heat',
+    'Brooklyn Nets',
+    '122 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    167,
+    4,
+    '2023-11-17 03:00',
+    'Golden State Warriors',
+    'Oklahoma City Thunder',
+    '109 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    168,
+    4,
+    '2023-11-18 00:00',
+    'Charlotte Hornets',
+    'Milwaukee Bucks',
+    '99 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    169,
+    4,
+    '2023-11-18 00:00',
+    'Washington Wizards',
+    'New York Knicks',
+    '99 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    170,
+    4,
+    '2023-11-18 00:30',
+    'Atlanta Hawks',
+    'Philadelphia 76ers',
+    '116 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    171,
+    4,
+    '2023-11-18 00:30',
+    'Cleveland Cavaliers',
+    'Detroit Pistons',
+    '108 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    172,
+    4,
+    '2023-11-18 00:30',
+    'Toronto Raptors',
+    'Boston Celtics',
+    '105 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    173,
+    4,
+    '2023-11-18 00:30',
+    'San Antonio Spurs',
+    'Sacramento Kings',
+    '120 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    174,
+    4,
+    '2023-11-18 01:00',
+    'Chicago Bulls',
+    'Orlando Magic',
+    '97 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    175,
+    4,
+    '2023-11-18 01:00',
+    'New Orleans Pelicans',
+    'Denver Nuggets',
+    '115 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    176,
+    4,
+    '2023-11-18 03:00',
+    'Utah Jazz',
+    'Phoenix Suns',
+    '128 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    177,
+    4,
+    '2023-11-18 03:00',
+    'Portland Trail Blazers',
+    'Los Angeles Lakers',
+    '95 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    178,
+    4,
+    '2023-11-18 03:30',
+    'LA Clippers',
+    'Houston Rockets',
+    '106 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    179,
+    4,
+    '2023-11-18 23:00',
+    'Charlotte Hornets',
+    'New York Knicks',
+    '108 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    180,
+    4,
+    '2023-11-19 00:00',
+    'New Orleans Pelicans',
+    'Minnesota Timberwolves',
+    '120 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    181,
+    4,
+    '2023-11-19 01:00',
+    'Chicago Bulls',
+    'Miami Heat',
+    '102 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    182,
+    4,
+    '2023-11-19 01:00',
+    'Milwaukee Bucks',
+    'Dallas Mavericks',
+    '132 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    183,
+    4,
+    '2023-11-19 01:00',
+    'San Antonio Spurs',
+    'Memphis Grizzlies',
+    '108 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    184,
+    4,
+    '2023-11-19 01:30',
+    'Golden State Warriors',
+    'Oklahoma City Thunder',
+    '123 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    185,
+    4,
+    '2023-11-19 20:00',
+    'Brooklyn Nets',
+    'Philadelphia 76ers',
+    '99 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    186,
+    4,
+    '2023-11-19 21:00',
+    'Toronto Raptors',
+    'Detroit Pistons',
+    '142 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    187,
+    4,
+    '2023-11-19 22:00',
+    'Indiana Pacers',
+    'Orlando Magic',
+    '116 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    188,
+    4,
+    '2023-11-19 23:00',
+    'Cleveland Cavaliers',
+    'Denver Nuggets',
+    '121 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    189,
+    4,
+    '2023-11-20 00:30',
+    'Dallas Mavericks',
+    'Sacramento Kings',
+    '113 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    190,
+    4,
+    '2023-11-20 01:00',
+    'Memphis Grizzlies',
+    'Boston Celtics',
+    '100 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    191,
+    4,
+    '2023-11-20 01:00',
+    'Utah Jazz',
+    'Phoenix Suns',
+    '137 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    192,
+    4,
+    '2023-11-20 02:00',
+    'Portland Trail Blazers',
+    'Oklahoma City Thunder',
+    '91 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    193,
+    4,
+    '2023-11-20 02:30',
+    'Los Angeles Lakers',
+    'Houston Rockets',
+    '105 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    194,
+    5,
+    '2023-11-21 00:00',
+    'Charlotte Hornets',
+    'Boston Celtics',
+    '121 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    195,
+    5,
+    '2023-11-21 00:00',
+    'Detroit Pistons',
+    'Denver Nuggets',
+    '103 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    196,
+    5,
+    '2023-11-21 00:00',
+    'Washington Wizards',
+    'Milwaukee Bucks',
+    '129 - 142'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    197,
+    5,
+    '2023-11-21 01:00',
+    'Chicago Bulls',
+    'Miami Heat',
+    '100 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    198,
+    5,
+    '2023-11-21 01:00',
+    'Minnesota Timberwolves',
+    'New York Knicks',
+    '117 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    199,
+    5,
+    '2023-11-21 01:00',
+    'New Orleans Pelicans',
+    'Sacramento Kings',
+    '129 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    200,
+    5,
+    '2023-11-21 01:00',
+    'San Antonio Spurs',
+    'LA Clippers',
+    '99 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    201,
+    5,
+    '2023-11-21 03:00',
+    'Golden State Warriors',
+    'Houston Rockets',
+    '121 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    202,
+    5,
+    '2023-11-22 00:00',
+    'Orlando Magic',
+    'Toronto Raptors',
+    '126 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    203,
+    5,
+    '2023-11-22 00:30',
+    'Atlanta Hawks',
+    'Indiana Pacers',
+    '152 - 157'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    204,
+    5,
+    '2023-11-22 00:30',
+    'Philadelphia 76ers',
+    'Cleveland Cavaliers',
+    '119 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    205,
+    5,
+    '2023-11-22 02:00',
+    'Phoenix Suns',
+    'Portland Trail Blazers',
+    '120 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    206,
+    5,
+    '2023-11-22 03:00',
+    'Los Angeles Lakers',
+    'Utah Jazz',
+    '131 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    207,
+    5,
+    '2023-11-23 00:00',
+    'Charlotte Hornets',
+    'Washington Wizards',
+    '117 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    208,
+    5,
+    '2023-11-23 00:00',
+    'Orlando Magic',
+    'Denver Nuggets',
+    '124 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    209,
+    5,
+    '2023-11-23 00:30',
+    'Atlanta Hawks',
+    'Brooklyn Nets',
+    '147 - 145'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    210,
+    5,
+    '2023-11-23 00:30',
+    'Boston Celtics',
+    'Milwaukee Bucks',
+    '119 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    211,
+    5,
+    '2023-11-23 00:30',
+    'Cleveland Cavaliers',
+    'Miami Heat',
+    '96 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    212,
+    5,
+    '2023-11-23 00:30',
+    'Indiana Pacers',
+    'Toronto Raptors',
+    '131 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    213,
+    5,
+    '2023-11-23 01:00',
+    'Houston Rockets',
+    'Memphis Grizzlies',
+    '111 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    214,
+    5,
+    '2023-11-23 01:00',
+    'Minnesota Timberwolves',
+    'Philadelphia 76ers',
+    '112 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    215,
+    5,
+    '2023-11-23 01:00',
+    'New Orleans Pelicans',
+    'Sacramento Kings',
+    '117 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    216,
+    5,
+    '2023-11-23 01:00',
+    'Oklahoma City Thunder',
+    'Chicago Bulls',
+    '116 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    217,
+    5,
+    '2023-11-23 01:00',
+    'San Antonio Spurs',
+    'LA Clippers',
+    '102 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    218,
+    5,
+    '2023-11-23 03:00',
+    'Phoenix Suns',
+    'Golden State Warriors',
+    '123 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    219,
+    5,
+    '2023-11-23 03:00',
+    'Portland Trail Blazers',
+    'Utah Jazz',
+    '121 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    220,
+    5,
+    '2023-11-23 03:30',
+    'Los Angeles Lakers',
+    'Dallas Mavericks',
+    '101 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    221,
+    5,
+    '2023-11-24 19:30',
+    'Orlando Magic',
+    'Boston Celtics',
+    '113 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    222,
+    5,
+    '2023-11-24 22:00',
+    'Memphis Grizzlies',
+    'Phoenix Suns',
+    '89 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    223,
+    5,
+    '2023-11-25 00:30',
+    'New York Knicks',
+    'Miami Heat',
+    '100 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    224,
+    5,
+    '2023-11-25 00:30',
+    'Toronto Raptors',
+    'Chicago Bulls',
+    '121 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    225,
+    5,
+    '2023-11-25 01:00',
+    'Indiana Pacers',
+    'Detroit Pistons',
+    '136 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    226,
+    5,
+    '2023-11-25 01:00',
+    'Houston Rockets',
+    'Denver Nuggets',
+    '105 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    227,
+    5,
+    '2023-11-25 01:00',
+    'Milwaukee Bucks',
+    'Washington Wizards',
+    '131 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    228,
+    5,
+    '2023-11-25 01:00',
+    'Minnesota Timberwolves',
+    'Sacramento Kings',
+    '111 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    229,
+    5,
+    '2023-11-25 03:00',
+    'Golden State Warriors',
+    'San Antonio Spurs',
+    '118 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    230,
+    5,
+    '2023-11-25 03:30',
+    'LA Clippers',
+    'New Orleans Pelicans',
+    '106 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    231,
+    5,
+    '2023-11-25 22:00',
+    'Oklahoma City Thunder',
+    'Philadelphia 76ers',
+    '123 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    232,
+    5,
+    '2023-11-25 23:00',
+    'Brooklyn Nets',
+    'Miami Heat',
+    '112 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    233,
+    5,
+    '2023-11-26 00:00',
+    'Washington Wizards',
+    'Atlanta Hawks',
+    '108 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    234,
+    5,
+    '2023-11-26 00:30',
+    'Cleveland Cavaliers',
+    'Los Angeles Lakers',
+    '115 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    235,
+    5,
+    '2023-11-26 02:30',
+    'Utah Jazz',
+    'New Orleans Pelicans',
+    '105 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    236,
+    5,
+    '2023-11-26 03:30',
+    'LA Clippers',
+    'Dallas Mavericks',
+    '107 - 88'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    237,
+    5,
+    '2023-11-26 20:30',
+    'Milwaukee Bucks',
+    'Portland Trail Blazers',
+    '108 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    238,
+    5,
+    '2023-11-26 23:00',
+    'Boston Celtics',
+    'Atlanta Hawks',
+    '113 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    239,
+    5,
+    '2023-11-26 23:00',
+    'New York Knicks',
+    'Phoenix Suns',
+    '113 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    240,
+    5,
+    '2023-11-26 23:00',
+    'Orlando Magic',
+    'Charlotte Hornets',
+    '130 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    241,
+    5,
+    '2023-11-26 23:00',
+    'Memphis Grizzlies',
+    'Minnesota Timberwolves',
+    '97 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    242,
+    5,
+    '2023-11-27 00:30',
+    'Brooklyn Nets',
+    'Chicago Bulls',
+    '118 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    243,
+    5,
+    '2023-11-27 00:30',
+    'Cleveland Cavaliers',
+    'Toronto Raptors',
+    '105 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    244,
+    5,
+    '2023-11-27 01:00',
+    'Denver Nuggets',
+    'San Antonio Spurs',
+    '132 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    245,
+    6,
+    '2023-11-28 00:00',
+    'Detroit Pistons',
+    'Washington Wizards',
+    '107 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    246,
+    6,
+    '2023-11-28 00:00',
+    'Indiana Pacers',
+    'Portland Trail Blazers',
+    '110 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    247,
+    6,
+    '2023-11-28 00:00',
+    'Philadelphia 76ers',
+    'Los Angeles Lakers',
+    '138 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    248,
+    6,
+    '2023-11-28 02:00',
+    'Utah Jazz',
+    'New Orleans Pelicans',
+    '114 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    249,
+    6,
+    '2023-11-28 03:30',
+    'LA Clippers',
+    'Denver Nuggets',
+    '104 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    250,
+    6,
+    '2023-11-29 00:30',
+    'Boston Celtics',
+    'Chicago Bulls',
+    '124 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    251,
+    6,
+    '2023-11-29 00:30',
+    'Brooklyn Nets',
+    'Toronto Raptors',
+    '115 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    252,
+    6,
+    '2023-11-29 00:30',
+    'Cleveland Cavaliers',
+    'Atlanta Hawks',
+    '128 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    253,
+    6,
+    '2023-11-29 00:30',
+    'Miami Heat',
+    'Milwaukee Bucks',
+    '124 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    254,
+    6,
+    '2023-11-29 00:30',
+    'New York Knicks',
+    'Charlotte Hornets',
+    '115 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    255,
+    6,
+    '2023-11-29 01:00',
+    'Minnesota Timberwolves',
+    'Oklahoma City Thunder',
+    '106 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    256,
+    6,
+    '2023-11-29 01:30',
+    'Dallas Mavericks',
+    'Houston Rockets',
+    '121 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    257,
+    6,
+    '2023-11-29 03:00',
+    'Sacramento Kings',
+    'Golden State Warriors',
+    '124 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    258,
+    6,
+    '2023-11-30 00:00',
+    'Detroit Pistons',
+    'Los Angeles Lakers',
+    '107 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    259,
+    6,
+    '2023-11-30 00:00',
+    'Orlando Magic',
+    'Washington Wizards',
+    '139 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    260,
+    6,
+    '2023-11-30 00:30',
+    'Toronto Raptors',
+    'Phoenix Suns',
+    '112 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    261,
+    6,
+    '2023-11-30 01:00',
+    'Memphis Grizzlies',
+    'Utah Jazz',
+    '105 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    262,
+    6,
+    '2023-11-30 01:00',
+    'New Orleans Pelicans',
+    'Philadelphia 76ers',
+    '124 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    263,
+    6,
+    '2023-11-30 02:00',
+    'Denver Nuggets',
+    'Houston Rockets',
+    '134 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    264,
+    6,
+    '2023-11-30 03:00',
+    'Sacramento Kings',
+    'LA Clippers',
+    '117 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    265,
+    6,
+    '2023-12-01 00:00',
+    'Cleveland Cavaliers',
+    'Portland Trail Blazers',
+    '95 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    266,
+    6,
+    '2023-12-01 00:30',
+    'Brooklyn Nets',
+    'Charlotte Hornets',
+    '128 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    267,
+    6,
+    '2023-12-01 00:30',
+    'Miami Heat',
+    'Indiana Pacers',
+    '142 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    268,
+    6,
+    '2023-12-01 00:30',
+    'New York Knicks',
+    'Detroit Pistons',
+    '118 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    269,
+    6,
+    '2023-12-01 01:00',
+    'Chicago Bulls',
+    'Milwaukee Bucks',
+    '120 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    270,
+    6,
+    '2023-12-01 01:00',
+    'Minnesota Timberwolves',
+    'Utah Jazz',
+    '101 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    271,
+    6,
+    '2023-12-01 01:00',
+    'Oklahoma City Thunder',
+    'Los Angeles Lakers',
+    '133 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    272,
+    6,
+    '2023-12-01 01:00',
+    'San Antonio Spurs',
+    'Atlanta Hawks',
+    '135 - 137'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    273,
+    6,
+    '2023-12-01 03:00',
+    'Golden State Warriors',
+    'LA Clippers',
+    '120 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    274,
+    6,
+    '2023-12-02 00:00',
+    'Orlando Magic',
+    'Washington Wizards',
+    '130 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    275,
+    6,
+    '2023-12-02 00:30',
+    'Boston Celtics',
+    'Philadelphia 76ers',
+    '125 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    276,
+    6,
+    '2023-12-02 00:30',
+    'Toronto Raptors',
+    'New York Knicks',
+    '106 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    277,
+    6,
+    '2023-12-02 00:30',
+    'Dallas Mavericks',
+    'Memphis Grizzlies',
+    '94 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    278,
+    6,
+    '2023-12-02 01:00',
+    'New Orleans Pelicans',
+    'San Antonio Spurs',
+    '121 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    279,
+    6,
+    '2023-12-02 03:00',
+    'Phoenix Suns',
+    'Denver Nuggets',
+    '111 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    280,
+    6,
+    '2023-12-02 21:00',
+    'LA Clippers',
+    'Golden State Warriors',
+    '113 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    281,
+    6,
+    '2023-12-02 22:00',
+    'Charlotte Hornets',
+    'Minnesota Timberwolves',
+    '117 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    282,
+    6,
+    '2023-12-03 00:00',
+    'Brooklyn Nets',
+    'Orlando Magic',
+    '129 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    283,
+    6,
+    '2023-12-03 00:00',
+    'Detroit Pistons',
+    'Cleveland Cavaliers',
+    '101 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    284,
+    6,
+    '2023-12-03 01:00',
+    'Miami Heat',
+    'Indiana Pacers',
+    '129 - 144'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    285,
+    6,
+    '2023-12-03 01:00',
+    'Chicago Bulls',
+    'New Orleans Pelicans',
+    '124 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    286,
+    6,
+    '2023-12-03 01:00',
+    'Milwaukee Bucks',
+    'Atlanta Hawks',
+    '132 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    287,
+    6,
+    '2023-12-03 02:00',
+    'Dallas Mavericks',
+    'Oklahoma City Thunder',
+    '120 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    288,
+    6,
+    '2023-12-03 02:00',
+    'Phoenix Suns',
+    'Memphis Grizzlies',
+    '116 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    289,
+    6,
+    '2023-12-03 02:30',
+    'Utah Jazz',
+    'Portland Trail Blazers',
+    '118 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    290,
+    6,
+    '2023-12-03 03:00',
+    'Sacramento Kings',
+    'Denver Nuggets',
+    '123 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    291,
+    6,
+    '2023-12-03 03:30',
+    'Los Angeles Lakers',
+    'Houston Rockets',
+    '107 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1201,
+    7,
+    '2023-12-05 00:30',
+    'Indiana Pacers',
+    'Boston Celtics',
+    '122 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1202,
+    7,
+    '2023-12-05 03:00',
+    'Sacramento Kings',
+    'New Orleans Pelicans',
+    '117 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1203,
+    7,
+    '2023-12-06 00:30',
+    'Milwaukee Bucks',
+    'New York Knicks',
+    '146 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1204,
+    7,
+    '2023-12-06 03:00',
+    'Los Angeles Lakers',
+    'Phoenix Suns',
+    '106 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1205,
+    7,
+    '2023-12-07 00:00',
+    'Cleveland Cavaliers',
+    'Orlando Magic',
+    '121 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    1206,
+    7,
+    '2023-12-07 00:00',
+    'Detroit Pistons',
+    'Memphis Grizzlies',
+    '102 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1207,
+    7,
+    '2023-12-07 00:00',
+    'Washington Wizards',
+    'Philadelphia 76ers',
+    '126 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1208,
+    7,
+    '2023-12-07 00:30',
+    'Toronto Raptors',
+    'Miami Heat',
+    '103 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1209,
+    7,
+    '2023-12-07 00:30',
+    'Atlanta Hawks',
+    'Brooklyn Nets',
+    '113 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1210,
+    7,
+    '2023-12-07 00:30',
+    'Minnesota Timberwolves',
+    'San Antonio Spurs',
+    '102 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1211,
+    7,
+    '2023-12-07 01:00',
+    'Chicago Bulls',
+    'Charlotte Hornets',
+    '111 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1212,
+    7,
+    '2023-12-07 01:00',
+    'Houston Rockets',
+    'Oklahoma City Thunder',
+    '110 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1213,
+    7,
+    '2023-12-07 01:30',
+    'Dallas Mavericks',
+    'Utah Jazz',
+    '147 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1214,
+    7,
+    '2023-12-07 03:00',
+    'Golden State Warriors',
+    'Portland Trail Blazers',
+    '110 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1215,
+    7,
+    '2023-12-07 03:00',
+    'LA Clippers',
+    'Denver Nuggets',
+    '111 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'T-Mobile Arena'),
+    1227,
+    7,
+    '2023-12-07 22:00',
+    'Milwaukee Bucks',
+    'Indiana Pacers',
+    '119 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'T-Mobile Arena'),
+    1228,
+    7,
+    '2023-12-08 02:00',
+    'Los Angeles Lakers',
+    'New Orleans Pelicans',
+    '133 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1216,
+    7,
+    '2023-12-09 00:00',
+    'Charlotte Hornets',
+    'Toronto Raptors',
+    '119 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1217,
+    7,
+    '2023-12-09 00:00',
+    'Orlando Magic',
+    'Detroit Pistons',
+    '123 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1218,
+    7,
+    '2023-12-09 00:00',
+    'Philadelphia 76ers',
+    'Atlanta Hawks',
+    '125 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1219,
+    7,
+    '2023-12-09 00:30',
+    'Brooklyn Nets',
+    'Washington Wizards',
+    '124 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'T-Mobile Arena'),
+    1229,
+    7,
+    '2023-12-09 00:30',
+    'Boston Celtics',
+    'New York Knicks',
+    '133 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1220,
+    7,
+    '2023-12-09 01:00',
+    'Miami Heat',
+    'Cleveland Cavaliers',
+    '99 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1221,
+    7,
+    '2023-12-09 01:00',
+    'Memphis Grizzlies',
+    'Minnesota Timberwolves',
+    '103 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1222,
+    7,
+    '2023-12-09 01:00',
+    'Oklahoma City Thunder',
+    'Golden State Warriors',
+    '138 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1223,
+    7,
+    '2023-12-09 01:30',
+    'San Antonio Spurs',
+    'Chicago Bulls',
+    '112 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1224,
+    7,
+    '2023-12-09 02:00',
+    'Denver Nuggets',
+    'Houston Rockets',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'T-Mobile Arena'),
+    1230,
+    7,
+    '2023-12-09 02:00',
+    'Phoenix Suns',
+    'Sacramento Kings',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1225,
+    7,
+    '2023-12-09 03:00',
+    'Utah Jazz',
+    'LA Clippers',
+    '103 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1226,
+    7,
+    '2023-12-09 03:00',
+    'Portland Trail Blazers',
+    'Dallas Mavericks',
+    '112 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'T-Mobile Arena'),
+    1231,
+    7,
+    '2023-12-10 01:30',
+    'Los Angeles Lakers',
+    'Indiana Pacers',
+    '123 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    292,
+    8,
+    '2023-12-12 00:00',
+    'Charlotte Hornets',
+    'Miami Heat',
+    '114 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    293,
+    8,
+    '2023-12-12 00:00',
+    'Detroit Pistons',
+    'Indiana Pacers',
+    '123 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    294,
+    8,
+    '2023-12-12 00:00',
+    'Orlando Magic',
+    'Cleveland Cavaliers',
+    '104 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    295,
+    8,
+    '2023-12-12 00:00',
+    'Philadelphia 76ers',
+    'Washington Wizards',
+    '146 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    296,
+    8,
+    '2023-12-12 00:30',
+    'Atlanta Hawks',
+    'Denver Nuggets',
+    '122 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    297,
+    8,
+    '2023-12-12 00:30',
+    'New York Knicks',
+    'Toronto Raptors',
+    '136 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    298,
+    8,
+    '2023-12-12 01:00',
+    'Houston Rockets',
+    'San Antonio Spurs',
+    '93 - 82'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    299,
+    8,
+    '2023-12-12 01:00',
+    'Memphis Grizzlies',
+    'Dallas Mavericks',
+    '113 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    300,
+    8,
+    '2023-12-12 01:00',
+    'Milwaukee Bucks',
+    'Chicago Bulls',
+    '133 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    301,
+    8,
+    '2023-12-12 01:00',
+    'New Orleans Pelicans',
+    'Minnesota Timberwolves',
+    '121 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    302,
+    8,
+    '2023-12-12 01:00',
+    'Oklahoma City Thunder',
+    'Utah Jazz',
+    '134 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    303,
+    8,
+    '2023-12-12 03:00',
+    'Sacramento Kings',
+    'Brooklyn Nets',
+    '131 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    304,
+    8,
+    '2023-12-12 03:30',
+    'LA Clippers',
+    'Portland Trail Blazers',
+    '132 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    305,
+    8,
+    '2023-12-13 00:30',
+    'Boston Celtics',
+    'Cleveland Cavaliers',
+    '120 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    306,
+    8,
+    '2023-12-13 00:30',
+    'Dallas Mavericks',
+    'Los Angeles Lakers',
+    '127 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    307,
+    8,
+    '2023-12-13 01:00',
+    'Chicago Bulls',
+    'Denver Nuggets',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    308,
+    8,
+    '2023-12-13 03:00',
+    'Phoenix Suns',
+    'Golden State Warriors',
+    '119 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    309,
+    8,
+    '2023-12-13 03:30',
+    'LA Clippers',
+    'Sacramento Kings',
+    '119 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    310,
+    8,
+    '2023-12-14 00:00',
+    'Detroit Pistons',
+    'Philadelphia 76ers',
+    '111 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    311,
+    8,
+    '2023-12-14 00:00',
+    'Washington Wizards',
+    'New Orleans Pelicans',
+    '122 - 142'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    312,
+    8,
+    '2023-12-14 00:30',
+    'Miami Heat',
+    'Charlotte Hornets',
+    '115 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    313,
+    8,
+    '2023-12-14 00:30',
+    'Toronto Raptors',
+    'Atlanta Hawks',
+    '135 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    314,
+    8,
+    '2023-12-14 01:00',
+    'Houston Rockets',
+    'Memphis Grizzlies',
+    '117 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    315,
+    8,
+    '2023-12-14 01:00',
+    'Milwaukee Bucks',
+    'Indiana Pacers',
+    '140 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    316,
+    8,
+    '2023-12-14 01:00',
+    'San Antonio Spurs',
+    'Los Angeles Lakers',
+    '119 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    317,
+    8,
+    '2023-12-14 02:00',
+    'Phoenix Suns',
+    'Brooklyn Nets',
+    '112 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    318,
+    8,
+    '2023-12-14 02:00',
+    'Utah Jazz',
+    'New York Knicks',
+    '117 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    319,
+    8,
+    '2023-12-15 00:30',
+    'Boston Celtics',
+    'Cleveland Cavaliers',
+    '116 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    320,
+    8,
+    '2023-12-15 00:30',
+    'Miami Heat',
+    'Chicago Bulls',
+    '116 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    321,
+    8,
+    '2023-12-15 01:30',
+    'Dallas Mavericks',
+    'Minnesota Timberwolves',
+    '101 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    322,
+    8,
+    '2023-12-15 02:00',
+    'Denver Nuggets',
+    'Brooklyn Nets',
+    '124 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    323,
+    8,
+    '2023-12-15 03:00',
+    'Portland Trail Blazers',
+    'Utah Jazz',
+    '114 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    324,
+    8,
+    '2023-12-15 03:00',
+    'Sacramento Kings',
+    'Oklahoma City Thunder',
+    '128 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    325,
+    8,
+    '2023-12-15 03:30',
+    'LA Clippers',
+    'Golden State Warriors',
+    '121 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    326,
+    8,
+    '2023-12-16 00:00',
+    'Charlotte Hornets',
+    'New Orleans Pelicans',
+    '107 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    327,
+    8,
+    '2023-12-16 00:00',
+    'Philadelphia 76ers',
+    'Detroit Pistons',
+    '124 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    328,
+    8,
+    '2023-12-16 00:00',
+    'Washington Wizards',
+    'Indiana Pacers',
+    '137 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    329,
+    8,
+    '2023-12-16 00:30',
+    'Boston Celtics',
+    'Orlando Magic',
+    '128 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    330,
+    8,
+    '2023-12-16 00:30',
+    'Toronto Raptors',
+    'Atlanta Hawks',
+    '104 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    331,
+    8,
+    '2023-12-16 00:30',
+    'San Antonio Spurs',
+    'Los Angeles Lakers',
+    '129 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    332,
+    8,
+    '2023-12-16 01:00',
+    'Memphis Grizzlies',
+    'Houston Rockets',
+    '96 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    333,
+    8,
+    '2023-12-16 03:00',
+    'Phoenix Suns',
+    'New York Knicks',
+    '122 - 139'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    334,
+    8,
+    '2023-12-16 23:00',
+    'Milwaukee Bucks',
+    'Detroit Pistons',
+    '146 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    335,
+    8,
+    '2023-12-17 00:00',
+    'Charlotte Hornets',
+    'Philadelphia 76ers',
+    '82 - 135'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    336,
+    8,
+    '2023-12-17 00:30',
+    'Cleveland Cavaliers',
+    'Atlanta Hawks',
+    '127 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    337,
+    8,
+    '2023-12-17 01:00',
+    'Miami Heat',
+    'Chicago Bulls',
+    '118 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    338,
+    8,
+    '2023-12-17 01:00',
+    'Minnesota Timberwolves',
+    'Indiana Pacers',
+    '127 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    339,
+    8,
+    '2023-12-17 01:30',
+    'Golden State Warriors',
+    'Brooklyn Nets',
+    '124 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    340,
+    8,
+    '2023-12-17 02:00',
+    'Denver Nuggets',
+    'Oklahoma City Thunder',
+    '117 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    341,
+    8,
+    '2023-12-17 02:00',
+    'Portland Trail Blazers',
+    'Dallas Mavericks',
+    '120 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    342,
+    8,
+    '2023-12-17 03:00',
+    'Sacramento Kings',
+    'Utah Jazz',
+    '125 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    343,
+    8,
+    '2023-12-17 03:30',
+    'LA Clippers',
+    'New York Knicks',
+    '144 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    344,
+    8,
+    '2023-12-17 20:00',
+    'Boston Celtics',
+    'Orlando Magic',
+    '114 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    345,
+    8,
+    '2023-12-17 20:30',
+    'San Antonio Spurs',
+    'New Orleans Pelicans',
+    '110 - 146'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    346,
+    8,
+    '2023-12-18 00:00',
+    'Milwaukee Bucks',
+    'Houston Rockets',
+    '128 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    347,
+    8,
+    '2023-12-18 01:00',
+    'Phoenix Suns',
+    'Washington Wizards',
+    '112 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    348,
+    8,
+    '2023-12-18 02:00',
+    'Portland Trail Blazers',
+    'Golden State Warriors',
+    '114 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    349,
+    9,
+    '2023-12-19 00:00',
+    'Cleveland Cavaliers',
+    'Houston Rockets',
+    '135 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    350,
+    9,
+    '2023-12-19 00:00',
+    'Indiana Pacers',
+    'LA Clippers',
+    '127 - 151'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    351,
+    9,
+    '2023-12-19 00:00',
+    'Philadelphia 76ers',
+    'Chicago Bulls',
+    '104 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    352,
+    9,
+    '2023-12-19 00:30',
+    'Atlanta Hawks',
+    'Detroit Pistons',
+    '130 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    353,
+    9,
+    '2023-12-19 00:30',
+    'Miami Heat',
+    'Minnesota Timberwolves',
+    '108 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    354,
+    9,
+    '2023-12-19 00:30',
+    'Toronto Raptors',
+    'Charlotte Hornets',
+    '114 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    355,
+    9,
+    '2023-12-19 01:00',
+    'Oklahoma City Thunder',
+    'Memphis Grizzlies',
+    '116 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    356,
+    9,
+    '2023-12-19 02:00',
+    'Denver Nuggets',
+    'Dallas Mavericks',
+    '114 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    357,
+    9,
+    '2023-12-19 02:00',
+    'Utah Jazz',
+    'Brooklyn Nets',
+    '125 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    358,
+    9,
+    '2023-12-19 03:00',
+    'Sacramento Kings',
+    'Washington Wizards',
+    '143 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    359,
+    9,
+    '2023-12-19 03:30',
+    'Los Angeles Lakers',
+    'New York Knicks',
+    '109 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    360,
+    9,
+    '2023-12-20 00:30',
+    'New Orleans Pelicans',
+    'Memphis Grizzlies',
+    '113 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    361,
+    9,
+    '2023-12-20 01:00',
+    'Milwaukee Bucks',
+    'San Antonio Spurs',
+    '132 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    362,
+    9,
+    '2023-12-20 03:00',
+    'Golden State Warriors',
+    'Boston Celtics',
+    '132 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    363,
+    9,
+    '2023-12-20 03:00',
+    'Portland Trail Blazers',
+    'Phoenix Suns',
+    '109 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    364,
+    9,
+    '2023-12-21 00:00',
+    'Cleveland Cavaliers',
+    'Utah Jazz',
+    '124 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    365,
+    9,
+    '2023-12-21 00:00',
+    'Indiana Pacers',
+    'Charlotte Hornets',
+    '144 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    366,
+    9,
+    '2023-12-21 00:00',
+    'Orlando Magic',
+    'Miami Heat',
+    '106 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    367,
+    9,
+    '2023-12-21 00:00',
+    'Philadelphia 76ers',
+    'Minnesota Timberwolves',
+    '127 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    368,
+    9,
+    '2023-12-21 00:30',
+    'Brooklyn Nets',
+    'New York Knicks',
+    '102 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    369,
+    9,
+    '2023-12-21 00:30',
+    'Toronto Raptors',
+    'Denver Nuggets',
+    '104 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    370,
+    9,
+    '2023-12-21 01:00',
+    'Chicago Bulls',
+    'Los Angeles Lakers',
+    '124 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    371,
+    9,
+    '2023-12-21 01:00',
+    'Houston Rockets',
+    'Atlanta Hawks',
+    '127 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    372,
+    9,
+    '2023-12-21 01:30',
+    'Dallas Mavericks',
+    'LA Clippers',
+    '111 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    373,
+    9,
+    '2023-12-21 03:00',
+    'Sacramento Kings',
+    'Boston Celtics',
+    '119 - 144'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    374,
+    9,
+    '2023-12-22 00:00',
+    'Detroit Pistons',
+    'Utah Jazz',
+    '111 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    375,
+    9,
+    '2023-12-22 00:30',
+    'Cleveland Cavaliers',
+    'New Orleans Pelicans',
+    '104 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    376,
+    9,
+    '2023-12-22 01:00',
+    'Chicago Bulls',
+    'San Antonio Spurs',
+    '114 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    377,
+    9,
+    '2023-12-22 01:00',
+    'Memphis Grizzlies',
+    'Indiana Pacers',
+    '116 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    378,
+    9,
+    '2023-12-22 01:00',
+    'Milwaukee Bucks',
+    'Orlando Magic',
+    '118 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    379,
+    9,
+    '2023-12-22 01:00',
+    'Oklahoma City Thunder',
+    'LA Clippers',
+    '134 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    380,
+    9,
+    '2023-12-22 02:00',
+    'Minnesota Timberwolves',
+    'Los Angeles Lakers',
+    '118 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    381,
+    9,
+    '2023-12-22 03:00',
+    'Portland Trail Blazers',
+    'Washington Wizards',
+    '117 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    382,
+    9,
+    '2023-12-23 00:00',
+    'Philadelphia 76ers',
+    'Toronto Raptors',
+    '121 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    383,
+    9,
+    '2023-12-23 00:30',
+    'Brooklyn Nets',
+    'Denver Nuggets',
+    '117 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    384,
+    9,
+    '2023-12-23 01:00',
+    'Miami Heat',
+    'Atlanta Hawks',
+    '122 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    385,
+    9,
+    '2023-12-23 01:00',
+    'Houston Rockets',
+    'Dallas Mavericks',
+    '122 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    386,
+    9,
+    '2023-12-23 03:00',
+    'Golden State Warriors',
+    'Washington Wizards',
+    '129 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    387,
+    9,
+    '2023-12-23 03:00',
+    'Sacramento Kings',
+    'Phoenix Suns',
+    '120 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    388,
+    9,
+    '2023-12-23 17:30',
+    'New York Knicks',
+    'Milwaukee Bucks',
+    '111 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    389,
+    9,
+    '2023-12-23 20:30',
+    'LA Clippers',
+    'Boston Celtics',
+    '108 - 145'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    390,
+    9,
+    '2023-12-24 00:00',
+    'Charlotte Hornets',
+    'Denver Nuggets',
+    '95 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    391,
+    9,
+    '2023-12-24 00:00',
+    'Indiana Pacers',
+    'Orlando Magic',
+    '110 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    392,
+    9,
+    '2023-12-24 00:00',
+    'New Orleans Pelicans',
+    'Houston Rockets',
+    '104 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    393,
+    9,
+    '2023-12-24 00:30',
+    'Atlanta Hawks',
+    'Memphis Grizzlies',
+    '119 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    394,
+    9,
+    '2023-12-24 00:30',
+    'Brooklyn Nets',
+    'Detroit Pistons',
+    '126 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    395,
+    9,
+    '2023-12-24 00:30',
+    'Toronto Raptors',
+    'Utah Jazz',
+    '119 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    396,
+    9,
+    '2023-12-24 01:00',
+    'Chicago Bulls',
+    'Cleveland Cavaliers',
+    '95 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    397,
+    9,
+    '2023-12-24 01:00',
+    'Oklahoma City Thunder',
+    'Los Angeles Lakers',
+    '120 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    398,
+    9,
+    '2023-12-24 01:30',
+    'Dallas Mavericks',
+    'San Antonio Spurs',
+    '144 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    399,
+    9,
+    '2023-12-24 01:30',
+    'Golden State Warriors',
+    'Portland Trail Blazers',
+    '126 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    400,
+    9,
+    '2023-12-24 03:00',
+    'Sacramento Kings',
+    'Minnesota Timberwolves',
+    '98 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    401,
+    10,
+    '2023-12-25 17:00',
+    'New York Knicks',
+    'Milwaukee Bucks',
+    '129 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    402,
+    10,
+    '2023-12-25 19:30',
+    'Denver Nuggets',
+    'Golden State Warriors',
+    '120 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    403,
+    10,
+    '2023-12-25 22:00',
+    'Los Angeles Lakers',
+    'Boston Celtics',
+    '115 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    404,
+    10,
+    '2023-12-26 01:00',
+    'Miami Heat',
+    'Philadelphia 76ers',
+    '119 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    405,
+    10,
+    '2023-12-26 03:30',
+    'Phoenix Suns',
+    'Dallas Mavericks',
+    '114 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    406,
+    10,
+    '2023-12-27 00:00',
+    'Detroit Pistons',
+    'Brooklyn Nets',
+    '112 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    407,
+    10,
+    '2023-12-27 00:00',
+    'Washington Wizards',
+    'Orlando Magic',
+    '119 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    408,
+    10,
+    '2023-12-27 01:00',
+    'Chicago Bulls',
+    'Atlanta Hawks',
+    '118 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    409,
+    10,
+    '2023-12-27 01:00',
+    'Houston Rockets',
+    'Indiana Pacers',
+    '117 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    410,
+    10,
+    '2023-12-27 01:00',
+    'New Orleans Pelicans',
+    'Memphis Grizzlies',
+    '115 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    411,
+    10,
+    '2023-12-27 01:00',
+    'Oklahoma City Thunder',
+    'Minnesota Timberwolves',
+    '129 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    412,
+    10,
+    '2023-12-27 01:00',
+    'San Antonio Spurs',
+    'Utah Jazz',
+    '118 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    413,
+    10,
+    '2023-12-27 03:00',
+    'Portland Trail Blazers',
+    'Sacramento Kings',
+    '130 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    414,
+    10,
+    '2023-12-27 03:30',
+    'LA Clippers',
+    'Charlotte Hornets',
+    '113 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    415,
+    10,
+    '2023-12-28 00:00',
+    'Orlando Magic',
+    'Philadelphia 76ers',
+    '92 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    416,
+    10,
+    '2023-12-28 00:00',
+    'Washington Wizards',
+    'Toronto Raptors',
+    '102 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    417,
+    10,
+    '2023-12-28 00:30',
+    'Brooklyn Nets',
+    'Milwaukee Bucks',
+    '122 - 144'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    418,
+    10,
+    '2023-12-28 01:00',
+    'Houston Rockets',
+    'Phoenix Suns',
+    '113 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    419,
+    10,
+    '2023-12-28 01:00',
+    'Oklahoma City Thunder',
+    'New York Knicks',
+    '129 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    420,
+    10,
+    '2023-12-28 01:30',
+    'Dallas Mavericks',
+    'Cleveland Cavaliers',
+    '110 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    421,
+    10,
+    '2023-12-29 00:30',
+    'Boston Celtics',
+    'Detroit Pistons',
+    '128 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    422,
+    10,
+    '2023-12-29 01:00',
+    'Chicago Bulls',
+    'Indiana Pacers',
+    '104 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    423,
+    10,
+    '2023-12-29 01:00',
+    'Minnesota Timberwolves',
+    'Dallas Mavericks',
+    '118 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    424,
+    10,
+    '2023-12-29 01:00',
+    'New Orleans Pelicans',
+    'Utah Jazz',
+    '112 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    425,
+    10,
+    '2023-12-29 02:00',
+    'Denver Nuggets',
+    'Memphis Grizzlies',
+    '142 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    426,
+    10,
+    '2023-12-29 03:00',
+    'Golden State Warriors',
+    'Miami Heat',
+    '102 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    427,
+    10,
+    '2023-12-29 03:00',
+    'Portland Trail Blazers',
+    'San Antonio Spurs',
+    '105 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    428,
+    10,
+    '2023-12-29 03:30',
+    'Los Angeles Lakers',
+    'Charlotte Hornets',
+    '133 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    429,
+    10,
+    '2023-12-30 00:00',
+    'Orlando Magic',
+    'New York Knicks',
+    '117 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    430,
+    10,
+    '2023-12-30 00:00',
+    'Washington Wizards',
+    'Brooklyn Nets',
+    '110 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    431,
+    10,
+    '2023-12-30 00:30',
+    'Atlanta Hawks',
+    'Sacramento Kings',
+    '110 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    432,
+    10,
+    '2023-12-30 00:30',
+    'Boston Celtics',
+    'Toronto Raptors',
+    '120 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    433,
+    10,
+    '2023-12-30 00:30',
+    'Cleveland Cavaliers',
+    'Milwaukee Bucks',
+    '111 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    434,
+    10,
+    '2023-12-30 01:00',
+    'Houston Rockets',
+    'Philadelphia 76ers',
+    '127 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    435,
+    10,
+    '2023-12-30 02:00',
+    'Denver Nuggets',
+    'Oklahoma City Thunder',
+    '93 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    436,
+    10,
+    '2023-12-30 02:00',
+    'Phoenix Suns',
+    'Charlotte Hornets',
+    '133 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    437,
+    10,
+    '2023-12-30 03:00',
+    'Portland Trail Blazers',
+    'San Antonio Spurs',
+    '134 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    438,
+    10,
+    '2023-12-30 03:30',
+    'LA Clippers',
+    'Memphis Grizzlies',
+    '117 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    439,
+    10,
+    '2023-12-30 22:00',
+    'Utah Jazz',
+    'Miami Heat',
+    '117 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    440,
+    10,
+    '2023-12-30 23:00',
+    'Detroit Pistons',
+    'Toronto Raptors',
+    '129 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    441,
+    10,
+    '2023-12-31 00:00',
+    'Indiana Pacers',
+    'New York Knicks',
+    '140 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    442,
+    10,
+    '2023-12-31 01:00',
+    'Chicago Bulls',
+    'Philadelphia 76ers',
+    '105 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    443,
+    10,
+    '2023-12-31 01:00',
+    'Minnesota Timberwolves',
+    'Los Angeles Lakers',
+    '108 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    444,
+    10,
+    '2023-12-31 01:30',
+    'Golden State Warriors',
+    'Dallas Mavericks',
+    '122 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    445,
+    10,
+    '2023-12-31 20:00',
+    'Washington Wizards',
+    'Atlanta Hawks',
+    '126 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    446,
+    10,
+    '2024-01-01 00:00',
+    'New Orleans Pelicans',
+    'Los Angeles Lakers',
+    '129 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    447,
+    10,
+    '2024-01-01 00:00',
+    'Oklahoma City Thunder',
+    'Brooklyn Nets',
+    '124 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    448,
+    10,
+    '2024-01-01 00:00',
+    'San Antonio Spurs',
+    'Boston Celtics',
+    '101 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    449,
+    10,
+    '2024-01-01 01:00',
+    'Memphis Grizzlies',
+    'Sacramento Kings',
+    '92 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    450,
+    10,
+    '2024-01-01 01:00',
+    'Phoenix Suns',
+    'Orlando Magic',
+    '112 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    451,
+    11,
+    '2024-01-01 20:00',
+    'New York Knicks',
+    'Minnesota Timberwolves',
+    '112 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    452,
+    11,
+    '2024-01-02 00:30',
+    'Toronto Raptors',
+    'Cleveland Cavaliers',
+    '124 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    453,
+    11,
+    '2024-01-02 01:00',
+    'Houston Rockets',
+    'Detroit Pistons',
+    '136 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    454,
+    11,
+    '2024-01-02 01:00',
+    'Milwaukee Bucks',
+    'Indiana Pacers',
+    '113 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    455,
+    11,
+    '2024-01-02 02:00',
+    'Denver Nuggets',
+    'Charlotte Hornets',
+    '111 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    456,
+    11,
+    '2024-01-02 02:00',
+    'Phoenix Suns',
+    'Portland Trail Blazers',
+    '109 - 88'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    457,
+    11,
+    '2024-01-02 02:00',
+    'Utah Jazz',
+    'Dallas Mavericks',
+    '127 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    458,
+    11,
+    '2024-01-02 03:30',
+    'LA Clippers',
+    'Miami Heat',
+    '121 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    459,
+    11,
+    '2024-01-03 00:00',
+    'Philadelphia 76ers',
+    'Chicago Bulls',
+    '110 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    460,
+    11,
+    '2024-01-03 01:00',
+    'Memphis Grizzlies',
+    'San Antonio Spurs',
+    '106 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    461,
+    11,
+    '2024-01-03 01:00',
+    'New Orleans Pelicans',
+    'Brooklyn Nets',
+    '112 - 85'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    462,
+    11,
+    '2024-01-03 01:00',
+    'Oklahoma City Thunder',
+    'Boston Celtics',
+    '127 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    463,
+    11,
+    '2024-01-03 03:00',
+    'Golden State Warriors',
+    'Orlando Magic',
+    '121 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    464,
+    11,
+    '2024-01-03 03:00',
+    'Sacramento Kings',
+    'Charlotte Hornets',
+    '104 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    465,
+    11,
+    '2024-01-04 00:00',
+    'Cleveland Cavaliers',
+    'Washington Wizards',
+    '140 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    466,
+    11,
+    '2024-01-04 00:00',
+    'Indiana Pacers',
+    'Milwaukee Bucks',
+    '142 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    467,
+    11,
+    '2024-01-04 00:30',
+    'Atlanta Hawks',
+    'Oklahoma City Thunder',
+    '141 - 138'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    469,
+    11,
+    '2024-01-04 01:00',
+    'Houston Rockets',
+    'Brooklyn Nets',
+    '112 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    470,
+    11,
+    '2024-01-04 01:00',
+    'Memphis Grizzlies',
+    'Toronto Raptors',
+    '111 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    471,
+    11,
+    '2024-01-04 01:00',
+    'Minnesota Timberwolves',
+    'New Orleans Pelicans',
+    '106 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    468,
+    11,
+    '2024-01-04 01:30',
+    'New York Knicks',
+    'Chicago Bulls',
+    '116 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    472,
+    11,
+    '2024-01-04 01:30',
+    'Dallas Mavericks',
+    'Portland Trail Blazers',
+    '126 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    473,
+    11,
+    '2024-01-04 02:00',
+    'Phoenix Suns',
+    'LA Clippers',
+    '122 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    474,
+    11,
+    '2024-01-04 02:00',
+    'Utah Jazz',
+    'Detroit Pistons',
+    '154 - 148'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    475,
+    11,
+    '2024-01-04 03:00',
+    'Los Angeles Lakers',
+    'Miami Heat',
+    '96 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    476,
+    11,
+    '2024-01-04 03:00',
+    'Sacramento Kings',
+    'Orlando Magic',
+    '138 - 135'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    477,
+    11,
+    '2024-01-05 00:30',
+    'San Antonio Spurs',
+    'Milwaukee Bucks',
+    '121 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    478,
+    11,
+    '2024-01-05 03:00',
+    'Golden State Warriors',
+    'Denver Nuggets',
+    '127 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    479,
+    11,
+    '2024-01-06 00:00',
+    'Boston Celtics',
+    'Utah Jazz',
+    '126 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    480,
+    11,
+    '2024-01-06 00:00',
+    'Indiana Pacers',
+    'Atlanta Hawks',
+    '150 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    481,
+    11,
+    '2024-01-06 00:30',
+    'Brooklyn Nets',
+    'Oklahoma City Thunder',
+    '124 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    482,
+    11,
+    '2024-01-06 00:30',
+    'Cleveland Cavaliers',
+    'Washington Wizards',
+    '114 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    483,
+    11,
+    '2024-01-06 00:30',
+    'Philadelphia 76ers',
+    'New York Knicks',
+    '92 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    484,
+    11,
+    '2024-01-06 01:00',
+    'Chicago Bulls',
+    'Charlotte Hornets',
+    '104 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    485,
+    11,
+    '2024-01-06 01:00',
+    'Houston Rockets',
+    'Minnesota Timberwolves',
+    '95 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    486,
+    11,
+    '2024-01-06 01:00',
+    'New Orleans Pelicans',
+    'LA Clippers',
+    '95 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    487,
+    11,
+    '2024-01-06 01:30',
+    'Dallas Mavericks',
+    'Portland Trail Blazers',
+    '139 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    488,
+    11,
+    '2024-01-06 02:00',
+    'Denver Nuggets',
+    'Orlando Magic',
+    '120 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    489,
+    11,
+    '2024-01-06 02:00',
+    'Phoenix Suns',
+    'Miami Heat',
+    '113 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    490,
+    11,
+    '2024-01-06 03:00',
+    'Golden State Warriors',
+    'Detroit Pistons',
+    '113 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    491,
+    11,
+    '2024-01-06 03:00',
+    'Los Angeles Lakers',
+    'Memphis Grizzlies',
+    '113 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    492,
+    11,
+    '2024-01-06 03:00',
+    'Sacramento Kings',
+    'Toronto Raptors',
+    '135 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    493,
+    11,
+    '2024-01-07 00:00',
+    'Indiana Pacers',
+    'Boston Celtics',
+    '101 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    494,
+    11,
+    '2024-01-07 00:00',
+    'Washington Wizards',
+    'New York Knicks',
+    '105 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    495,
+    11,
+    '2024-01-07 00:30',
+    'Philadelphia 76ers',
+    'Utah Jazz',
+    '109 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    496,
+    11,
+    '2024-01-07 01:00',
+    'Houston Rockets',
+    'Milwaukee Bucks',
+    '112 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    497,
+    11,
+    '2024-01-07 18:00',
+    'Cleveland Cavaliers',
+    'San Antonio Spurs',
+    '117 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    498,
+    11,
+    '2024-01-07 20:00',
+    'Brooklyn Nets',
+    'Portland Trail Blazers',
+    '127 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    499,
+    11,
+    '2024-01-07 23:00',
+    'Orlando Magic',
+    'Atlanta Hawks',
+    '117 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    500,
+    11,
+    '2024-01-07 23:00',
+    'Sacramento Kings',
+    'New Orleans Pelicans',
+    '100 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    501,
+    11,
+    '2024-01-08 00:30',
+    'Dallas Mavericks',
+    'Minnesota Timberwolves',
+    '115 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    502,
+    11,
+    '2024-01-08 01:00',
+    'Denver Nuggets',
+    'Detroit Pistons',
+    '131 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    503,
+    11,
+    '2024-01-08 01:00',
+    'Phoenix Suns',
+    'Memphis Grizzlies',
+    '115 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    504,
+    11,
+    '2024-01-08 01:30',
+    'Golden State Warriors',
+    'Toronto Raptors',
+    '118 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    505,
+    11,
+    '2024-01-08 02:30',
+    'Los Angeles Lakers',
+    'LA Clippers',
+    '106 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    506,
+    12,
+    '2024-01-09 00:00',
+    'Charlotte Hornets',
+    'Chicago Bulls',
+    '112 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    507,
+    12,
+    '2024-01-09 00:00',
+    'Indiana Pacers',
+    'Boston Celtics',
+    '133 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    508,
+    12,
+    '2024-01-09 00:00',
+    'Washington Wizards',
+    'Oklahoma City Thunder',
+    '128 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    509,
+    12,
+    '2024-01-09 00:30',
+    'Miami Heat',
+    'Houston Rockets',
+    '120 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    510,
+    12,
+    '2024-01-09 01:00',
+    'Milwaukee Bucks',
+    'Utah Jazz',
+    '116 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    511,
+    12,
+    '2024-01-09 03:30',
+    'LA Clippers',
+    'Phoenix Suns',
+    '138 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    512,
+    12,
+    '2024-01-10 00:00',
+    'Detroit Pistons',
+    'Sacramento Kings',
+    '110 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    513,
+    12,
+    '2024-01-10 00:00',
+    'Orlando Magic',
+    'Minnesota Timberwolves',
+    '92 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    514,
+    12,
+    '2024-01-10 00:30',
+    'New York Knicks',
+    'Portland Trail Blazers',
+    '112 - 84'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    515,
+    12,
+    '2024-01-10 01:30',
+    'Dallas Mavericks',
+    'Memphis Grizzlies',
+    '103 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    516,
+    12,
+    '2024-01-10 03:30',
+    'Los Angeles Lakers',
+    'Toronto Raptors',
+    '132 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    517,
+    12,
+    '2024-01-11 00:00',
+    'Boston Celtics',
+    'Minnesota Timberwolves',
+    '127 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    518,
+    12,
+    '2024-01-11 00:00',
+    'Charlotte Hornets',
+    'Sacramento Kings',
+    '98 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    519,
+    12,
+    '2024-01-11 00:00',
+    'Detroit Pistons',
+    'San Antonio Spurs',
+    '108 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    520,
+    12,
+    '2024-01-11 00:00',
+    'Indiana Pacers',
+    'Washington Wizards',
+    '112 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    521,
+    12,
+    '2024-01-11 00:30',
+    'Atlanta Hawks',
+    'Philadelphia 76ers',
+    '139 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    522,
+    12,
+    '2024-01-11 00:30',
+    'Miami Heat',
+    'Oklahoma City Thunder',
+    '120 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    523,
+    12,
+    '2024-01-11 01:00',
+    'Chicago Bulls',
+    'Houston Rockets',
+    '124 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    525,
+    12,
+    '2024-01-11 01:30',
+    'Golden State Warriors',
+    'New Orleans Pelicans',
+    '105 - 141'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    524,
+    12,
+    '2024-01-11 03:00',
+    'Utah Jazz',
+    'Denver Nuggets',
+    '124 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    526,
+    12,
+    '2024-01-11 03:30',
+    'LA Clippers',
+    'Toronto Raptors',
+    '126 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Accor Arena'),
+    527,
+    12,
+    '2024-01-11 19:00',
+    'Cleveland Cavaliers',
+    'Brooklyn Nets',
+    '111 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    528,
+    12,
+    '2024-01-12 00:30',
+    'Milwaukee Bucks',
+    'Boston Celtics',
+    '135 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    529,
+    12,
+    '2024-01-12 01:00',
+    'Oklahoma City Thunder',
+    'Portland Trail Blazers',
+    '139 - 77'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    530,
+    12,
+    '2024-01-12 01:30',
+    'Dallas Mavericks',
+    'New York Knicks',
+    '128 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    531,
+    12,
+    '2024-01-12 03:00',
+    'Los Angeles Lakers',
+    'Phoenix Suns',
+    '109 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    532,
+    12,
+    '2024-01-13 00:30',
+    'Philadelphia 76ers',
+    'Sacramento Kings',
+    '112 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    533,
+    12,
+    '2024-01-13 00:30',
+    'Atlanta Hawks',
+    'Indiana Pacers',
+    '108 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    534,
+    12,
+    '2024-01-13 00:30',
+    'Detroit Pistons',
+    'Houston Rockets',
+    '110 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    535,
+    12,
+    '2024-01-13 01:00',
+    'Miami Heat',
+    'Orlando Magic',
+    '99 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    536,
+    12,
+    '2024-01-13 01:00',
+    'Chicago Bulls',
+    'Golden State Warriors',
+    '131 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    537,
+    12,
+    '2024-01-13 01:00',
+    'Memphis Grizzlies',
+    'LA Clippers',
+    '119 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    538,
+    12,
+    '2024-01-13 01:00',
+    'Minnesota Timberwolves',
+    'Portland Trail Blazers',
+    '116 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    541,
+    12,
+    '2024-01-13 01:00',
+    'San Antonio Spurs',
+    'Charlotte Hornets',
+    '135 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    540,
+    12,
+    '2024-01-13 02:30',
+    'Utah Jazz',
+    'Toronto Raptors',
+    '145 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    539,
+    12,
+    '2024-01-13 03:00',
+    'Denver Nuggets',
+    'New Orleans Pelicans',
+    '125 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    542,
+    12,
+    '2024-01-14 00:00',
+    'Boston Celtics',
+    'Houston Rockets',
+    '145 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    543,
+    12,
+    '2024-01-14 00:30',
+    'Atlanta Hawks',
+    'Washington Wizards',
+    '99 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    544,
+    12,
+    '2024-01-14 01:00',
+    'Memphis Grizzlies',
+    'New York Knicks',
+    '94 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    545,
+    12,
+    '2024-01-14 01:00',
+    'Milwaukee Bucks',
+    'Golden State Warriors',
+    '129 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    546,
+    12,
+    '2024-01-14 01:00',
+    'Oklahoma City Thunder',
+    'Orlando Magic',
+    '112 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    547,
+    12,
+    '2024-01-14 01:30',
+    'Dallas Mavericks',
+    'New Orleans Pelicans',
+    '108 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    548,
+    12,
+    '2024-01-14 01:30',
+    'San Antonio Spurs',
+    'Chicago Bulls',
+    '116 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    549,
+    12,
+    '2024-01-14 02:30',
+    'Utah Jazz',
+    'Los Angeles Lakers',
+    '132 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    550,
+    12,
+    '2024-01-14 20:30',
+    'Denver Nuggets',
+    'Indiana Pacers',
+    '117 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    551,
+    12,
+    '2024-01-14 23:00',
+    'Miami Heat',
+    'Charlotte Hornets',
+    '104 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    552,
+    12,
+    '2024-01-15 00:00',
+    'Milwaukee Bucks',
+    'Sacramento Kings',
+    '143 - 142'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    553,
+    12,
+    '2024-01-15 00:00',
+    'Minnesota Timberwolves',
+    'LA Clippers',
+    '109 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    554,
+    12,
+    '2024-01-15 02:00',
+    'Portland Trail Blazers',
+    'Phoenix Suns',
+    '116 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    555,
+    13,
+    '2024-01-15 18:00',
+    'Philadelphia 76ers',
+    'Houston Rockets',
+    '124 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    556,
+    13,
+    '2024-01-15 19:30',
+    'Dallas Mavericks',
+    'New Orleans Pelicans',
+    '125 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    557,
+    13,
+    '2024-01-15 20:00',
+    'New York Knicks',
+    'Orlando Magic',
+    '94 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    558,
+    13,
+    '2024-01-15 20:00',
+    'Washington Wizards',
+    'Detroit Pistons',
+    '117 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    559,
+    13,
+    '2024-01-15 20:30',
+    'Atlanta Hawks',
+    'San Antonio Spurs',
+    '109 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    560,
+    13,
+    '2024-01-15 23:00',
+    'Memphis Grizzlies',
+    'Golden State Warriors',
+    '116 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    561,
+    13,
+    '2024-01-16 00:00',
+    'Cleveland Cavaliers',
+    'Chicago Bulls',
+    '109 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    562,
+    13,
+    '2024-01-16 00:30',
+    'Brooklyn Nets',
+    'Miami Heat',
+    '95 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    563,
+    13,
+    '2024-01-16 00:30',
+    'Toronto Raptors',
+    'Boston Celtics',
+    '96 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    564,
+    13,
+    '2024-01-16 02:00',
+    'Utah Jazz',
+    'Indiana Pacers',
+    '132 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    565,
+    13,
+    '2024-01-16 03:30',
+    'Los Angeles Lakers',
+    'Oklahoma City Thunder',
+    '112 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    566,
+    13,
+    '2024-01-17 00:30',
+    'Philadelphia 76ers',
+    'Denver Nuggets',
+    '126 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    567,
+    13,
+    '2024-01-17 02:00',
+    'Phoenix Suns',
+    'Sacramento Kings',
+    '119 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    568,
+    13,
+    '2024-01-17 03:00',
+    'LA Clippers',
+    'Oklahoma City Thunder',
+    '128 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    569,
+    13,
+    '2024-01-18 00:00',
+    'Detroit Pistons',
+    'Minnesota Timberwolves',
+    '117 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    570,
+    13,
+    '2024-01-18 00:30',
+    'Atlanta Hawks',
+    'Orlando Magic',
+    '106 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    571,
+    13,
+    '2024-01-18 00:30',
+    'Boston Celtics',
+    'San Antonio Spurs',
+    '117 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    572,
+    13,
+    '2024-01-18 00:30',
+    'Cleveland Cavaliers',
+    'Milwaukee Bucks',
+    '135 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    573,
+    13,
+    '2024-01-18 00:30',
+    'New York Knicks',
+    'Houston Rockets',
+    '109 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    574,
+    13,
+    '2024-01-18 00:30',
+    'Toronto Raptors',
+    'Miami Heat',
+    '121 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    575,
+    13,
+    '2024-01-18 01:00',
+    'New Orleans Pelicans',
+    'Charlotte Hornets',
+    '132 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    577,
+    13,
+    '2024-01-18 01:30',
+    'Los Angeles Lakers',
+    'Dallas Mavericks',
+    '127 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    578,
+    13,
+    '2024-01-18 03:00',
+    'Portland Trail Blazers',
+    'Brooklyn Nets',
+    '105 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    579,
+    13,
+    '2024-01-19 00:30',
+    'New York Knicks',
+    'Washington Wizards',
+    '113 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    580,
+    13,
+    '2024-01-19 00:30',
+    'Toronto Raptors',
+    'Chicago Bulls',
+    '110 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    581,
+    13,
+    '2024-01-19 02:00',
+    'Utah Jazz',
+    'Oklahoma City Thunder',
+    '129 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    582,
+    13,
+    '2024-01-19 03:00',
+    'Minnesota Timberwolves',
+    'Memphis Grizzlies',
+    '118 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    583,
+    13,
+    '2024-01-19 03:00',
+    'Sacramento Kings',
+    'Indiana Pacers',
+    '121 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    584,
+    13,
+    '2024-01-20 00:00',
+    'Charlotte Hornets',
+    'San Antonio Spurs',
+    '124 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    585,
+    13,
+    '2024-01-20 00:00',
+    'Orlando Magic',
+    'Philadelphia 76ers',
+    '109 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    586,
+    13,
+    '2024-01-20 00:30',
+    'Boston Celtics',
+    'Denver Nuggets',
+    '100 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    587,
+    13,
+    '2024-01-20 01:00',
+    'Miami Heat',
+    'Atlanta Hawks',
+    '108 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    588,
+    13,
+    '2024-01-20 01:00',
+    'New Orleans Pelicans',
+    'Phoenix Suns',
+    '109 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    590,
+    13,
+    '2024-01-20 03:00',
+    'Portland Trail Blazers',
+    'Indiana Pacers',
+    '118 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    591,
+    13,
+    '2024-01-20 03:30',
+    'Los Angeles Lakers',
+    'Brooklyn Nets',
+    '112 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    592,
+    13,
+    '2024-01-20 20:00',
+    'Detroit Pistons',
+    'Milwaukee Bucks',
+    '135 - 141'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    593,
+    13,
+    '2024-01-21 00:00',
+    'Charlotte Hornets',
+    'Philadelphia 76ers',
+    '89 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    594,
+    13,
+    '2024-01-21 00:00',
+    'Washington Wizards',
+    'San Antonio Spurs',
+    '127 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    595,
+    13,
+    '2024-01-21 00:30',
+    'Atlanta Hawks',
+    'Cleveland Cavaliers',
+    '95 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    596,
+    13,
+    '2024-01-21 00:30',
+    'New York Knicks',
+    'Toronto Raptors',
+    '126 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    597,
+    13,
+    '2024-01-21 01:00',
+    'Chicago Bulls',
+    'Memphis Grizzlies',
+    '125 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    598,
+    13,
+    '2024-01-21 01:00',
+    'Houston Rockets',
+    'Utah Jazz',
+    '127 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    599,
+    13,
+    '2024-01-21 01:00',
+    'Minnesota Timberwolves',
+    'Oklahoma City Thunder',
+    '97 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    600,
+    13,
+    '2024-01-21 20:30',
+    'LA Clippers',
+    'Brooklyn Nets',
+    '125 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    601,
+    13,
+    '2024-01-21 23:00',
+    'Orlando Magic',
+    'Miami Heat',
+    '105 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    602,
+    13,
+    '2024-01-21 23:00',
+    'Washington Wizards',
+    'Denver Nuggets',
+    '104 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    603,
+    13,
+    '2024-01-22 00:00',
+    'Houston Rockets',
+    'Boston Celtics',
+    '107 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    604,
+    13,
+    '2024-01-22 01:00',
+    'Phoenix Suns',
+    'Indiana Pacers',
+    '117 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    605,
+    13,
+    '2024-01-22 03:00',
+    'Los Angeles Lakers',
+    'Portland Trail Blazers',
+    '134 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    606,
+    14,
+    '2024-01-23 00:00',
+    'Detroit Pistons',
+    'Milwaukee Bucks',
+    '113 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    607,
+    14,
+    '2024-01-23 00:00',
+    'Orlando Magic',
+    'Cleveland Cavaliers',
+    '99 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    608,
+    14,
+    '2024-01-23 00:00',
+    'Philadelphia 76ers',
+    'San Antonio Spurs',
+    '133 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    609,
+    14,
+    '2024-01-23 00:30',
+    'Toronto Raptors',
+    'Memphis Grizzlies',
+    '100 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    610,
+    14,
+    '2024-01-23 01:00',
+    'Minnesota Timberwolves',
+    'Charlotte Hornets',
+    '125 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    611,
+    14,
+    '2024-01-23 01:30',
+    'Dallas Mavericks',
+    'Boston Celtics',
+    '110 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    612,
+    14,
+    '2024-01-23 02:00',
+    'Phoenix Suns',
+    'Chicago Bulls',
+    '115 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    613,
+    14,
+    '2024-01-23 03:00',
+    'Sacramento Kings',
+    'Atlanta Hawks',
+    '122 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    614,
+    14,
+    '2024-01-24 00:00',
+    'Indiana Pacers',
+    'Denver Nuggets',
+    '109 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    615,
+    14,
+    '2024-01-24 00:30',
+    'Brooklyn Nets',
+    'New York Knicks',
+    '103 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    616,
+    14,
+    '2024-01-24 01:00',
+    'New Orleans Pelicans',
+    'Utah Jazz',
+    '153 - 24'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    617,
+    14,
+    '2024-01-24 01:00',
+    'Oklahoma City Thunder',
+    'Portland Trail Blazers',
+    '111 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    618,
+    14,
+    '2024-01-24 03:00',
+    'LA Clippers',
+    'Los Angeles Lakers',
+    '127 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    619,
+    14,
+    '2024-01-25 00:00',
+    'Detroit Pistons',
+    'Charlotte Hornets',
+    '113 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    620,
+    14,
+    '2024-01-25 00:00',
+    'Washington Wizards',
+    'Minnesota Timberwolves',
+    '107 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    621,
+    14,
+    '2024-01-25 00:30',
+    'Miami Heat',
+    'Memphis Grizzlies',
+    '96 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    623,
+    14,
+    '2024-01-25 01:00',
+    'Houston Rockets',
+    'Portland Trail Blazers',
+    '131 - 137'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    624,
+    14,
+    '2024-01-25 01:00',
+    'Milwaukee Bucks',
+    'Cleveland Cavaliers',
+    '126 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    625,
+    14,
+    '2024-01-25 01:30',
+    'Dallas Mavericks',
+    'Phoenix Suns',
+    '109 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    622,
+    14,
+    '2024-01-25 02:30',
+    'San Antonio Spurs',
+    'Oklahoma City Thunder',
+    '114 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    626,
+    14,
+    '2024-01-25 03:00',
+    'Golden State Warriors',
+    'Atlanta Hawks',
+    '134 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    627,
+    14,
+    '2024-01-26 00:00',
+    'Indiana Pacers',
+    'Philadelphia 76ers',
+    '134 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    628,
+    14,
+    '2024-01-26 00:00',
+    'Washington Wizards',
+    'Utah Jazz',
+    '108 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    629,
+    14,
+    '2024-01-26 00:30',
+    'Brooklyn Nets',
+    'Minnesota Timberwolves',
+    '94 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    630,
+    14,
+    '2024-01-26 00:30',
+    'Miami Heat',
+    'Boston Celtics',
+    '110 - 143'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    631,
+    14,
+    '2024-01-26 00:30',
+    'New York Knicks',
+    'Denver Nuggets',
+    '122 - 84'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    632,
+    14,
+    '2024-01-26 03:00',
+    'Golden State Warriors',
+    'Sacramento Kings',
+    '133 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    633,
+    14,
+    '2024-01-26 03:30',
+    'Los Angeles Lakers',
+    'Chicago Bulls',
+    '141 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    634,
+    14,
+    '2024-01-27 00:00',
+    'Atlanta Hawks',
+    'Dallas Mavericks',
+    '143 - 148'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    635,
+    14,
+    '2024-01-27 00:00',
+    'Charlotte Hornets',
+    'Houston Rockets',
+    '104 - 138'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    636,
+    14,
+    '2024-01-27 00:00',
+    'Indiana Pacers',
+    'Phoenix Suns',
+    '133 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    637,
+    14,
+    '2024-01-27 00:30',
+    'Toronto Raptors',
+    'LA Clippers',
+    '107 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    638,
+    14,
+    '2024-01-27 01:00',
+    'Memphis Grizzlies',
+    'Orlando Magic',
+    '107 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    639,
+    14,
+    '2024-01-27 01:00',
+    'Milwaukee Bucks',
+    'Cleveland Cavaliers',
+    '100 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    640,
+    14,
+    '2024-01-27 01:00',
+    'New Orleans Pelicans',
+    'Oklahoma City Thunder',
+    '83 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    641,
+    14,
+    '2024-01-27 02:30',
+    'San Antonio Spurs',
+    'Portland Trail Blazers',
+    '116 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    642,
+    14,
+    '2024-01-27 17:00',
+    'Detroit Pistons',
+    'Washington Wizards',
+    '104 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    643,
+    14,
+    '2024-01-27 20:00',
+    'New York Knicks',
+    'Miami Heat',
+    '125 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    644,
+    14,
+    '2024-01-27 22:30',
+    'Denver Nuggets',
+    'Philadelphia 76ers',
+    '111 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    645,
+    14,
+    '2024-01-27 23:00',
+    'Brooklyn Nets',
+    'Houston Rockets',
+    '106 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    646,
+    14,
+    '2024-01-28 00:00',
+    'Boston Celtics',
+    'LA Clippers',
+    '96 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    647,
+    14,
+    '2024-01-28 00:00',
+    'Charlotte Hornets',
+    'Utah Jazz',
+    '122 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    648,
+    14,
+    '2024-01-28 01:00',
+    'Milwaukee Bucks',
+    'New Orleans Pelicans',
+    '141 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    649,
+    14,
+    '2024-01-28 01:30',
+    'San Antonio Spurs',
+    'Minnesota Timberwolves',
+    '113 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    650,
+    14,
+    '2024-01-28 01:30',
+    'Golden State Warriors',
+    'Los Angeles Lakers',
+    '144 - 145'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    651,
+    14,
+    '2024-01-28 02:00',
+    'Dallas Mavericks',
+    'Sacramento Kings',
+    '115 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    654,
+    14,
+    '2024-01-28 19:00',
+    'Detroit Pistons',
+    'Oklahoma City Thunder',
+    '120 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    652,
+    14,
+    '2024-01-28 20:30',
+    'Indiana Pacers',
+    'Memphis Grizzlies',
+    '116 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    653,
+    14,
+    '2024-01-28 23:00',
+    'Atlanta Hawks',
+    'Toronto Raptors',
+    '126 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    655,
+    14,
+    '2024-01-28 23:00',
+    'Orlando Magic',
+    'Phoenix Suns',
+    '113 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    656,
+    14,
+    '2024-01-29 02:00',
+    'Portland Trail Blazers',
+    'Chicago Bulls',
+    '96 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    657,
+    15,
+    '2024-01-30 00:00',
+    'Charlotte Hornets',
+    'New York Knicks',
+    '92 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    658,
+    15,
+    '2024-01-30 00:00',
+    'Cleveland Cavaliers',
+    'LA Clippers',
+    '118 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    659,
+    15,
+    '2024-01-30 00:30',
+    'Boston Celtics',
+    'New Orleans Pelicans',
+    '118 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    660,
+    15,
+    '2024-01-30 00:30',
+    'Brooklyn Nets',
+    'Utah Jazz',
+    '147 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    661,
+    15,
+    '2024-01-30 00:30',
+    'Miami Heat',
+    'Phoenix Suns',
+    '105 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    662,
+    15,
+    '2024-01-30 01:00',
+    'Houston Rockets',
+    'Los Angeles Lakers',
+    '135 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    663,
+    15,
+    '2024-01-30 01:00',
+    'Memphis Grizzlies',
+    'Sacramento Kings',
+    '94 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    664,
+    15,
+    '2024-01-30 01:00',
+    'Oklahoma City Thunder',
+    'Minnesota Timberwolves',
+    '101 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    665,
+    15,
+    '2024-01-30 01:00',
+    'San Antonio Spurs',
+    'Washington Wizards',
+    '113 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    666,
+    15,
+    '2024-01-30 01:30',
+    'Dallas Mavericks',
+    'Orlando Magic',
+    '131 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    667,
+    15,
+    '2024-01-30 02:00',
+    'Denver Nuggets',
+    'Milwaukee Bucks',
+    '113 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    668,
+    15,
+    '2024-01-30 03:00',
+    'Portland Trail Blazers',
+    'Philadelphia 76ers',
+    '130 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    669,
+    15,
+    '2024-01-31 00:30',
+    'Atlanta Hawks',
+    'Los Angeles Lakers',
+    '138 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    670,
+    15,
+    '2024-01-31 00:30',
+    'Boston Celtics',
+    'Indiana Pacers',
+    '129 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    671,
+    15,
+    '2024-01-31 00:30',
+    'New York Knicks',
+    'Utah Jazz',
+    '118 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    672,
+    15,
+    '2024-01-31 01:00',
+    'Chicago Bulls',
+    'Toronto Raptors',
+    '107 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    673,
+    15,
+    '2024-01-31 03:00',
+    'Golden State Warriors',
+    'Philadelphia 76ers',
+    '119 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    674,
+    15,
+    '2024-02-01 00:00',
+    'Charlotte Hornets',
+    'Chicago Bulls',
+    '110 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    675,
+    15,
+    '2024-02-01 00:00',
+    'Cleveland Cavaliers',
+    'Detroit Pistons',
+    '128 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    676,
+    15,
+    '2024-02-01 00:00',
+    'Washington Wizards',
+    'LA Clippers',
+    '109 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    678,
+    15,
+    '2024-02-01 00:30',
+    'Miami Heat',
+    'Sacramento Kings',
+    '115 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    679,
+    15,
+    '2024-02-01 01:00',
+    'Houston Rockets',
+    'New Orleans Pelicans',
+    '99 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    680,
+    15,
+    '2024-02-01 01:00',
+    'Minnesota Timberwolves',
+    'Dallas Mavericks',
+    '121 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    681,
+    15,
+    '2024-02-01 01:00',
+    'San Antonio Spurs',
+    'Orlando Magic',
+    '98 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    682,
+    15,
+    '2024-02-01 01:00',
+    'Oklahoma City Thunder',
+    'Denver Nuggets',
+    '105 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    677,
+    15,
+    '2024-02-01 01:30',
+    'Brooklyn Nets',
+    'Phoenix Suns',
+    '120 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    683,
+    15,
+    '2024-02-01 03:00',
+    'Portland Trail Blazers',
+    'Milwaukee Bucks',
+    '119 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    684,
+    15,
+    '2024-02-02 00:30',
+    'Boston Celtics',
+    'Los Angeles Lakers',
+    '105 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    685,
+    15,
+    '2024-02-02 00:30',
+    'New York Knicks',
+    'Indiana Pacers',
+    '109 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    687,
+    15,
+    '2024-02-02 01:00',
+    'Memphis Grizzlies',
+    'Cleveland Cavaliers',
+    '101 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    686,
+    15,
+    '2024-02-02 03:00',
+    'Utah Jazz',
+    'Philadelphia 76ers',
+    '124 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    688,
+    15,
+    '2024-02-03 00:00',
+    'Detroit Pistons',
+    'LA Clippers',
+    '125 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    689,
+    15,
+    '2024-02-03 00:00',
+    'Washington Wizards',
+    'Miami Heat',
+    '102 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    690,
+    15,
+    '2024-02-03 00:30',
+    'Atlanta Hawks',
+    'Phoenix Suns',
+    '129 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    691,
+    15,
+    '2024-02-03 00:30',
+    'Indiana Pacers',
+    'Sacramento Kings',
+    '122 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    692,
+    15,
+    '2024-02-03 01:00',
+    'Houston Rockets',
+    'Toronto Raptors',
+    '135 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    693,
+    15,
+    '2024-02-03 01:00',
+    'Memphis Grizzlies',
+    'Golden State Warriors',
+    '101 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    694,
+    15,
+    '2024-02-03 01:00',
+    'Minnesota Timberwolves',
+    'Orlando Magic',
+    '106 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    695,
+    15,
+    '2024-02-03 01:00',
+    'Oklahoma City Thunder',
+    'Charlotte Hornets',
+    '126 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    696,
+    15,
+    '2024-02-03 01:00',
+    'San Antonio Spurs',
+    'New Orleans Pelicans',
+    '113 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    697,
+    15,
+    '2024-02-03 02:00',
+    'Denver Nuggets',
+    'Portland Trail Blazers',
+    '120 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    698,
+    15,
+    '2024-02-03 23:00',
+    'Philadelphia 76ers',
+    'Brooklyn Nets',
+    '121 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    699,
+    15,
+    '2024-02-04 00:30',
+    'Atlanta Hawks',
+    'Golden State Warriors',
+    '141 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    700,
+    15,
+    '2024-02-04 01:00',
+    'Chicago Bulls',
+    'Sacramento Kings',
+    '115 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    701,
+    15,
+    '2024-02-04 01:30',
+    'New York Knicks',
+    'Los Angeles Lakers',
+    '105 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    702,
+    15,
+    '2024-02-04 01:30',
+    'Dallas Mavericks',
+    'Milwaukee Bucks',
+    '117 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    703,
+    15,
+    '2024-02-04 01:30',
+    'San Antonio Spurs',
+    'Cleveland Cavaliers',
+    '101 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    704,
+    15,
+    '2024-02-04 20:00',
+    'Detroit Pistons',
+    'Orlando Magic',
+    '99 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    705,
+    15,
+    '2024-02-04 20:30',
+    'Washington Wizards',
+    'Phoenix Suns',
+    '112 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    706,
+    15,
+    '2024-02-04 23:00',
+    'Boston Celtics',
+    'Memphis Grizzlies',
+    '131 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    707,
+    15,
+    '2024-02-04 23:00',
+    'Charlotte Hornets',
+    'Indiana Pacers',
+    '99 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    708,
+    15,
+    '2024-02-04 23:00',
+    'Miami Heat',
+    'LA Clippers',
+    '95 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    709,
+    15,
+    '2024-02-05 00:00',
+    'Minnesota Timberwolves',
+    'Houston Rockets',
+    '111 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    710,
+    15,
+    '2024-02-05 00:00',
+    'Oklahoma City Thunder',
+    'Toronto Raptors',
+    '135 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    711,
+    15,
+    '2024-02-05 01:00',
+    'Utah Jazz',
+    'Milwaukee Bucks',
+    '123 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    712,
+    15,
+    '2024-02-05 01:30',
+    'Denver Nuggets',
+    'Portland Trail Blazers',
+    '112 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    713,
+    16,
+    '2024-02-06 00:00',
+    'Charlotte Hornets',
+    'Los Angeles Lakers',
+    '118 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    714,
+    16,
+    '2024-02-06 00:00',
+    'Cleveland Cavaliers',
+    'Sacramento Kings',
+    '136 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    715,
+    16,
+    '2024-02-06 00:00',
+    'Philadelphia 76ers',
+    'Dallas Mavericks',
+    '102 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    716,
+    16,
+    '2024-02-06 00:30',
+    'Atlanta Hawks',
+    'LA Clippers',
+    '144 - 149'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    717,
+    16,
+    '2024-02-06 00:30',
+    'Brooklyn Nets',
+    'Golden State Warriors',
+    '98 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    718,
+    16,
+    '2024-02-06 01:00',
+    'New Orleans Pelicans',
+    'Toronto Raptors',
+    '138 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    719,
+    16,
+    '2024-02-07 00:00',
+    'Indiana Pacers',
+    'Houston Rockets',
+    '132 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    720,
+    16,
+    '2024-02-07 00:30',
+    'Brooklyn Nets',
+    'Dallas Mavericks',
+    '107 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    721,
+    16,
+    '2024-02-07 00:30',
+    'Miami Heat',
+    'Orlando Magic',
+    '121 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    722,
+    16,
+    '2024-02-07 00:30',
+    'New York Knicks',
+    'Memphis Grizzlies',
+    '123 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    723,
+    16,
+    '2024-02-07 01:00',
+    'Chicago Bulls',
+    'Minnesota Timberwolves',
+    '129 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    724,
+    16,
+    '2024-02-07 02:00',
+    'Utah Jazz',
+    'Oklahoma City Thunder',
+    '124 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    725,
+    16,
+    '2024-02-07 03:00',
+    'Phoenix Suns',
+    'Milwaukee Bucks',
+    '114 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    726,
+    16,
+    '2024-02-08 00:00',
+    'Charlotte Hornets',
+    'Toronto Raptors',
+    '117 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    728,
+    16,
+    '2024-02-08 00:00',
+    'Washington Wizards',
+    'Cleveland Cavaliers',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    727,
+    16,
+    '2024-02-08 00:30',
+    'Philadelphia 76ers',
+    'Golden State Warriors',
+    '104 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    729,
+    16,
+    '2024-02-08 00:30',
+    'Boston Celtics',
+    'Atlanta Hawks',
+    '125 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    730,
+    16,
+    '2024-02-08 00:30',
+    'Miami Heat',
+    'San Antonio Spurs',
+    '116 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    731,
+    16,
+    '2024-02-08 03:00',
+    'LA Clippers',
+    'New Orleans Pelicans',
+    '106 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    732,
+    16,
+    '2024-02-08 03:00',
+    'Sacramento Kings',
+    'Detroit Pistons',
+    '120 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    733,
+    16,
+    '2024-02-09 00:00',
+    'Indiana Pacers',
+    'Golden State Warriors',
+    '109 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    734,
+    16,
+    '2024-02-09 00:00',
+    'Orlando Magic',
+    'San Antonio Spurs',
+    '127 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    735,
+    16,
+    '2024-02-09 00:30',
+    'Brooklyn Nets',
+    'Cleveland Cavaliers',
+    '95 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    736,
+    16,
+    '2024-02-09 00:30',
+    'New York Knicks',
+    'Dallas Mavericks',
+    '108 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    737,
+    16,
+    '2024-02-09 01:00',
+    'Memphis Grizzlies',
+    'Chicago Bulls',
+    '110 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    738,
+    16,
+    '2024-02-09 01:00',
+    'Milwaukee Bucks',
+    'Minnesota Timberwolves',
+    '105 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    739,
+    16,
+    '2024-02-09 02:00',
+    'Phoenix Suns',
+    'Utah Jazz',
+    '129 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    740,
+    16,
+    '2024-02-09 03:00',
+    'Los Angeles Lakers',
+    'Denver Nuggets',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    741,
+    16,
+    '2024-02-09 03:00',
+    'Portland Trail Blazers',
+    'Detroit Pistons',
+    '122 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    742,
+    16,
+    '2024-02-10 00:00',
+    'Philadelphia 76ers',
+    'Atlanta Hawks',
+    '121 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    743,
+    16,
+    '2024-02-10 00:30',
+    'Boston Celtics',
+    'Washington Wizards',
+    '133 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    744,
+    16,
+    '2024-02-10 00:30',
+    'Toronto Raptors',
+    'Houston Rockets',
+    '107 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    745,
+    16,
+    '2024-02-10 01:00',
+    'Milwaukee Bucks',
+    'Charlotte Hornets',
+    '120 - 84'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    746,
+    16,
+    '2024-02-10 03:00',
+    'Sacramento Kings',
+    'Denver Nuggets',
+    '135 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    747,
+    16,
+    '2024-02-10 03:30',
+    'Los Angeles Lakers',
+    'New Orleans Pelicans',
+    '139 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    748,
+    16,
+    '2024-02-10 20:00',
+    'Dallas Mavericks',
+    'Oklahoma City Thunder',
+    '146 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    749,
+    16,
+    '2024-02-10 20:30',
+    'LA Clippers',
+    'Detroit Pistons',
+    '112 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    750,
+    16,
+    '2024-02-10 23:00',
+    'Brooklyn Nets',
+    'San Antonio Spurs',
+    '123 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    751,
+    16,
+    '2024-02-11 00:00',
+    'Charlotte Hornets',
+    'Memphis Grizzlies',
+    '115 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    752,
+    16,
+    '2024-02-11 00:00',
+    'Orlando Magic',
+    'Chicago Bulls',
+    '114 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    753,
+    16,
+    '2024-02-11 00:00',
+    'Washington Wizards',
+    'Philadelphia 76ers',
+    '113 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    754,
+    16,
+    '2024-02-11 00:30',
+    'Atlanta Hawks',
+    'Houston Rockets',
+    '122 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    755,
+    16,
+    '2024-02-11 00:30',
+    'New York Knicks',
+    'Indiana Pacers',
+    '111 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    756,
+    16,
+    '2024-02-11 00:30',
+    'Toronto Raptors',
+    'Cleveland Cavaliers',
+    '95 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    757,
+    16,
+    '2024-02-11 01:30',
+    'Golden State Warriors',
+    'Phoenix Suns',
+    '113 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    758,
+    16,
+    '2024-02-11 03:00',
+    'Portland Trail Blazers',
+    'New Orleans Pelicans',
+    '84 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    759,
+    16,
+    '2024-02-11 19:00',
+    'Miami Heat',
+    'Boston Celtics',
+    '106 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    760,
+    16,
+    '2024-02-11 20:00',
+    'Oklahoma City Thunder',
+    'Sacramento Kings',
+    '127 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    761,
+    17,
+    '2024-02-13 00:00',
+    'Charlotte Hornets',
+    'Indiana Pacers',
+    '111 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    762,
+    17,
+    '2024-02-13 00:00',
+    'Cleveland Cavaliers',
+    'Philadelphia 76ers',
+    '121 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    763,
+    17,
+    '2024-02-13 00:30',
+    'Atlanta Hawks',
+    'Chicago Bulls',
+    '126 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    764,
+    17,
+    '2024-02-13 00:30',
+    'Toronto Raptors',
+    'San Antonio Spurs',
+    '99 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    765,
+    17,
+    '2024-02-13 01:00',
+    'Houston Rockets',
+    'New York Knicks',
+    '105 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    766,
+    17,
+    '2024-02-13 01:00',
+    'Memphis Grizzlies',
+    'New Orleans Pelicans',
+    '87 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    767,
+    17,
+    '2024-02-13 01:00',
+    'Milwaukee Bucks',
+    'Denver Nuggets',
+    '112 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    768,
+    17,
+    '2024-02-13 01:30',
+    'Dallas Mavericks',
+    'Washington Wizards',
+    '112 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    769,
+    17,
+    '2024-02-13 02:00',
+    'Utah Jazz',
+    'Golden State Warriors',
+    '107 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    770,
+    17,
+    '2024-02-13 03:30',
+    'LA Clippers',
+    'Minnesota Timberwolves',
+    '100 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    771,
+    17,
+    '2024-02-14 00:30',
+    'Brooklyn Nets',
+    'Boston Celtics',
+    '110 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    772,
+    17,
+    '2024-02-14 00:30',
+    'Orlando Magic',
+    'Oklahoma City Thunder',
+    '113 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    773,
+    17,
+    '2024-02-14 01:00',
+    'Milwaukee Bucks',
+    'Miami Heat',
+    '97 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    774,
+    17,
+    '2024-02-14 03:00',
+    'Phoenix Suns',
+    'Sacramento Kings',
+    '130 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    775,
+    17,
+    '2024-02-14 03:00',
+    'Portland Trail Blazers',
+    'Minnesota Timberwolves',
+    '109 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    776,
+    17,
+    '2024-02-14 03:30',
+    'Los Angeles Lakers',
+    'Detroit Pistons',
+    '125 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    777,
+    17,
+    '2024-02-15 00:00',
+    'Charlotte Hornets',
+    'Atlanta Hawks',
+    '122 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    778,
+    17,
+    '2024-02-15 00:00',
+    'Orlando Magic',
+    'New York Knicks',
+    '118 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    779,
+    17,
+    '2024-02-15 00:00',
+    'Philadelphia 76ers',
+    'Miami Heat',
+    '104 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    780,
+    17,
+    '2024-02-15 00:30',
+    'Boston Celtics',
+    'Brooklyn Nets',
+    '136 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    781,
+    17,
+    '2024-02-15 00:30',
+    'Cleveland Cavaliers',
+    'Chicago Bulls',
+    '108 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    782,
+    17,
+    '2024-02-15 00:30',
+    'Toronto Raptors',
+    'Indiana Pacers',
+    '125 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    783,
+    17,
+    '2024-02-15 01:00',
+    'Memphis Grizzlies',
+    'Houston Rockets',
+    '121 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    784,
+    17,
+    '2024-02-15 01:00',
+    'New Orleans Pelicans',
+    'Washington Wizards',
+    '133 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    785,
+    17,
+    '2024-02-15 01:30',
+    'Dallas Mavericks',
+    'San Antonio Spurs',
+    '116 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    786,
+    17,
+    '2024-02-15 02:00',
+    'Denver Nuggets',
+    'Sacramento Kings',
+    '98 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    787,
+    17,
+    '2024-02-15 02:00',
+    'Phoenix Suns',
+    'Detroit Pistons',
+    '116 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    788,
+    17,
+    '2024-02-15 02:00',
+    'Utah Jazz',
+    'Los Angeles Lakers',
+    '122 - 138'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    789,
+    17,
+    '2024-02-15 03:00',
+    'Golden State Warriors',
+    'LA Clippers',
+    '125 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    790,
+    17,
+    '2024-02-16 01:30',
+    'Memphis Grizzlies',
+    'Milwaukee Bucks',
+    '113 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    576,
+    17,
+    '2024-02-16 02:00',
+    'Utah Jazz',
+    'Golden State Warriors',
+    '137 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    791,
+    17,
+    '2024-02-16 03:00',
+    'Portland Trail Blazers',
+    'Minnesota Timberwolves',
+    '91 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    792,
+    18,
+    '2024-02-23 00:00',
+    'Cleveland Cavaliers',
+    'Orlando Magic',
+    '109 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    793,
+    18,
+    '2024-02-23 00:00',
+    'Indiana Pacers',
+    'Detroit Pistons',
+    '129 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    794,
+    18,
+    '2024-02-23 00:00',
+    'Philadelphia 76ers',
+    'New York Knicks',
+    '96 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    795,
+    18,
+    '2024-02-23 00:00',
+    'Toronto Raptors',
+    'Brooklyn Nets',
+    '121 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    796,
+    18,
+    '2024-02-23 00:30',
+    'Dallas Mavericks',
+    'Phoenix Suns',
+    '123 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    797,
+    18,
+    '2024-02-23 01:00',
+    'Chicago Bulls',
+    'Boston Celtics',
+    '112 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    798,
+    18,
+    '2024-02-23 01:00',
+    'New Orleans Pelicans',
+    'Houston Rockets',
+    '127 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    799,
+    18,
+    '2024-02-23 01:00',
+    'Oklahoma City Thunder',
+    'LA Clippers',
+    '129 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    800,
+    18,
+    '2024-02-23 02:00',
+    'Denver Nuggets',
+    'Washington Wizards',
+    '130 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    801,
+    18,
+    '2024-02-23 02:00',
+    'Utah Jazz',
+    'Charlotte Hornets',
+    '107 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    802,
+    18,
+    '2024-02-23 03:00',
+    'Golden State Warriors',
+    'Los Angeles Lakers',
+    '128 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    803,
+    18,
+    '2024-02-23 03:00',
+    'Sacramento Kings',
+    'San Antonio Spurs',
+    '127 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    804,
+    18,
+    '2024-02-24 00:30',
+    'Atlanta Hawks',
+    'Toronto Raptors',
+    '121 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    805,
+    18,
+    '2024-02-24 00:30',
+    'Philadelphia 76ers',
+    'Cleveland Cavaliers',
+    '104 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    806,
+    18,
+    '2024-02-24 01:00',
+    'Houston Rockets',
+    'Phoenix Suns',
+    '114 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    807,
+    18,
+    '2024-02-24 01:00',
+    'Memphis Grizzlies',
+    'LA Clippers',
+    '95 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    809,
+    18,
+    '2024-02-24 01:00',
+    'Oklahoma City Thunder',
+    'Washington Wizards',
+    '147 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    810,
+    18,
+    '2024-02-24 01:00',
+    'New Orleans Pelicans',
+    'Miami Heat',
+    '95 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    808,
+    18,
+    '2024-02-24 03:00',
+    'Minnesota Timberwolves',
+    'Milwaukee Bucks',
+    '107 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    811,
+    18,
+    '2024-02-24 03:00',
+    'Golden State Warriors',
+    'Charlotte Hornets',
+    '97 - 84'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    812,
+    18,
+    '2024-02-24 03:00',
+    'Portland Trail Blazers',
+    'Denver Nuggets',
+    '112 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    813,
+    18,
+    '2024-02-24 03:30',
+    'Los Angeles Lakers',
+    'San Antonio Spurs',
+    '123 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    814,
+    18,
+    '2024-02-25 01:00',
+    'Detroit Pistons',
+    'Orlando Magic',
+    '109 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    816,
+    18,
+    '2024-02-25 01:30',
+    'New York Knicks',
+    'Boston Celtics',
+    '102 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    815,
+    18,
+    '2024-02-25 02:00',
+    'Minnesota Timberwolves',
+    'Brooklyn Nets',
+    '101 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    817,
+    18,
+    '2024-02-25 18:00',
+    'Philadelphia 76ers',
+    'Milwaukee Bucks',
+    '98 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    818,
+    18,
+    '2024-02-25 20:30',
+    'Phoenix Suns',
+    'Los Angeles Lakers',
+    '123 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    819,
+    18,
+    '2024-02-25 22:00',
+    'Indiana Pacers',
+    'Dallas Mavericks',
+    '133 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    820,
+    18,
+    '2024-02-25 23:00',
+    'Washington Wizards',
+    'Cleveland Cavaliers',
+    '105 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    821,
+    18,
+    '2024-02-26 00:00',
+    'Atlanta Hawks',
+    'Orlando Magic',
+    '109 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    822,
+    18,
+    '2024-02-26 00:00',
+    'Houston Rockets',
+    'Oklahoma City Thunder',
+    '110 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    823,
+    18,
+    '2024-02-26 00:00',
+    'New Orleans Pelicans',
+    'Chicago Bulls',
+    '106 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    824,
+    18,
+    '2024-02-26 00:00',
+    'Golden State Warriors',
+    'Denver Nuggets',
+    '103 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    825,
+    18,
+    '2024-02-26 01:00',
+    'Utah Jazz',
+    'San Antonio Spurs',
+    '128 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    826,
+    18,
+    '2024-02-26 02:00',
+    'Portland Trail Blazers',
+    'Charlotte Hornets',
+    '80 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    827,
+    18,
+    '2024-02-26 02:30',
+    'LA Clippers',
+    'Sacramento Kings',
+    '107 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    829,
+    19,
+    '2024-02-27 00:00',
+    'Indiana Pacers',
+    'Toronto Raptors',
+    '122 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    828,
+    19,
+    '2024-02-27 00:30',
+    'New York Knicks',
+    'Detroit Pistons',
+    '113 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    830,
+    19,
+    '2024-02-27 01:00',
+    'Memphis Grizzlies',
+    'Brooklyn Nets',
+    '86 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    831,
+    19,
+    '2024-02-27 03:00',
+    'Sacramento Kings',
+    'Miami Heat',
+    '110 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    832,
+    19,
+    '2024-02-28 00:00',
+    'Cleveland Cavaliers',
+    'Dallas Mavericks',
+    '121 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    833,
+    19,
+    '2024-02-28 00:00',
+    'Orlando Magic',
+    'Brooklyn Nets',
+    '108 - 81'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    834,
+    19,
+    '2024-02-28 00:00',
+    'Washington Wizards',
+    'Golden State Warriors',
+    '112 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    835,
+    19,
+    '2024-02-28 00:30',
+    'Atlanta Hawks',
+    'Utah Jazz',
+    '124 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    836,
+    19,
+    '2024-02-28 00:30',
+    'Boston Celtics',
+    'Philadelphia 76ers',
+    '117 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    837,
+    19,
+    '2024-02-28 00:30',
+    'New York Knicks',
+    'New Orleans Pelicans',
+    '92 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    838,
+    19,
+    '2024-02-28 01:00',
+    'Minnesota Timberwolves',
+    'San Antonio Spurs',
+    '114 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    839,
+    19,
+    '2024-02-28 01:00',
+    'Chicago Bulls',
+    'Detroit Pistons',
+    '95 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    840,
+    19,
+    '2024-02-28 01:00',
+    'Milwaukee Bucks',
+    'Charlotte Hornets',
+    '123 - 85'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    841,
+    19,
+    '2024-02-28 03:00',
+    'Oklahoma City Thunder',
+    'Houston Rockets',
+    '112 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    842,
+    19,
+    '2024-02-28 03:00',
+    'Portland Trail Blazers',
+    'Miami Heat',
+    '96 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    843,
+    19,
+    '2024-02-29 00:30',
+    'Indiana Pacers',
+    'New Orleans Pelicans',
+    '123 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    844,
+    19,
+    '2024-02-29 00:30',
+    'Toronto Raptors',
+    'Dallas Mavericks',
+    '125 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    845,
+    19,
+    '2024-02-29 01:00',
+    'Minnesota Timberwolves',
+    'Memphis Grizzlies',
+    '110 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    846,
+    19,
+    '2024-02-29 01:00',
+    'Chicago Bulls',
+    'Cleveland Cavaliers',
+    '132 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    847,
+    19,
+    '2024-02-29 02:00',
+    'Denver Nuggets',
+    'Sacramento Kings',
+    '117 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    848,
+    19,
+    '2024-02-29 03:00',
+    'LA Clippers',
+    'Los Angeles Lakers',
+    '112 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    849,
+    19,
+    '2024-03-01 00:00',
+    'Charlotte Hornets',
+    'Milwaukee Bucks',
+    '99 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    850,
+    19,
+    '2024-03-01 00:00',
+    'Orlando Magic',
+    'Utah Jazz',
+    '115 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    851,
+    19,
+    '2024-03-01 00:30',
+    'Brooklyn Nets',
+    'Atlanta Hawks',
+    '124 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    852,
+    19,
+    '2024-03-01 00:30',
+    'New York Knicks',
+    'Golden State Warriors',
+    '99 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    853,
+    19,
+    '2024-03-01 01:30',
+    'San Antonio Spurs',
+    'Oklahoma City Thunder',
+    '132 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    854,
+    19,
+    '2024-03-01 02:00',
+    'Phoenix Suns',
+    'Houston Rockets',
+    '110 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    855,
+    19,
+    '2024-03-01 03:00',
+    'Denver Nuggets',
+    'Miami Heat',
+    '103 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    856,
+    19,
+    '2024-03-01 03:30',
+    'Los Angeles Lakers',
+    'Washington Wizards',
+    '134 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    857,
+    19,
+    '2024-03-02 00:00',
+    'Detroit Pistons',
+    'Cleveland Cavaliers',
+    '100 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    858,
+    19,
+    '2024-03-02 00:00',
+    'Philadelphia 76ers',
+    'Charlotte Hornets',
+    '121 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    859,
+    19,
+    '2024-03-02 00:30',
+    'Boston Celtics',
+    'Dallas Mavericks',
+    '138 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    860,
+    19,
+    '2024-03-02 00:30',
+    'Toronto Raptors',
+    'Golden State Warriors',
+    '105 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    861,
+    19,
+    '2024-03-02 01:00',
+    'Memphis Grizzlies',
+    'Portland Trail Blazers',
+    '92 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    862,
+    19,
+    '2024-03-02 01:00',
+    'Minnesota Timberwolves',
+    'Sacramento Kings',
+    '120 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    863,
+    19,
+    '2024-03-02 01:00',
+    'New Orleans Pelicans',
+    'Indiana Pacers',
+    '129 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    864,
+    19,
+    '2024-03-02 03:00',
+    'Chicago Bulls',
+    'Milwaukee Bucks',
+    '97 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    865,
+    19,
+    '2024-03-02 03:30',
+    'LA Clippers',
+    'Washington Wizards',
+    '140 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    866,
+    19,
+    '2024-03-02 20:00',
+    'Brooklyn Nets',
+    'Atlanta Hawks',
+    '114 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    867,
+    19,
+    '2024-03-02 22:00',
+    'Miami Heat',
+    'Utah Jazz',
+    '126 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    868,
+    19,
+    '2024-03-03 01:00',
+    'Memphis Grizzlies',
+    'Portland Trail Blazers',
+    '100 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    869,
+    19,
+    '2024-03-03 01:30',
+    'Los Angeles Lakers',
+    'Denver Nuggets',
+    '114 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    870,
+    19,
+    '2024-03-03 02:00',
+    'Phoenix Suns',
+    'Houston Rockets',
+    '109 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    871,
+    19,
+    '2024-03-03 18:00',
+    'Dallas Mavericks',
+    'Philadelphia 76ers',
+    '116 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    872,
+    19,
+    '2024-03-03 20:30',
+    'Boston Celtics',
+    'Golden State Warriors',
+    '140 - 88'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    873,
+    19,
+    '2024-03-03 20:30',
+    'Minnesota Timberwolves',
+    'LA Clippers',
+    '88 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    874,
+    19,
+    '2024-03-03 23:00',
+    'Orlando Magic',
+    'Detroit Pistons',
+    '113 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    875,
+    19,
+    '2024-03-03 23:00',
+    'Toronto Raptors',
+    'Charlotte Hornets',
+    '111 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    876,
+    19,
+    '2024-03-04 00:00',
+    'Cleveland Cavaliers',
+    'New York Knicks',
+    '98 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    877,
+    19,
+    '2024-03-04 00:00',
+    'San Antonio Spurs',
+    'Indiana Pacers',
+    '117 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    878,
+    19,
+    '2024-03-04 02:30',
+    'Phoenix Suns',
+    'Oklahoma City Thunder',
+    '110 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    879,
+    20,
+    '2024-03-05 00:30',
+    'Brooklyn Nets',
+    'Memphis Grizzlies',
+    '102 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    880,
+    20,
+    '2024-03-05 01:00',
+    'Milwaukee Bucks',
+    'LA Clippers',
+    '113 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    881,
+    20,
+    '2024-03-05 01:00',
+    'Minnesota Timberwolves',
+    'Portland Trail Blazers',
+    '119 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    882,
+    20,
+    '2024-03-05 02:00',
+    'Utah Jazz',
+    'Washington Wizards',
+    '127 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    883,
+    20,
+    '2024-03-05 03:00',
+    'Sacramento Kings',
+    'Chicago Bulls',
+    '109 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    884,
+    20,
+    '2024-03-05 03:30',
+    'Los Angeles Lakers',
+    'Oklahoma City Thunder',
+    '116 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    885,
+    20,
+    '2024-03-06 00:00',
+    'Charlotte Hornets',
+    'Orlando Magic',
+    '89 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    886,
+    20,
+    '2024-03-06 00:30',
+    'Cleveland Cavaliers',
+    'Boston Celtics',
+    '105 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    887,
+    20,
+    '2024-03-06 00:30',
+    'Brooklyn Nets',
+    'Philadelphia 76ers',
+    '112 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    888,
+    20,
+    '2024-03-06 00:30',
+    'Miami Heat',
+    'Detroit Pistons',
+    '118 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    889,
+    20,
+    '2024-03-06 00:30',
+    'New York Knicks',
+    'Atlanta Hawks',
+    '100 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    890,
+    20,
+    '2024-03-06 00:30',
+    'Toronto Raptors',
+    'New Orleans Pelicans',
+    '98 - 139'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    891,
+    20,
+    '2024-03-06 01:00',
+    'Houston Rockets',
+    'San Antonio Spurs',
+    '114 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    892,
+    20,
+    '2024-03-06 01:30',
+    'Dallas Mavericks',
+    'Indiana Pacers',
+    '120 - 137'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    893,
+    20,
+    '2024-03-06 03:00',
+    'Denver Nuggets',
+    'Phoenix Suns',
+    '107 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    894,
+    20,
+    '2024-03-07 00:00',
+    'Washington Wizards',
+    'Orlando Magic',
+    '109 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    895,
+    20,
+    '2024-03-07 00:30',
+    'Atlanta Hawks',
+    'Cleveland Cavaliers',
+    '112 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    896,
+    20,
+    '2024-03-07 00:30',
+    'Philadelphia 76ers',
+    'Memphis Grizzlies',
+    '109 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    897,
+    20,
+    '2024-03-07 00:30',
+    'Houston Rockets',
+    'LA Clippers',
+    '116 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    898,
+    20,
+    '2024-03-07 02:00',
+    'Utah Jazz',
+    'Chicago Bulls',
+    '117 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    899,
+    20,
+    '2024-03-07 03:00',
+    'Golden State Warriors',
+    'Milwaukee Bucks',
+    '125 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    900,
+    20,
+    '2024-03-07 03:00',
+    'Portland Trail Blazers',
+    'Oklahoma City Thunder',
+    '120 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    901,
+    20,
+    '2024-03-07 03:30',
+    'Los Angeles Lakers',
+    'Sacramento Kings',
+    '120 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    902,
+    20,
+    '2024-03-08 00:00',
+    'Detroit Pistons',
+    'Brooklyn Nets',
+    '118 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    903,
+    20,
+    '2024-03-08 00:00',
+    'Indiana Pacers',
+    'Minnesota Timberwolves',
+    '111 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    904,
+    20,
+    '2024-03-08 00:30',
+    'Dallas Mavericks',
+    'Miami Heat',
+    '114 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    905,
+    20,
+    '2024-03-08 02:00',
+    'Phoenix Suns',
+    'Toronto Raptors',
+    '120 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    906,
+    20,
+    '2024-03-08 03:00',
+    'Denver Nuggets',
+    'Boston Celtics',
+    '115 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    907,
+    20,
+    '2024-03-08 03:00',
+    'Golden State Warriors',
+    'Chicago Bulls',
+    '122 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    908,
+    20,
+    '2024-03-08 03:00',
+    'Sacramento Kings',
+    'San Antonio Spurs',
+    '131 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    909,
+    20,
+    '2024-03-09 00:00',
+    'Philadelphia 76ers',
+    'New Orleans Pelicans',
+    '95 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    910,
+    20,
+    '2024-03-09 00:00',
+    'Washington Wizards',
+    'Charlotte Hornets',
+    '112 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    911,
+    20,
+    '2024-03-09 00:30',
+    'Cleveland Cavaliers',
+    'Minnesota Timberwolves',
+    '113 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    912,
+    20,
+    '2024-03-09 00:30',
+    'New York Knicks',
+    'Orlando Magic',
+    '98 - 74'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    913,
+    20,
+    '2024-03-09 01:00',
+    'Memphis Grizzlies',
+    'Atlanta Hawks',
+    '92 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    914,
+    20,
+    '2024-03-09 01:00',
+    'Oklahoma City Thunder',
+    'Miami Heat',
+    '107 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    915,
+    20,
+    '2024-03-09 03:00',
+    'Los Angeles Lakers',
+    'Milwaukee Bucks',
+    '123 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    916,
+    20,
+    '2024-03-09 03:00',
+    'Portland Trail Blazers',
+    'Houston Rockets',
+    '107 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    917,
+    20,
+    '2024-03-09 21:00',
+    'LA Clippers',
+    'Chicago Bulls',
+    '112 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    918,
+    20,
+    '2024-03-10 00:00',
+    'Charlotte Hornets',
+    'Brooklyn Nets',
+    '110 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    919,
+    20,
+    '2024-03-10 00:00',
+    'Detroit Pistons',
+    'Dallas Mavericks',
+    '123 - 142'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    920,
+    20,
+    '2024-03-10 01:30',
+    'Phoenix Suns',
+    'Boston Celtics',
+    '107 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    921,
+    20,
+    '2024-03-10 01:30',
+    'Golden State Warriors',
+    'San Antonio Spurs',
+    '113 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    922,
+    20,
+    '2024-03-10 02:00',
+    'Denver Nuggets',
+    'Utah Jazz',
+    '142 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    923,
+    20,
+    '2024-03-10 03:00',
+    'Portland Trail Blazers',
+    'Toronto Raptors',
+    '128 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    924,
+    20,
+    '2024-03-10 19:00',
+    'LA Clippers',
+    'Milwaukee Bucks',
+    '117 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    925,
+    20,
+    '2024-03-10 22:00',
+    'Atlanta Hawks',
+    'New Orleans Pelicans',
+    '103 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    926,
+    20,
+    '2024-03-10 22:00',
+    'Miami Heat',
+    'Washington Wizards',
+    '108 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    928,
+    20,
+    '2024-03-10 22:00',
+    'Orlando Magic',
+    'Indiana Pacers',
+    '97 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    929,
+    20,
+    '2024-03-10 22:00',
+    'Sacramento Kings',
+    'Houston Rockets',
+    '104 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    927,
+    20,
+    '2024-03-10 23:00',
+    'New York Knicks',
+    'Philadelphia 76ers',
+    '73 - 79'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    930,
+    20,
+    '2024-03-10 23:00',
+    'Cleveland Cavaliers',
+    'Brooklyn Nets',
+    '101 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    931,
+    20,
+    '2024-03-10 23:00',
+    'Oklahoma City Thunder',
+    'Memphis Grizzlies',
+    '124 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    932,
+    20,
+    '2024-03-11 01:30',
+    'Los Angeles Lakers',
+    'Minnesota Timberwolves',
+    '120 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    933,
+    21,
+    '2024-03-11 23:00',
+    'Detroit Pistons',
+    'Charlotte Hornets',
+    '114 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    934,
+    21,
+    '2024-03-11 23:30',
+    'Cleveland Cavaliers',
+    'Phoenix Suns',
+    '111 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    935,
+    21,
+    '2024-03-12 00:00',
+    'Chicago Bulls',
+    'Dallas Mavericks',
+    '92 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    936,
+    21,
+    '2024-03-12 00:00',
+    'San Antonio Spurs',
+    'Golden State Warriors',
+    '102 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    937,
+    21,
+    '2024-03-12 01:00',
+    'Denver Nuggets',
+    'Toronto Raptors',
+    '125 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    938,
+    21,
+    '2024-03-12 02:30',
+    'Portland Trail Blazers',
+    'Boston Celtics',
+    '99 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    939,
+    21,
+    '2024-03-12 23:30',
+    'New York Knicks',
+    'Philadelphia 76ers',
+    '106 - 79'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    940,
+    21,
+    '2024-03-13 00:00',
+    'Memphis Grizzlies',
+    'Washington Wizards',
+    '109 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    941,
+    21,
+    '2024-03-13 00:00',
+    'Oklahoma City Thunder',
+    'Indiana Pacers',
+    '111 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    942,
+    21,
+    '2024-03-13 00:30',
+    'San Antonio Spurs',
+    'Houston Rockets',
+    '101 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    943,
+    21,
+    '2024-03-13 01:00',
+    'Utah Jazz',
+    'Boston Celtics',
+    '107 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    944,
+    21,
+    '2024-03-13 02:00',
+    'LA Clippers',
+    'Minnesota Timberwolves',
+    '100 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    945,
+    21,
+    '2024-03-13 02:00',
+    'Sacramento Kings',
+    'Milwaukee Bucks',
+    '129 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    946,
+    21,
+    '2024-03-13 23:00',
+    'Detroit Pistons',
+    'Toronto Raptors',
+    '113 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    947,
+    21,
+    '2024-03-13 23:00',
+    'Orlando Magic',
+    'Brooklyn Nets',
+    '114 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    948,
+    21,
+    '2024-03-13 23:30',
+    'Indiana Pacers',
+    'Chicago Bulls',
+    '129 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    949,
+    21,
+    '2024-03-13 23:30',
+    'Miami Heat',
+    'Denver Nuggets',
+    '88 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    950,
+    21,
+    '2024-03-14 00:00',
+    'Memphis Grizzlies',
+    'Charlotte Hornets',
+    '98 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    951,
+    21,
+    '2024-03-14 00:00',
+    'New Orleans Pelicans',
+    'Cleveland Cavaliers',
+    '95 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    952,
+    21,
+    '2024-03-14 00:30',
+    'Dallas Mavericks',
+    'Golden State Warriors',
+    '109 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    953,
+    21,
+    '2024-03-14 02:00',
+    'Portland Trail Blazers',
+    'Atlanta Hawks',
+    '106 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    954,
+    21,
+    '2024-03-14 02:00',
+    'Sacramento Kings',
+    'Los Angeles Lakers',
+    '120 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    955,
+    21,
+    '2024-03-14 23:30',
+    'Boston Celtics',
+    'Phoenix Suns',
+    '127 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    956,
+    21,
+    '2024-03-15 00:00',
+    'Chicago Bulls',
+    'LA Clippers',
+    '111 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    957,
+    21,
+    '2024-03-15 00:00',
+    'Houston Rockets',
+    'Washington Wizards',
+    '135 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    958,
+    21,
+    '2024-03-15 00:00',
+    'Milwaukee Bucks',
+    'Philadelphia 76ers',
+    '114 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    959,
+    21,
+    '2024-03-15 02:00',
+    'Oklahoma City Thunder',
+    'Dallas Mavericks',
+    '126 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    960,
+    21,
+    '2024-03-15 02:00',
+    'Portland Trail Blazers',
+    'New York Knicks',
+    '93 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    961,
+    21,
+    '2024-03-15 23:00',
+    'Charlotte Hornets',
+    'Phoenix Suns',
+    '96 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    962,
+    21,
+    '2024-03-15 23:00',
+    'Detroit Pistons',
+    'Miami Heat',
+    '95 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    963,
+    21,
+    '2024-03-15 23:30',
+    'Toronto Raptors',
+    'Orlando Magic',
+    '103 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    964,
+    21,
+    '2024-03-16 00:00',
+    'New Orleans Pelicans',
+    'LA Clippers',
+    '112 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moody Center'),
+    965,
+    21,
+    '2024-03-16 00:30',
+    'San Antonio Spurs',
+    'Denver Nuggets',
+    '106 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    966,
+    21,
+    '2024-03-16 01:30',
+    'Utah Jazz',
+    'Atlanta Hawks',
+    '124 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    967,
+    21,
+    '2024-03-16 21:00',
+    'Houston Rockets',
+    'Cleveland Cavaliers',
+    '117 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    968,
+    21,
+    '2024-03-16 23:00',
+    'Indiana Pacers',
+    'Brooklyn Nets',
+    '121 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    969,
+    21,
+    '2024-03-16 23:00',
+    'Philadelphia 76ers',
+    'Charlotte Hornets',
+    '109 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    970,
+    21,
+    '2024-03-16 23:00',
+    'New Orleans Pelicans',
+    'Portland Trail Blazers',
+    '126 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    971,
+    21,
+    '2024-03-17 00:00',
+    'Chicago Bulls',
+    'Washington Wizards',
+    '127 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    972,
+    21,
+    '2024-03-17 00:00',
+    'Memphis Grizzlies',
+    'Oklahoma City Thunder',
+    '112 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    973,
+    21,
+    '2024-03-17 00:30',
+    'Los Angeles Lakers',
+    'Golden State Warriors',
+    '121 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    974,
+    21,
+    '2024-03-17 01:30',
+    'Utah Jazz',
+    'Minnesota Timberwolves',
+    '100 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    975,
+    21,
+    '2024-03-17 02:00',
+    'Sacramento Kings',
+    'New York Knicks',
+    '91 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    976,
+    21,
+    '2024-03-17 17:00',
+    'Milwaukee Bucks',
+    'Phoenix Suns',
+    '140 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    977,
+    21,
+    '2024-03-17 19:00',
+    'Detroit Pistons',
+    'Miami Heat',
+    '101 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    978,
+    21,
+    '2024-03-17 19:30',
+    'Dallas Mavericks',
+    'Denver Nuggets',
+    '107 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    979,
+    21,
+    '2024-03-17 22:00',
+    'Orlando Magic',
+    'Toronto Raptors',
+    '111 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    980,
+    21,
+    '2024-03-17 22:00',
+    'Washington Wizards',
+    'Boston Celtics',
+    '104 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moody Center'),
+    981,
+    21,
+    '2024-03-17 23:00',
+    'San Antonio Spurs',
+    'Brooklyn Nets',
+    '122 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    982,
+    21,
+    '2024-03-18 01:30',
+    'LA Clippers',
+    'Atlanta Hawks',
+    '93 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    983,
+    22,
+    '2024-03-18 23:00',
+    'Indiana Pacers',
+    'Cleveland Cavaliers',
+    '103 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    984,
+    22,
+    '2024-03-18 23:30',
+    'Boston Celtics',
+    'Detroit Pistons',
+    '119 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    985,
+    22,
+    '2024-03-18 23:30',
+    'Philadelphia 76ers',
+    'Miami Heat',
+    '98 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    986,
+    22,
+    '2024-03-19 00:00',
+    'Chicago Bulls',
+    'Portland Trail Blazers',
+    '110 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    987,
+    22,
+    '2024-03-19 01:00',
+    'Utah Jazz',
+    'Minnesota Timberwolves',
+    '104 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    988,
+    22,
+    '2024-03-19 02:00',
+    'Golden State Warriors',
+    'New York Knicks',
+    '112 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    989,
+    22,
+    '2024-03-19 02:00',
+    'Sacramento Kings',
+    'Memphis Grizzlies',
+    '121 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    990,
+    22,
+    '2024-03-19 02:30',
+    'Los Angeles Lakers',
+    'Atlanta Hawks',
+    '136 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    991,
+    22,
+    '2024-03-19 23:00',
+    'Orlando Magic',
+    'Charlotte Hornets',
+    '112 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    992,
+    22,
+    '2024-03-19 23:00',
+    'Washington Wizards',
+    'Houston Rockets',
+    '114 - 137'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    993,
+    22,
+    '2024-03-19 23:30',
+    'Brooklyn Nets',
+    'New Orleans Pelicans',
+    '91 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    994,
+    22,
+    '2024-03-20 00:00',
+    'San Antonio Spurs',
+    'Dallas Mavericks',
+    '107 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    995,
+    22,
+    '2024-03-20 01:00',
+    'Minnesota Timberwolves',
+    'Denver Nuggets',
+    '112 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    996,
+    22,
+    '2024-03-20 23:00',
+    'Cleveland Cavaliers',
+    'Miami Heat',
+    '104 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    997,
+    22,
+    '2024-03-20 23:00',
+    'Detroit Pistons',
+    'Indiana Pacers',
+    '103 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    998,
+    22,
+    '2024-03-20 23:30',
+    'Boston Celtics',
+    'Milwaukee Bucks',
+    '122 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    999,
+    22,
+    '2024-03-20 23:30',
+    'Toronto Raptors',
+    'Sacramento Kings',
+    '89 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1000,
+    22,
+    '2024-03-21 00:00',
+    'Oklahoma City Thunder',
+    'Utah Jazz',
+    '119 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1001,
+    22,
+    '2024-03-21 02:00',
+    'Golden State Warriors',
+    'Memphis Grizzlies',
+    '137 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1002,
+    22,
+    '2024-03-21 02:00',
+    'Phoenix Suns',
+    'Philadelphia 76ers',
+    '115 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1003,
+    22,
+    '2024-03-21 02:00',
+    'Portland Trail Blazers',
+    'LA Clippers',
+    '103 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1004,
+    22,
+    '2024-03-21 23:00',
+    'Orlando Magic',
+    'New Orleans Pelicans',
+    '121 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1005,
+    22,
+    '2024-03-21 23:00',
+    'Washington Wizards',
+    'Sacramento Kings',
+    '109 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1006,
+    22,
+    '2024-03-22 00:00',
+    'Houston Rockets',
+    'Chicago Bulls',
+    '127 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1007,
+    22,
+    '2024-03-22 00:00',
+    'Milwaukee Bucks',
+    'Brooklyn Nets',
+    '115 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1008,
+    22,
+    '2024-03-22 00:30',
+    'Dallas Mavericks',
+    'Utah Jazz',
+    '113 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1009,
+    22,
+    '2024-03-22 01:00',
+    'Denver Nuggets',
+    'New York Knicks',
+    '113 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1010,
+    22,
+    '2024-03-22 02:30',
+    'Phoenix Suns',
+    'Atlanta Hawks',
+    '128 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    1011,
+    22,
+    '2024-03-22 23:00',
+    'Detroit Pistons',
+    'Boston Celtics',
+    '102 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1012,
+    22,
+    '2024-03-22 23:00',
+    'Toronto Raptors',
+    'Oklahoma City Thunder',
+    '103 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1013,
+    22,
+    '2024-03-23 00:00',
+    'Miami Heat',
+    'New Orleans Pelicans',
+    '88 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1014,
+    22,
+    '2024-03-23 00:00',
+    'Minnesota Timberwolves',
+    'Cleveland Cavaliers',
+    '104 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1015,
+    22,
+    '2024-03-23 00:00',
+    'San Antonio Spurs',
+    'Memphis Grizzlies',
+    '97 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1016,
+    22,
+    '2024-03-23 02:00',
+    'Golden State Warriors',
+    'Indiana Pacers',
+    '111 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1017,
+    22,
+    '2024-03-23 02:00',
+    'Portland Trail Blazers',
+    'LA Clippers',
+    '117 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1018,
+    22,
+    '2024-03-23 02:30',
+    'Los Angeles Lakers',
+    'Philadelphia 76ers',
+    '101 - 94'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1019,
+    22,
+    '2024-03-23 17:00',
+    'New York Knicks',
+    'Brooklyn Nets',
+    '105 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1020,
+    22,
+    '2024-03-23 23:00',
+    'Orlando Magic',
+    'Sacramento Kings',
+    '107 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1021,
+    22,
+    '2024-03-23 23:30',
+    'Atlanta Hawks',
+    'Charlotte Hornets',
+    '132 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1022,
+    22,
+    '2024-03-24 00:00',
+    'Washington Wizards',
+    'Toronto Raptors',
+    '112 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1023,
+    22,
+    '2024-03-24 00:00',
+    'Chicago Bulls',
+    'Boston Celtics',
+    '113 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1024,
+    22,
+    '2024-03-24 00:00',
+    'Houston Rockets',
+    'Utah Jazz',
+    '147 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1025,
+    22,
+    '2024-03-24 00:00',
+    'San Antonio Spurs',
+    'Phoenix Suns',
+    '106 - 131'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1026,
+    22,
+    '2024-03-24 02:00',
+    'Portland Trail Blazers',
+    'Denver Nuggets',
+    '111 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    1027,
+    22,
+    '2024-03-24 19:00',
+    'Detroit Pistons',
+    'New Orleans Pelicans',
+    '101 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1028,
+    22,
+    '2024-03-24 19:30',
+    'LA Clippers',
+    'Philadelphia 76ers',
+    '107 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1029,
+    22,
+    '2024-03-24 22:00',
+    'Miami Heat',
+    'Cleveland Cavaliers',
+    '121 - 84'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1030,
+    22,
+    '2024-03-24 23:00',
+    'Milwaukee Bucks',
+    'Oklahoma City Thunder',
+    '118 - 93'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1031,
+    22,
+    '2024-03-24 23:00',
+    'Minnesota Timberwolves',
+    'Golden State Warriors',
+    '114 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1032,
+    22,
+    '2024-03-25 02:00',
+    'Los Angeles Lakers',
+    'Indiana Pacers',
+    '150 - 145'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1033,
+    23,
+    '2024-03-25 23:00',
+    'Cleveland Cavaliers',
+    'Charlotte Hornets',
+    '115 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1034,
+    23,
+    '2024-03-25 23:30',
+    'Atlanta Hawks',
+    'Boston Celtics',
+    '120 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1035,
+    23,
+    '2024-03-25 23:30',
+    'New York Knicks',
+    'Detroit Pistons',
+    '124 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1036,
+    23,
+    '2024-03-25 23:30',
+    'Toronto Raptors',
+    'Brooklyn Nets',
+    '88 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1037,
+    23,
+    '2024-03-26 00:00',
+    'Chicago Bulls',
+    'Washington Wizards',
+    '105 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1038,
+    23,
+    '2024-03-26 00:00',
+    'Houston Rockets',
+    'Portland Trail Blazers',
+    '110 - 92'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1039,
+    23,
+    '2024-03-26 00:00',
+    'San Antonio Spurs',
+    'Phoenix Suns',
+    '104 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1040,
+    23,
+    '2024-03-26 01:00',
+    'Denver Nuggets',
+    'Memphis Grizzlies',
+    '128 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1041,
+    23,
+    '2024-03-26 01:00',
+    'Utah Jazz',
+    'Dallas Mavericks',
+    '105 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1042,
+    23,
+    '2024-03-26 02:00',
+    'Sacramento Kings',
+    'Philadelphia 76ers',
+    '108 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1043,
+    23,
+    '2024-03-26 02:30',
+    'LA Clippers',
+    'Indiana Pacers',
+    '116 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1044,
+    23,
+    '2024-03-26 23:30',
+    'Miami Heat',
+    'Golden State Warriors',
+    '92 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1045,
+    23,
+    '2024-03-26 23:30',
+    'Milwaukee Bucks',
+    'Los Angeles Lakers',
+    '124 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1046,
+    23,
+    '2024-03-27 00:00',
+    'New Orleans Pelicans',
+    'Oklahoma City Thunder',
+    '112 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1047,
+    23,
+    '2024-03-27 02:00',
+    'Sacramento Kings',
+    'Dallas Mavericks',
+    '96 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1048,
+    23,
+    '2024-03-27 23:00',
+    'Charlotte Hornets',
+    'Cleveland Cavaliers',
+    '118 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1049,
+    23,
+    '2024-03-27 23:00',
+    'Orlando Magic',
+    'Golden State Warriors',
+    '93 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1050,
+    23,
+    '2024-03-27 23:00',
+    'Washington Wizards',
+    'Brooklyn Nets',
+    '119 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1051,
+    23,
+    '2024-03-27 23:30',
+    'Atlanta Hawks',
+    'Portland Trail Blazers',
+    '120 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1052,
+    23,
+    '2024-03-27 23:30',
+    'Philadelphia 76ers',
+    'LA Clippers',
+    '107 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1053,
+    23,
+    '2024-03-27 23:30',
+    'Toronto Raptors',
+    'New York Knicks',
+    '101 - 145'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1054,
+    23,
+    '2024-03-28 00:00',
+    'Chicago Bulls',
+    'Indiana Pacers',
+    '125 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1055,
+    23,
+    '2024-03-28 00:00',
+    'Memphis Grizzlies',
+    'Los Angeles Lakers',
+    '124 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1056,
+    23,
+    '2024-03-28 00:00',
+    'Minnesota Timberwolves',
+    'Detroit Pistons',
+    '106 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1057,
+    23,
+    '2024-03-28 00:00',
+    'Oklahoma City Thunder',
+    'Houston Rockets',
+    '126 - 132'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1058,
+    23,
+    '2024-03-28 01:00',
+    'Utah Jazz',
+    'San Antonio Spurs',
+    '111 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1059,
+    23,
+    '2024-03-28 02:00',
+    'Denver Nuggets',
+    'Phoenix Suns',
+    '97 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1060,
+    23,
+    '2024-03-28 23:30',
+    'Atlanta Hawks',
+    'Boston Celtics',
+    '123 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1061,
+    23,
+    '2024-03-29 00:00',
+    'New Orleans Pelicans',
+    'Milwaukee Bucks',
+    '107 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1062,
+    23,
+    '2024-03-29 23:00',
+    'Charlotte Hornets',
+    'Golden State Warriors',
+    '97 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1063,
+    23,
+    '2024-03-29 23:00',
+    'Indiana Pacers',
+    'Los Angeles Lakers',
+    '109 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1064,
+    23,
+    '2024-03-29 23:00',
+    'Orlando Magic',
+    'LA Clippers',
+    '97 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1065,
+    23,
+    '2024-03-29 23:00',
+    'Washington Wizards',
+    'Detroit Pistons',
+    '87 - 96'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1066,
+    23,
+    '2024-03-29 23:30',
+    'Brooklyn Nets',
+    'Chicago Bulls',
+    '125 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1067,
+    23,
+    '2024-03-29 23:30',
+    'Cleveland Cavaliers',
+    'Philadelphia 76ers',
+    '117 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1068,
+    23,
+    '2024-03-30 00:00',
+    'Miami Heat',
+    'Portland Trail Blazers',
+    '142 - 82'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1069,
+    23,
+    '2024-03-30 00:00',
+    'Oklahoma City Thunder',
+    'Phoenix Suns',
+    '128 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1070,
+    23,
+    '2024-03-30 00:00',
+    'San Antonio Spurs',
+    'New York Knicks',
+    '130 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1071,
+    23,
+    '2024-03-30 01:00',
+    'Denver Nuggets',
+    'Minnesota Timberwolves',
+    '98 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1072,
+    23,
+    '2024-03-30 01:30',
+    'Utah Jazz',
+    'Houston Rockets',
+    '100 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1073,
+    23,
+    '2024-03-30 02:00',
+    'Sacramento Kings',
+    'Dallas Mavericks',
+    '103 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1074,
+    23,
+    '2024-03-30 21:00',
+    'New Orleans Pelicans',
+    'Boston Celtics',
+    '92 - 104'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1075,
+    23,
+    '2024-03-30 23:00',
+    'Orlando Magic',
+    'Memphis Grizzlies',
+    '118 - 88'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1076,
+    23,
+    '2024-03-30 23:30',
+    'Atlanta Hawks',
+    'Milwaukee Bucks',
+    '113 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1077,
+    23,
+    '2024-03-31 19:30',
+    'Denver Nuggets',
+    'Cleveland Cavaliers',
+    '130 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1078,
+    23,
+    '2024-03-31 22:00',
+    'Brooklyn Nets',
+    'Los Angeles Lakers',
+    '104 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1079,
+    23,
+    '2024-03-31 22:00',
+    'Charlotte Hornets',
+    'LA Clippers',
+    '118 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1080,
+    23,
+    '2024-03-31 22:00',
+    'Toronto Raptors',
+    'Philadelphia 76ers',
+    '120 - 135'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1081,
+    23,
+    '2024-03-31 22:00',
+    'Washington Wizards',
+    'Miami Heat',
+    '107 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1082,
+    23,
+    '2024-03-31 23:00',
+    'New York Knicks',
+    'Oklahoma City Thunder',
+    '112 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1083,
+    23,
+    '2024-03-31 23:00',
+    'Houston Rockets',
+    'Dallas Mavericks',
+    '107 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1084,
+    23,
+    '2024-03-31 23:00',
+    'Minnesota Timberwolves',
+    'Chicago Bulls',
+    '101 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1085,
+    23,
+    '2024-03-31 23:00',
+    'San Antonio Spurs',
+    'Golden State Warriors',
+    '113 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1086,
+    23,
+    '2024-04-01 01:00',
+    'Sacramento Kings',
+    'Utah Jazz',
+    '127 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1087,
+    24,
+    '2024-04-01 23:00',
+    'Charlotte Hornets',
+    'Boston Celtics',
+    '104 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    1088,
+    24,
+    '2024-04-01 23:00',
+    'Detroit Pistons',
+    'Memphis Grizzlies',
+    '108 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1089,
+    24,
+    '2024-04-01 23:00',
+    'Indiana Pacers',
+    'Brooklyn Nets',
+    '133 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1090,
+    24,
+    '2024-04-01 23:00',
+    'Orlando Magic',
+    'Portland Trail Blazers',
+    '104 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1091,
+    24,
+    '2024-04-02 00:00',
+    'Chicago Bulls',
+    'Atlanta Hawks',
+    '101 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1092,
+    24,
+    '2024-04-02 00:00',
+    'New Orleans Pelicans',
+    'Phoenix Suns',
+    '111 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1094,
+    24,
+    '2024-04-02 23:00',
+    'Toronto Raptors',
+    'Los Angeles Lakers',
+    '111 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1095,
+    24,
+    '2024-04-02 23:00',
+    'Washington Wizards',
+    'Milwaukee Bucks',
+    '117 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1093,
+    24,
+    '2024-04-02 23:30',
+    'Philadelphia 76ers',
+    'Oklahoma City Thunder',
+    '109 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1096,
+    24,
+    '2024-04-02 23:30',
+    'Miami Heat',
+    'New York Knicks',
+    '109 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1098,
+    24,
+    '2024-04-03 00:00',
+    'Minnesota Timberwolves',
+    'Houston Rockets',
+    '113 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1099,
+    24,
+    '2024-04-03 01:00',
+    'Denver Nuggets',
+    'San Antonio Spurs',
+    '110 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1100,
+    24,
+    '2024-04-03 01:00',
+    'Utah Jazz',
+    'Cleveland Cavaliers',
+    '113 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    589,
+    24,
+    '2024-04-03 02:00',
+    'Golden State Warriors',
+    'Dallas Mavericks',
+    '104 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1101,
+    24,
+    '2024-04-03 02:00',
+    'Sacramento Kings',
+    'LA Clippers',
+    '109 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1102,
+    24,
+    '2024-04-03 23:00',
+    'Charlotte Hornets',
+    'Portland Trail Blazers',
+    '86 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1103,
+    24,
+    '2024-04-03 23:00',
+    'Washington Wizards',
+    'Los Angeles Lakers',
+    '120 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1104,
+    24,
+    '2024-04-03 23:30',
+    'Atlanta Hawks',
+    'Detroit Pistons',
+    '121 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1105,
+    24,
+    '2024-04-03 23:30',
+    'Boston Celtics',
+    'Oklahoma City Thunder',
+    '135 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1106,
+    24,
+    '2024-04-03 23:30',
+    'Brooklyn Nets',
+    'Indiana Pacers',
+    '115 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1107,
+    24,
+    '2024-04-04 00:00',
+    'Milwaukee Bucks',
+    'Memphis Grizzlies',
+    '101 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1108,
+    24,
+    '2024-04-04 00:00',
+    'Minnesota Timberwolves',
+    'Toronto Raptors',
+    '133 - 85'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1109,
+    24,
+    '2024-04-04 00:00',
+    'New Orleans Pelicans',
+    'Orlando Magic',
+    '108 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1110,
+    24,
+    '2024-04-04 02:00',
+    'Phoenix Suns',
+    'Cleveland Cavaliers',
+    '122 - 101'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1111,
+    24,
+    '2024-04-04 23:30',
+    'Miami Heat',
+    'Philadelphia 76ers',
+    '105 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1112,
+    24,
+    '2024-04-04 23:30',
+    'New York Knicks',
+    'Sacramento Kings',
+    '120 - 109'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1124,
+    24,
+    '2024-04-04 23:30',
+    'Dallas Mavericks',
+    'Atlanta Hawks',
+    '109 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1113,
+    24,
+    '2024-04-05 00:00',
+    'Houston Rockets',
+    'Golden State Warriors',
+    '110 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1114,
+    24,
+    '2024-04-05 02:00',
+    'LA Clippers',
+    'Denver Nuggets',
+    '102 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1115,
+    24,
+    '2024-04-05 23:00',
+    'Charlotte Hornets',
+    'Orlando Magic',
+    '124 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1116,
+    24,
+    '2024-04-05 23:00',
+    'Indiana Pacers',
+    'Oklahoma City Thunder',
+    '126 - 112'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1117,
+    24,
+    '2024-04-05 23:00',
+    'Washington Wizards',
+    'Portland Trail Blazers',
+    '102 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1118,
+    24,
+    '2024-04-05 23:30',
+    'Boston Celtics',
+    'Sacramento Kings',
+    '101 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1119,
+    24,
+    '2024-04-06 00:00',
+    'Chicago Bulls',
+    'New York Knicks',
+    '108 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1120,
+    24,
+    '2024-04-06 00:00',
+    'Houston Rockets',
+    'Miami Heat',
+    '104 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1121,
+    24,
+    '2024-04-06 00:00',
+    'Memphis Grizzlies',
+    'Detroit Pistons',
+    '108 - 90'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1122,
+    24,
+    '2024-04-06 00:00',
+    'Milwaukee Bucks',
+    'Toronto Raptors',
+    '111 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1123,
+    24,
+    '2024-04-06 00:00',
+    'New Orleans Pelicans',
+    'San Antonio Spurs',
+    '109 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1097,
+    24,
+    '2024-04-06 00:30',
+    'Dallas Mavericks',
+    'Golden State Warriors',
+    '108 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1125,
+    24,
+    '2024-04-06 02:00',
+    'Phoenix Suns',
+    'Minnesota Timberwolves',
+    '97 - 87'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1126,
+    24,
+    '2024-04-06 02:30',
+    'LA Clippers',
+    'Utah Jazz',
+    '131 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1127,
+    24,
+    '2024-04-06 19:30',
+    'Los Angeles Lakers',
+    'Cleveland Cavaliers',
+    '116 - 97'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1128,
+    24,
+    '2024-04-06 23:00',
+    'Brooklyn Nets',
+    'Detroit Pistons',
+    '113 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1129,
+    24,
+    '2024-04-07 00:00',
+    'Memphis Grizzlies',
+    'Philadelphia 76ers',
+    '96 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1130,
+    24,
+    '2024-04-07 01:00',
+    'Denver Nuggets',
+    'Atlanta Hawks',
+    '142 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1131,
+    24,
+    '2024-04-07 19:30',
+    'Dallas Mavericks',
+    'Houston Rockets',
+    '147 - 136'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1132,
+    24,
+    '2024-04-07 19:30',
+    'LA Clippers',
+    'Cleveland Cavaliers',
+    '120 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1133,
+    24,
+    '2024-04-07 21:00',
+    'Indiana Pacers',
+    'Miami Heat',
+    '117 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1134,
+    24,
+    '2024-04-07 22:00',
+    'Boston Celtics',
+    'Portland Trail Blazers',
+    '124 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1135,
+    24,
+    '2024-04-07 22:00',
+    'Charlotte Hornets',
+    'Oklahoma City Thunder',
+    '118 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1136,
+    24,
+    '2024-04-07 22:00',
+    'Orlando Magic',
+    'Chicago Bulls',
+    '113 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1137,
+    24,
+    '2024-04-07 22:00',
+    'Toronto Raptors',
+    'Washington Wizards',
+    '130 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1138,
+    24,
+    '2024-04-07 22:00',
+    'Phoenix Suns',
+    'New Orleans Pelicans',
+    '105 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1139,
+    24,
+    '2024-04-07 23:00',
+    'Milwaukee Bucks',
+    'New York Knicks',
+    '109 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1140,
+    24,
+    '2024-04-07 23:00',
+    'San Antonio Spurs',
+    'Philadelphia 76ers',
+    '126 - 133'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1141,
+    24,
+    '2024-04-07 23:30',
+    'Brooklyn Nets',
+    'Sacramento Kings',
+    '77 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1142,
+    24,
+    '2024-04-08 00:30',
+    'Golden State Warriors',
+    'Utah Jazz',
+    '118 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1143,
+    24,
+    '2024-04-08 02:00',
+    'Los Angeles Lakers',
+    'Minnesota Timberwolves',
+    '117 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Spectrum Center'),
+    1144,
+    25,
+    '2024-04-09 23:00',
+    'Charlotte Hornets',
+    'Dallas Mavericks',
+    '104 - 130'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1145,
+    25,
+    '2024-04-09 23:00',
+    'Philadelphia 76ers',
+    'Detroit Pistons',
+    '120 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Scotiabank Arena'),
+    1146,
+    25,
+    '2024-04-09 23:00',
+    'Toronto Raptors',
+    'Indiana Pacers',
+    '123 - 140'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1147,
+    25,
+    '2024-04-09 23:30',
+    'Atlanta Hawks',
+    'Miami Heat',
+    '111 - 117'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1148,
+    25,
+    '2024-04-09 23:30',
+    'Milwaukee Bucks',
+    'Boston Celtics',
+    '104 - 91'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'United Center'),
+    1149,
+    25,
+    '2024-04-10 00:00',
+    'Chicago Bulls',
+    'New York Knicks',
+    '117 - 128'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Toyota Center'),
+    1150,
+    25,
+    '2024-04-10 00:00',
+    'Houston Rockets',
+    'Orlando Magic',
+    '118 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1151,
+    25,
+    '2024-04-10 00:00',
+    'Memphis Grizzlies',
+    'San Antonio Spurs',
+    '87 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1152,
+    25,
+    '2024-04-10 00:00',
+    'Minnesota Timberwolves',
+    'Washington Wizards',
+    '130 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1153,
+    25,
+    '2024-04-10 00:00',
+    'Oklahoma City Thunder',
+    'Sacramento Kings',
+    '112 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1154,
+    25,
+    '2024-04-10 01:00',
+    'Utah Jazz',
+    'Denver Nuggets',
+    '95 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1155,
+    25,
+    '2024-04-10 02:00',
+    'Los Angeles Lakers',
+    'Golden State Warriors',
+    '120 - 134'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Footprint Center'),
+    1156,
+    25,
+    '2024-04-10 02:00',
+    'Phoenix Suns',
+    'LA Clippers',
+    '92 - 105'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1157,
+    25,
+    '2024-04-10 02:00',
+    'Portland Trail Blazers',
+    'New Orleans Pelicans',
+    '100 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1158,
+    25,
+    '2024-04-10 23:00',
+    'Cleveland Cavaliers',
+    'Memphis Grizzlies',
+    '110 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'State Farm Arena'),
+    1159,
+    25,
+    '2024-04-10 23:30',
+    'Atlanta Hawks',
+    'Charlotte Hornets',
+    '114 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Barclays Center'),
+    1160,
+    25,
+    '2024-04-10 23:30',
+    'Brooklyn Nets',
+    'Toronto Raptors',
+    '106 - 102'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1161,
+    25,
+    '2024-04-10 23:30',
+    'Miami Heat',
+    'Dallas Mavericks',
+    '92 - 111'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Fiserv Forum'),
+    1162,
+    25,
+    '2024-04-11 00:00',
+    'Milwaukee Bucks',
+    'Orlando Magic',
+    '117 - 99'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1163,
+    25,
+    '2024-04-11 00:00',
+    'Oklahoma City Thunder',
+    'San Antonio Spurs',
+    '127 - 89'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Ball Arena'),
+    1164,
+    25,
+    '2024-04-11 02:00',
+    'Denver Nuggets',
+    'Minnesota Timberwolves',
+    '116 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1165,
+    25,
+    '2024-04-11 02:30',
+    'LA Clippers',
+    'Phoenix Suns',
+    '108 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Little Caesars Arena'),
+    1166,
+    25,
+    '2024-04-11 23:00',
+    'Detroit Pistons',
+    'Chicago Bulls',
+    '105 - 127'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1167,
+    25,
+    '2024-04-11 23:30',
+    'Boston Celtics',
+    'New York Knicks',
+    '109 - 118'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Delta Center'),
+    1168,
+    25,
+    '2024-04-12 01:00',
+    'Utah Jazz',
+    'Houston Rockets',
+    '124 - 121'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1169,
+    25,
+    '2024-04-12 02:00',
+    'Portland Trail Blazers',
+    'Golden State Warriors',
+    '92 - 100'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1170,
+    25,
+    '2024-04-12 02:00',
+    'Sacramento Kings',
+    'New Orleans Pelicans',
+    '123 - 135'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1171,
+    25,
+    '2024-04-12 23:00',
+    'Philadelphia 76ers',
+    'Orlando Magic',
+    '125 - 113'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Capital One Arena'),
+    1172,
+    25,
+    '2024-04-12 23:00',
+    'Washington Wizards',
+    'Chicago Bulls',
+    '127 - 129'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1173,
+    25,
+    '2024-04-12 23:30',
+    'Boston Celtics',
+    'Charlotte Hornets',
+    '131 - 98'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1174,
+    25,
+    '2024-04-12 23:30',
+    'Cleveland Cavaliers',
+    'Indiana Pacers',
+    '129 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1175,
+    25,
+    '2024-04-12 23:30',
+    'New York Knicks',
+    'Brooklyn Nets',
+    '111 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1176,
+    25,
+    '2024-04-13 00:00',
+    'Miami Heat',
+    'Toronto Raptors',
+    '125 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1177,
+    25,
+    '2024-04-13 00:00',
+    'Memphis Grizzlies',
+    'Los Angeles Lakers',
+    '120 - 123'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1178,
+    25,
+    '2024-04-13 00:00',
+    'Minnesota Timberwolves',
+    'Atlanta Hawks',
+    '109 - 106'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1179,
+    25,
+    '2024-04-13 00:00',
+    'Oklahoma City Thunder',
+    'Milwaukee Bucks',
+    '125 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1180,
+    25,
+    '2024-04-13 00:00',
+    'San Antonio Spurs',
+    'Denver Nuggets',
+    '121 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'American Airlines Center'),
+    1181,
+    25,
+    '2024-04-13 00:30',
+    'Dallas Mavericks',
+    'Detroit Pistons',
+    '89 - 107'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1182,
+    25,
+    '2024-04-13 02:00',
+    'Golden State Warriors',
+    'New Orleans Pelicans',
+    '109 - 114'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Moda Center'),
+    1183,
+    25,
+    '2024-04-13 02:00',
+    'Portland Trail Blazers',
+    'Houston Rockets',
+    '107 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1184,
+    25,
+    '2024-04-13 02:30',
+    'LA Clippers',
+    'Utah Jazz',
+    '109 - 110'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1185,
+    25,
+    '2024-04-13 02:30',
+    'Sacramento Kings',
+    'Phoenix Suns',
+    '107 - 108'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'TD Garden'),
+    1186,
+    25,
+    '2024-04-14 17:00',
+    'Boston Celtics',
+    'Washington Wizards',
+    '132 - 122'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Rocket Mortgage FieldHouse'),
+    1187,
+    25,
+    '2024-04-14 17:00',
+    'Cleveland Cavaliers',
+    'Charlotte Hornets',
+    '110 - 120'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Gainbridge Fieldhouse'),
+    1188,
+    25,
+    '2024-04-14 17:00',
+    'Indiana Pacers',
+    'Atlanta Hawks',
+    '157 - 115'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kaseya Center'),
+    1189,
+    25,
+    '2024-04-14 17:00',
+    'Miami Heat',
+    'Toronto Raptors',
+    '118 - 103'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Madison Square Garden'),
+    1190,
+    25,
+    '2024-04-14 17:00',
+    'New York Knicks',
+    'Chicago Bulls',
+    '120 - 119'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
+    1191,
+    25,
+    '2024-04-14 17:00',
+    'Orlando Magic',
+    'Milwaukee Bucks',
+    '113 - 88'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Wells Fargo Center'),
+    1192,
+    25,
+    '2024-04-14 17:00',
+    'Philadelphia 76ers',
+    'Brooklyn Nets',
+    '107 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'FedExForum'),
+    1193,
+    25,
+    '2024-04-14 19:30',
+    'Memphis Grizzlies',
+    'Denver Nuggets',
+    '111 - 126'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Target Center'),
+    1194,
+    25,
+    '2024-04-14 19:30',
+    'Minnesota Timberwolves',
+    'Phoenix Suns',
+    '106 - 125'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Smoothie King Center'),
+    1195,
+    25,
+    '2024-04-14 19:30',
+    'New Orleans Pelicans',
+    'Los Angeles Lakers',
+    '108 - 124'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Paycom Center'),
+    1196,
+    25,
+    '2024-04-14 19:30',
+    'Oklahoma City Thunder',
+    'Dallas Mavericks',
+    '135 - 86'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
+    1197,
+    25,
+    '2024-04-14 19:30',
+    'San Antonio Spurs',
+    'Detroit Pistons',
+    '123 - 95'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Chase Center'),
+    1198,
+    25,
+    '2024-04-14 19:30',
+    'Golden State Warriors',
+    'Utah Jazz',
+    '123 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Crypto.com Arena'),
+    1199,
+    25,
+    '2024-04-14 19:30',
+    'LA Clippers',
+    'Houston Rockets',
+    '105 - 116'
+);
+
+INSERT INTO TeamFixtures
+(arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
+VALUES (
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Golden 1 Center'),
+    1200,
+    25,
+    '2024-04-14 19:30',
+    'Sacramento Kings',
+    'Portland Trail Blazers',
+    '121 - 82'
+);
+
+
+-- ----------------------------------------------------------
+-- ----------------------------------------------------------
+
 SET FOREIGN_KEY_CHECKS = 1;
 
