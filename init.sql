@@ -213,6 +213,8 @@ INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALU
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612761, 'Toronto Raptors', 'TOR', 'https://loodibee.com/wp-content/uploads/nba-toronto-raptors-logo-2020.png', 'East');
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612755, 'Philadelphia 76ers', 'PHI', 'https://loodibee.com/wp-content/uploads/nba-philadelphia-76ers-logo.png', 'East');
 INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (1610612739, 'Cleveland Cavaliers', 'CLE', 'https://loodibee.com/wp-content/uploads/cleveland-cavaliers-2010-2017.png', 'East');
+-- dummy team for international games
+INSERT INTO TEAMS (teamID, teamName, teamAbbreviation, logoUrl, conference) VALUES (999, 'Neutral Venue', 'NEU', NULL, 'Special');
 
 -- ----------------------------------------------------------
 -- ----------------------------------------------------------
@@ -3078,7 +3080,7 @@ INSERT INTO TeamArenaDetails
 (teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
 VALUES (
     (SELECT teamID FROM TEAMS WHERE teamName = 'LA Clippers'),
-    'Los Angeles', 'CA', 'Crypto.com Arena', 19060, 34.043, -118.2673, 'Pacific', 'Pacific', 89
+    'Los Angeles', 'CA', 'Crypto.com Arena ', 19060, 34.043, -118.2673, 'Pacific', 'Pacific', 89
 );
 
 INSERT INTO TeamArenaDetails
@@ -3200,6 +3202,36 @@ VALUES (
     'Washington', 'DC', 'Capital One Arena', 20356, 38.8981, -77.0209, 'Eastern', 'Southeast', 7
 );
 
+
+-- ----------------------------------------------------------
+-- ----------------------------------------------------------
+
+-- Additional Arenas for international and special games
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Mexico City', 'MX', 'Arena CDMX', 22000, 19.3647, -99.2752, 'Central', 'None', 2240
+);
+
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Las Vegas', 'NV', 'T-Mobile Arena', 20000, 36.1025, -115.1780, 'Pacific', 'Southwest', 620
+);
+
+INSERT INTO TeamArenaDetails (
+    teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m
+) VALUES (
+    999, 'Paris', 'FR', 'Accor Arena', 20000, 48.8380, 2.3788, 'UTC+1', 'Southwest', 35
+);
+
+INSERT INTO TeamArenaDetails
+(teamID, city, state, arena, capacity, latitude, longitude, us_time_zone, division, elevation_m)
+VALUES
+(999, 'Austin', 'TX', 'Moody Center', 15000, 30.2819, -97.7313, 'Central', 'Southwest', 149);
+
+
+
 -- ----------------------------------------------------------
 -- ----------------------------------------------------------
 
@@ -3267,7 +3299,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     6,
     1,
     '2023-10-25 23:00',
@@ -3351,7 +3383,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     13,
     1,
     '2023-10-26 01:30',
@@ -3471,7 +3503,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     23,
     1,
     '2023-10-28 00:00',
@@ -4167,7 +4199,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     81,
     2,
     '2023-11-04 23:00',
@@ -4251,7 +4283,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     88,
     2,
     '2023-11-05 20:30',
@@ -4323,7 +4355,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     94,
     3,
     '2023-11-07 00:00',
@@ -4695,7 +4727,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     125,
     3,
     '2023-11-11 01:00',
@@ -4743,7 +4775,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     129,
     3,
     '2023-11-11 23:00',
@@ -4875,7 +4907,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     140,
     3,
     '2023-11-13 00:00',
@@ -5271,7 +5303,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     173,
     4,
     '2023-11-18 00:30',
@@ -5391,7 +5423,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     183,
     4,
     '2023-11-19 01:00',
@@ -5595,7 +5627,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     200,
     5,
     '2023-11-21 01:00',
@@ -5619,7 +5651,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     202,
     5,
     '2023-11-22 00:00',
@@ -5691,7 +5723,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     208,
     5,
     '2023-11-23 00:00',
@@ -5799,7 +5831,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     217,
     5,
     '2023-11-23 01:00',
@@ -5847,7 +5879,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     221,
     5,
     '2023-11-24 19:30',
@@ -6075,7 +6107,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     240,
     5,
     '2023-11-26 23:00',
@@ -6303,7 +6335,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     259,
     6,
     '2023-11-30 00:00',
@@ -6459,7 +6491,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     272,
     6,
     '2023-12-01 01:00',
@@ -6483,7 +6515,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     274,
     6,
     '2023-12-02 00:00',
@@ -6915,7 +6947,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1217,
     7,
     '2023-12-09 00:00',
@@ -6999,7 +7031,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1223,
     7,
     '2023-12-09 01:30',
@@ -7095,7 +7127,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     294,
     8,
     '2023-12-12 00:00',
@@ -7359,7 +7391,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     316,
     8,
     '2023-12-14 01:00',
@@ -7539,7 +7571,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     331,
     8,
     '2023-12-16 00:30',
@@ -7707,7 +7739,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     345,
     8,
     '2023-12-17 20:30',
@@ -7959,7 +7991,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     366,
     9,
     '2023-12-21 00:00',
@@ -8511,7 +8543,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     412,
     10,
     '2023-12-27 01:00',
@@ -8547,7 +8579,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     415,
     10,
     '2023-12-28 00:00',
@@ -8715,7 +8747,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     429,
     10,
     '2023-12-30 00:00',
@@ -8943,7 +8975,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     448,
     10,
     '2024-01-01 00:00',
@@ -9291,7 +9323,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     477,
     11,
     '2024-01-05 00:30',
@@ -9555,7 +9587,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     499,
     11,
     '2024-01-07 23:00',
@@ -9723,7 +9755,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     513,
     12,
     '2024-01-10 00:00',
@@ -10035,7 +10067,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     541,
     12,
     '2024-01-13 01:00',
@@ -10143,7 +10175,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     548,
     12,
     '2024-01-14 01:30',
@@ -10575,7 +10607,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     585,
     13,
     '2024-01-20 00:00',
@@ -10755,7 +10787,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     601,
     13,
     '2024-01-21 23:00',
@@ -10827,7 +10859,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     607,
     14,
     '2024-01-23 00:00',
@@ -11043,7 +11075,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     622,
     14,
     '2024-01-25 02:30',
@@ -11235,7 +11267,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     641,
     14,
     '2024-01-27 02:30',
@@ -11331,7 +11363,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     649,
     14,
     '2024-01-28 01:30',
@@ -11403,7 +11435,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     655,
     14,
     '2024-01-28 23:00',
@@ -11523,7 +11555,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     665,
     15,
     '2024-01-30 01:00',
@@ -11703,7 +11735,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     681,
     15,
     '2024-02-01 01:00',
@@ -11895,7 +11927,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     696,
     15,
     '2024-02-03 01:00',
@@ -11979,7 +12011,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     703,
     15,
     '2024-02-04 01:30',
@@ -12351,7 +12383,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     734,
     16,
     '2024-02-09 00:00',
@@ -12567,7 +12599,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     752,
     16,
     '2024-02-11 00:00',
@@ -12807,7 +12839,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     772,
     17,
     '2024-02-14 00:30',
@@ -12879,7 +12911,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     778,
     17,
     '2024-02-15 00:00',
@@ -13551,7 +13583,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     833,
     19,
     '2024-02-28 00:00',
@@ -13755,7 +13787,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     850,
     19,
     '2024-03-01 00:00',
@@ -13791,7 +13823,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     853,
     19,
     '2024-03-01 01:30',
@@ -14043,7 +14075,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     874,
     19,
     '2024-03-03 23:00',
@@ -14079,7 +14111,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     877,
     19,
     '2024-03-04 00:00',
@@ -14679,7 +14711,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     928,
     20,
     '2024-03-10 22:00',
@@ -14787,7 +14819,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     936,
     21,
     '2024-03-12 00:00',
@@ -14859,7 +14891,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     942,
     21,
     '2024-03-13 00:30',
@@ -14919,7 +14951,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     947,
     21,
     '2024-03-13 23:00',
@@ -15303,7 +15335,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     979,
     21,
     '2024-03-17 22:00',
@@ -15447,7 +15479,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     991,
     22,
     '2024-03-19 23:00',
@@ -15483,7 +15515,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     994,
     22,
     '2024-03-20 00:00',
@@ -15603,7 +15635,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1004,
     22,
     '2024-03-21 23:00',
@@ -15735,7 +15767,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1015,
     22,
     '2024-03-23 00:00',
@@ -15795,7 +15827,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1020,
     22,
     '2024-03-23 23:00',
@@ -15855,7 +15887,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1025,
     22,
     '2024-03-24 00:00',
@@ -16023,7 +16055,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1039,
     23,
     '2024-03-26 00:00',
@@ -16143,7 +16175,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1049,
     23,
     '2024-03-27 23:00',
@@ -16323,7 +16355,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1064,
     23,
     '2024-03-29 23:00',
@@ -16395,7 +16427,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1070,
     23,
     '2024-03-30 00:00',
@@ -16455,7 +16487,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1075,
     23,
     '2024-03-30 23:00',
@@ -16575,7 +16607,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1085,
     23,
     '2024-03-31 23:00',
@@ -16635,7 +16667,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1090,
     24,
     '2024-04-01 23:00',
@@ -17199,7 +17231,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1136,
     24,
     '2024-04-07 22:00',
@@ -17247,7 +17279,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1140,
     24,
     '2024-04-07 23:00',
@@ -17727,7 +17759,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1180,
     25,
     '2024-04-13 00:00',
@@ -17859,7 +17891,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Kia Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Amway Center'),
     1191,
     25,
     '2024-04-14 17:00',
@@ -17931,7 +17963,7 @@ VALUES (
 INSERT INTO TeamFixtures
 (arenaDetailID, matchNumber, roundNumber, matchDate, homeTeam, awayTeam, result)
 VALUES (
-    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'Frost Bank Center'),
+    (SELECT arenaDetailID FROM TeamArenaDetails WHERE arena = 'AT&T Center'),
     1197,
     25,
     '2024-04-14 19:30',
