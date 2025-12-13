@@ -18014,3 +18014,26 @@ VALUES (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- EN ÇOK KULLANILAN SÜTUNLARA INDEX EKLEME
+-- (Bu, tüm Backend sorgularımızı hızlandırır)
+
+USE nba_db; -- Veritabanı adı
+
+-- 1. Player (Oyuncular) Tablosu
+-- Oyuncu arama/filtreleme için.
+ALTER TABLE PLAYERS
+ADD INDEX idx_player_name (playerName);
+
+-- 2. Performance (İstatistik) Tablosu
+-- Sıralama (Leaders) ve Filtreleme (Complex Query) için.
+ALTER TABLE PlayerRegularSeasonPerformance
+ADD INDEX idx_stats_player_id (playerID), -- Kimin istatistiği? (JOIN için)
+ADD INDEX idx_stats_efficiency (efficiency), -- Verimliliğe göre sıralama (Complex Query)
+ADD INDEX idx_stats_pts (PTS), -- Sayı kralları
+ADD INDEX idx_stats_reb (REB), -- Ribaund liderleri
+ADD INDEX idx_stats_ast (AST); -- Asist liderleri
+
+-- 3. Team (Takımlar) Tablosu
+-- Takım listeleme için.
+ALTER TABLE TEAMS
+ADD INDEX idx_team_conference (conference); -- Konferansa göre filtreleme
